@@ -1,7 +1,7 @@
 /* Sahit Mandala, CS536  */
 
 /*
-The Sym class stores the 
+The Sym class stores the associated information for each identifier
 */
 class Sym {
 
@@ -9,7 +9,7 @@ class Sym {
     private String type;
 
     /* Constructor, initializes Sym to have the given type
-     Takes String t as type*/
+     * Takes String t as type*/
     public Sym(String t) {
 	type = t;
     }
