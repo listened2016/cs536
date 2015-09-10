@@ -150,7 +150,7 @@ public class P1 {
          try {
             sampleST.lookupLocal(sampleStr);
             System.out.println(
-            "addDecl: Failed to throw EmptySymTableException on lookup");
+            "localLookup: Failed to throw EmptySymTableException on lookup");
         }
         catch (EmptySymTableException ex) {
         }
@@ -182,21 +182,16 @@ public class P1 {
         }
         
         
-        //lookupLocal: addDecl comparison (diff scope)
+        //lookupLocal: addDecl comparison (diff scope, null return)
         sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
         try {
             sampleST.addDecl(sampleStr,sampleSym);
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
-        sampleST.addScope();
-        sampleStr = "Not Hello World!";
-        sampleSym = new Sym("String");
-        try {
+            sampleST.addScope();
+            sampleStr = "Not Hello World!";
+            sampleSym = new Sym("String");
             sampleST.addDecl(sampleStr,sampleSym);
             returnSym = sampleST.lookupLocal("Not Hello World!");
             if (!(returnSym.toString().equals(sampleSym.toString()))) {
@@ -221,14 +216,9 @@ public class P1 {
         sampleSym = new Sym("Integer");
         try {
             sampleST.addDecl(sampleStr,sampleSym);
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
-        sampleST.addScope();
-        sampleStr = "Hello World!";
-        sampleSym = new Sym("String");
-        try {
+            sampleST.addScope();
+            sampleStr = "Hello World!";
+            sampleSym = new Sym("String");
             sampleST.addDecl(sampleStr,sampleSym);
             returnSym = sampleST.lookupLocal("Hello World!");
             if (!(returnSym.toString().equals("String"))) {
@@ -241,8 +231,69 @@ public class P1 {
         }
         
         //lookupGlobal: Empty SymTable Exception test
+        sampleST = new SymTable();
+        sampleStr = "Hello World!";
+        try {
+            sampleST.lookupGlobal(sampleStr);
+            System.out.println(
+            "lookupGlobal: Failed to throw EmptySymTableException on lookup");
+        }
+        catch (EmptySymTableException ex) {
+        }
+        
         //lookupGlobal: addDecl comparison (curr scope)
+        sampleST= new SymTable();
+        sampleST.addScope();
+        sampleStr = "Hello World!";
+        sampleSym = new Sym("Integer");
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupGlobal(sampleStr);
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+                "lookupLocal: Failed to return correct Sym value in first scope");
+            }
+            sampleStr = "Not Hello World!";
+            sampleSym = new Sym("String");
+            
+            sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupGlobal(sampleStr);
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+            "   lookupGlobal: Failed to return correct Sym value in first scope");
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
         //lookupGlobal: addDecl comparison (diff scope)
+        try {
+            sampleST= new SymTable();
+            sampleST.addScope();
+            sampleStr = "Hello World!";
+            sampleSym = new Sym("Integer");
+        
+            sampleST.addDecl(sampleStr,sampleSym);
+            sampleST.addScope();
+            sampleStr = "Not Hello World!";
+            sampleSym = new Sym("String");
+            sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupGlobal("Not Hello World!");
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+                "lookupGlobal: Failed to return correct Sym obj in 1st scope");
+            }
+            returnSym = sampleST.lookupGlobal("Hello World!");
+            if (!(returnSym.equals("Integer"))) {
+                System.out.println(
+                "lookupGlobal: Failed to return correct Sym obj in 2nd scope");
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
         //lookupGlobal: addDecl comparison (duplicate ids, diff scope)
         
     }
