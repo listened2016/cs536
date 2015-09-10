@@ -142,7 +142,12 @@ public class P1 {
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         returnSym = sampleST.lookupLocal(sampleStr);
         if (!(returnSym.toString().equals(sampleSym.toString()))) {
             System.out.println(
@@ -150,7 +155,12 @@ public class P1 {
         }
         sampleStr = "Not Hello World!";
         sampleSym = new Sym("String");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         returnSym = sampleST.lookupLocal(sampleStr);
         if (!(returnSym.toString().equals(sampleSym.toString()))) {
             System.out.println(
@@ -162,11 +172,21 @@ public class P1 {
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         sampleST.addScope();
         sampleStr = "Not Hello World!";
         sampleSym = new Sym("String");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         returnSym = sampleST.lookupLocal("Not Hello World!");
         if (!(returnSym.toString().equals(sampleSym.toString()))) {
             System.out.println(
@@ -183,11 +203,21 @@ public class P1 {
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("String");
-        sampleST.addDecl(sampleStr,sampleSym);
+        try {
+            sampleST.addDecl(sampleStr,sampleSym);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         returnSym = sampleST.lookupLocal("Hello World!");
         if (!(returnSym.toString().equals("String"))) {
             System.out.println(
