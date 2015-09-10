@@ -152,7 +152,7 @@ public class P1 {
             System.out.println(
             "addDecl: Failed to throw EmptySymTableException on lookup");
         }
-        catch (DuplicateSymException ex) {
+        catch (EmptySymTableException ex) {
         }
         
         //lookupLocal: addDecl comparison (curr scope)
