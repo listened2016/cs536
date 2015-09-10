@@ -82,8 +82,8 @@ public class SymTable {
       }
      
       for (int i = 0; i < symMapList.size(); i++) {
-         if (symMapList.get(0).containsKey(name)) {
-            return symMapList.get(0).get(name);
+         if (symMapList.get(i).containsKey(name)) {
+            return symMapList.get(i).get(name);
          }
       }
      

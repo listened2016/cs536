@@ -264,7 +264,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+	  //System.out.println(ex);
       }
       
       //lookupGlobal: addDecl comparison (diff scope)
@@ -280,18 +280,18 @@ public class P1 {
          sampleSym = new Sym("String");
          sampleST.addDecl(sampleStr,sampleSym);
          returnSym = sampleST.lookupGlobal("Not Hello World!");
-         if (!(returnSym.toString().equals(sampleSym.toString()))) {
+         if (!(returnSym.toString().equals("String"))) {
             System.out.println(
             "lookupGlobal: Failed to return correct Sym obj in 1st scope");
          }
          returnSym = sampleST.lookupGlobal("Hello World!");
-         if (!(returnSym.equals("Integer"))) {
+         if (!(returnSym.toString().equals("Integer"))) {
             System.out.println(
             "lookupGlobal: Failed to return correct Sym obj in 2nd scope");
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+	  System.out.println(ex);
       }
       
       //lookupGlobal: addDecl comparison (duplicate ids, diff scope)
@@ -312,12 +312,61 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+	  System.out.println(ex);
       }
       
       //removeScope: Empty SymTable Exception test
-      //removeScope: Add 1 scope, then remove; confirm Sym deletion
-      //removeScope: Add 2 scopes, then remove all; check local, global lookup
+      sampleST = new SymTable();
+      try {
+         sampleST.removeScope();
+         System.out.println(
+         "removeScope: Failed to throw EmptySymTableException on scope removal");
+      }
+      catch (EmptySymTableException ex) {
+      }
+
+      //removeScope: Add 1 scope, delete it, check emptySymTable
+      sampleST= new SymTable();
+      sampleST.addScope();
+      sampleStr = "Hello World!";
+      sampleSym = new Sym("Integer");
+      try {
+         sampleST.removeScope();
+      }
+      catch (Exception ex) {
+         System.out.println(ex);
+      }
+      try {
+         sampleST.removeScope();
+         System.out.println(
+            "removeScope: Failed to raise EmptySimTable exception");
+      }
+      catch (EmptySymTableException ex) {
+      }
+
+
+      //removeScope: Add 2 scope, then remove; confirm lookupLocal
+      sampleST= new SymTable();
+      sampleST.addScope();
+      sampleStr = "Hello World!";
+      sampleSym = new Sym("Integer");
+      try {
+         sampleST.addDecl(sampleStr,sampleSym);
+         sampleST.addScope();
+         sampleStr = "Hello World!";
+         sampleSym = new Sym("String");
+         sampleST.addDecl(sampleStr,sampleSym);
+         sampleST.removeScope();
+         returnSym = sampleST.lookupLocal("Hello World!");
+         if (!(returnSym.toString().equals("Integer"))) {
+            System.out.println(
+      "lookupGlobal: Failed to return correct Sym value after removal");
+         }
+      }
+      catch (Exception ex) {
+         System.out.println(ex);
+      }
+
    }
       
 }
