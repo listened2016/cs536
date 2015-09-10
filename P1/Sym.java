@@ -3,7 +3,7 @@
 /*
 The Sym class stores the associated information for each identifier
 */
-class Sym {
+public class Sym {
 
     /* Private variable storing the Sym's type*/
     private String type;

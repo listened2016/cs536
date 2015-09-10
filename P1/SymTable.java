@@ -8,7 +8,7 @@ compiled and information about each identifier. Implemented
 using a LinkedList of Hashmaps, with strings as keys and Sym objects
 as identifiers
 */
-class SymTable {
+public class SymTable {
 
     /* Private variable storing the list of hashmaps*/
     private List<HashMap<String,Sym>> symMapList;
