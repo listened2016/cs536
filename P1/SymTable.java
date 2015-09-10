@@ -60,7 +60,7 @@ public class SymTable {
      * Exceptions:
      * If this SymTable's list is empty, throw an EmptySymTableException.
      */
-    Sym lookupLocal(String name) {
+    Sym lookupLocal(String name) throws EmptySymTableException{
         if (symMapList.isEmpty()) {
             throw new EmptySymTableException();
         }
@@ -79,7 +79,7 @@ public class SymTable {
      * Exceptions:
      * If this SymTable's list is empty, throw an EmptySymTableException.
      */
-    Sym lookupGlobal(String name) {
+    Sym lookupGlobal(String name) throws EmptySymTableException{
         if (symMapList.isEmpty()) {
             throw new EmptySymTableException();
         }
