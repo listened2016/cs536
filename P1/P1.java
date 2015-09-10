@@ -162,28 +162,25 @@ public class P1 {
         sampleSym = new Sym("Integer");
         try {
             sampleST.addDecl(sampleStr,sampleSym);
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
-        returnSym = sampleST.lookupLocal(sampleStr);
-        if (!(returnSym.toString().equals(sampleSym.toString()))) {
-            System.out.println(
-            "lookupLocal: Failed to return correct Sym value in curr scope");
-        }
-        sampleStr = "Not Hello World!";
-        sampleSym = new Sym("String");
-        try {
+            returnSym = sampleST.lookupLocal(sampleStr);
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+                "lookupLocal: Failed to return correct Sym value in curr scope");
+            }
+            sampleStr = "Not Hello World!";
+            sampleSym = new Sym("String");
+            
             sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupLocal(sampleStr);
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+            "   lookupLocal: Failed to return correct Sym value in curr scope");
+            }
         }
         catch (Exception ex) {
             System.out.println(ex);
         }
-        returnSym = sampleST.lookupLocal(sampleStr);
-        if (!(returnSym.toString().equals(sampleSym.toString()))) {
-            System.out.println(
-            "lookupLocal: Failed to return correct Sym value in curr scope");
-        }
+        
         
         //lookupLocal: addDecl comparison (diff scope)
         sampleST= new SymTable();
@@ -201,20 +198,21 @@ public class P1 {
         sampleSym = new Sym("String");
         try {
             sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupLocal("Not Hello World!");
+            if (!(returnSym.toString().equals(sampleSym.toString()))) {
+                System.out.println(
+                "lookupLocal: Failed to return correct Sym value in curr scope");
+            }
+            returnSym = sampleST.lookupLocal("Hello World!");
+            if (!(returnSym==null)) {
+                System.out.println(
+                "lookupLocal: Returned incorrect Sym value in curr scope");
+            }
         }
         catch (Exception ex) {
             System.out.println(ex);
         }
-        returnSym = sampleST.lookupLocal("Not Hello World!");
-        if (!(returnSym.toString().equals(sampleSym.toString()))) {
-            System.out.println(
-            "lookupLocal: Failed to return correct Sym value in curr scope");
-        }
-        returnSym = sampleST.lookupLocal("Hello World!");
-        if (!(returnSym==null)) {
-            System.out.println(
-            "lookupLocal: Returned incorrect Sym value in curr scope");
-        }
+        
         
         //lookupLocal: addDecl comparison (duplicate ids, diff scope)
         sampleST= new SymTable();
@@ -232,14 +230,14 @@ public class P1 {
         sampleSym = new Sym("String");
         try {
             sampleST.addDecl(sampleStr,sampleSym);
+            returnSym = sampleST.lookupLocal("Hello World!");
+            if (!(returnSym.toString().equals("String"))) {
+                System.out.println(
+                "lookupLocal: Failed to return correct Sym value in curr scope");
+            }
         }
         catch (Exception ex) {
             System.out.println(ex);
-        }
-        returnSym = sampleST.lookupLocal("Hello World!");
-        if (!(returnSym.toString().equals("String"))) {
-            System.out.println(
-            "lookupLocal: Failed to return correct Sym value in curr scope");
         }
         
         //lookupGlobal: Empty SymTable Exception test
