@@ -42,11 +42,11 @@ public class P1 {
         sampleST = new SymTable();
         
         //addScope: add 1 scope test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         
          //addDecl: Empty SymTable Exception test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
         try {
@@ -58,7 +58,7 @@ public class P1 {
         }
        
         //addDecl: Null name test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = null;
         sampleSym = new Sym("Integer");
@@ -71,7 +71,7 @@ public class P1 {
         }
         
         //addDecl: Null sym test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = null;
@@ -84,7 +84,7 @@ public class P1 {
         }
         
         //addDecl: Null name and sym test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = null;
         sampleSym = null;
@@ -97,7 +97,7 @@ public class P1 {
         }
         
         //addDecl: Duplicate Sym Exception test
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleStrB = "Hello World!";
@@ -113,7 +113,7 @@ public class P1 {
         }
         
         //addDecl: Duplicate Sym across diff scope
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleStrB = "Hello World!";
@@ -141,7 +141,7 @@ public class P1 {
         }
         
         //lookupLocal: addDecl comparison (curr scope)
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
@@ -161,7 +161,7 @@ public class P1 {
         }
         
         //lookupLocal: addDecl comparison (diff scope)
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");
@@ -182,7 +182,7 @@ public class P1 {
         }
         
         //lookupLocal: addDecl comparison (duplicate ids, diff scope)
-        sampleSt = new SymTable();
+        sampleST= new SymTable();
         sampleST.addScope();
         sampleStr = "Hello World!";
         sampleSym = new Sym("Integer");

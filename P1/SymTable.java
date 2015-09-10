@@ -61,12 +61,12 @@ public class SymTable {
      * If this SymTable's list is empty, throw an EmptySymTableException.
      */
     Sym lookupLocal(String name) {
-        if (symTableList.isEmpty()) {
+        if (symMapList.isEmpty()) {
             throw new EmptySymTableException();
         }
         
-        if (symTableList.get(0).contains(name)) {
-            return symTableList.get(0).get(name);
+        if (symMapList.get(0).contains(name)) {
+            return symMapList.get(0).get(name);
         }
         else {
             return null;
@@ -80,13 +80,13 @@ public class SymTable {
      * If this SymTable's list is empty, throw an EmptySymTableException.
      */
     Sym lookupGlobal(String name) {
-        if (symTableList.isEmpty()) {
+        if (symMapList.isEmpty()) {
             throw new EmptySymTableException();
         }
         
         for (int i = 0; i < sysMapList.size(); i++) {
-            if (symTableList.get(0).contains(name)) {
-                return symTableList.get(0).get(name);
+            if (symMapList.get(0).contains(name)) {
+                return symMapList.get(0).get(name);
             }
         }
         
@@ -99,11 +99,11 @@ public class SymTable {
      * If this SymTable's list is empty, throw an EmptySymTableException.
      */
     void removeScope() throws EmptySymTableException {
-        if (symTableList.isEmpty()) {
+        if (symMapList.isEmpty()) {
             throw new EmptySymTableException();
         }
         
-        symTableList.remove(0);
+        symMapList.remove(0);
         return;
     }
     
