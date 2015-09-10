@@ -10,7 +10,7 @@ public class P1 {
         //Sym Class tests
         
         // Constructor: Null input test
-        Sym sampleSym = new Sym();
+        sampleSym = new Sym();
         
         //Constructor: NonEmpty String test
         sampleStr = "Integer";
@@ -23,7 +23,7 @@ public class P1 {
         if (!returnStr.equals(sampleStr)) {
             System.out.println(
 "getType: return value ("+returnStr+") does not match expected value("
-            +hw+")");
+            +sampleStr+")");
         }
         
         //toString(): Expected value test
