@@ -54,7 +54,7 @@ public class P1 {
       catch (EmptySymTableException ex) {
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("addDecl:"+ex);
       }
     
       //addDecl: Null name test
@@ -70,7 +70,7 @@ public class P1 {
       catch (NullPointerException ex) {
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("addDecl:"+ex);
       }
      
       //addDecl: Null sym test
@@ -86,7 +86,7 @@ public class P1 {
       catch (NullPointerException ex) {
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("addDecl:"+ex);
       }
      
       //addDecl: Null name and sym test
@@ -102,7 +102,7 @@ public class P1 {
       catch (NullPointerException ex) {
       }
       catch (Exception ex) {
-         System.out.println(ex);
+	  System.out.println("addDecl:"+ex);
       }
      
       //addDecl: Duplicate Sym Exception test
@@ -121,7 +121,7 @@ public class P1 {
       catch (DuplicateSymException ex) {
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("addDecl:"+ex);
       }
      
       //addDecl: Duplicate Sym across diff scope
@@ -141,7 +141,7 @@ public class P1 {
          "addDecl: Threw DuplicateSymException on dupl across diff scopes");
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("addDecl:"+ex);
       }
       
       //lookupLocal: Empty SymTable Exception test
@@ -178,7 +178,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("lookupLocal:"+ex);
       }
       
       
@@ -205,7 +205,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("lookupLocal:"+ex);
       }
       
       
@@ -227,7 +227,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("lookupLocal:"+ex);
       }
       
       //lookupGlobal: Empty SymTable Exception test
@@ -264,7 +264,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-	  //System.out.println(ex);
+	  System.out.println("lookupGlobal:"+ex);
       }
       
       //lookupGlobal: addDecl comparison (diff scope)
@@ -291,7 +291,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-	  System.out.println(ex);
+	  System.out.println("lookupGlobal:"+ex);
       }
       
       //lookupGlobal: addDecl comparison (duplicate ids, diff scope)
@@ -312,7 +312,7 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-	  System.out.println(ex);
+	  System.out.println("lookupGlobal:"+ex);
       }
       
       //removeScope: Empty SymTable Exception test
@@ -334,7 +334,7 @@ public class P1 {
          sampleST.removeScope();
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("removeScope:"+ex);
       }
       try {
          sampleST.removeScope();
@@ -364,8 +364,20 @@ public class P1 {
          }
       }
       catch (Exception ex) {
-         System.out.println(ex);
+         System.out.println("lookupGlobal:"+ex);
       }
+
+      //print: empty table
+      sampleST= new SymTable();
+      try { 
+         sampleST.print();
+      }
+      catch (Exception ex) {
+         System.out.println("print:"+ex);
+      }
+      //print: 1 scope, empty
+      //print: 2 scopes, 1 sym each 
+      
 
    }
       
