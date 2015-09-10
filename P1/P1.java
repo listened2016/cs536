@@ -8,10 +8,7 @@ public class P1 {
         Sym sampleSym, sampleSymB, returnSym;
         SymTable sampleST;
         //Sym Class tests
-        
-        // Constructor: Null input test
-        sampleSym = new Sym();
-        
+                
         //Constructor: NonEmpty String test
         sampleStr = "Integer";
         sampleSym = new Sym(sampleStr);

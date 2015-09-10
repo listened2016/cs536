@@ -32,7 +32,7 @@ public class SymTable {
      */
     void addDecl(String name, Sym sym) throws DuplicateSymException, 
     EmptySymTableException {
-        if ((name==null) || (sys==null)) {
+        if ((name==null) || (sym==null)) {
             throw new NullPointerException();
         }
         
@@ -40,7 +40,7 @@ public class SymTable {
             throw new EmptySymTableException();
         }
         
-        if (sysMapList.get(0).containsKey(name)) {
+        if (symMapList.get(0).containsKey(name)) {
             throw new DuplicateSymException();
         }
         
@@ -65,7 +65,7 @@ public class SymTable {
             throw new EmptySymTableException();
         }
         
-        if (symMapList.get(0).contains(name)) {
+        if (symMapList.get(0).containsKey(name)) {
             return symMapList.get(0).get(name);
         }
         else {
@@ -84,8 +84,8 @@ public class SymTable {
             throw new EmptySymTableException();
         }
         
-        for (int i = 0; i < sysMapList.size(); i++) {
-            if (symMapList.get(0).contains(name)) {
+        for (int i = 0; i < symMapList.size(); i++) {
+            if (symMapList.get(0).containsKey(name)) {
                 return symMapList.get(0).get(name);
             }
         }
@@ -115,8 +115,8 @@ public class SymTable {
      */
     void print() {
         System.out.print("\nSym Table\n");
-        for (int i = 0; i < sysMapList.size(); i++) {
-            System.out.print(sysMapList.get(i).toString());
+        for (int i = 0; i < symMapList.size(); i++) {
+            System.out.print(symMapList.get(i).toString());
             System.out.print("\n");
         }
         return;
