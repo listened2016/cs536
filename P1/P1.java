@@ -2,7 +2,7 @@
 
 public class P1 {
     
-    public static void Main(String args[]) {
+    public static void main(String[] args) {
         String returnStr;
         String sampleStr, sampleStrB;
         Sym sampleSym, sampleSymB, returnSym;
