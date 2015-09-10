@@ -53,6 +53,9 @@ public class P1 {
         }
         catch (EmptySymTableException ex) {
         }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
        
         //addDecl: Null name test
         sampleST= new SymTable();
@@ -65,6 +68,9 @@ public class P1 {
             "addDecl: Failed to throw NullPointerException on null name");
         }
         catch (NullPointerException ex) {
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
         }
         
         //addDecl: Null sym test
@@ -79,6 +85,9 @@ public class P1 {
         }
         catch (NullPointerException ex) {
         }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         
         //addDecl: Null name and sym test
         sampleST= new SymTable();
@@ -91,6 +100,9 @@ public class P1 {
             "addDecl: Failed to throw NullPointerException on null name, Sym");
         }
         catch (NullPointerException ex) {
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
         }
         
         //addDecl: Duplicate Sym Exception test
@@ -108,6 +120,9 @@ public class P1 {
         }
         catch (DuplicateSymException ex) {
         }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
         
         //addDecl: Duplicate Sym across diff scope
         sampleST= new SymTable();
@@ -124,6 +139,9 @@ public class P1 {
         catch (DuplicateSymException ex) {
             System.out.println(
             "addDecl: Threw DuplicateSymException on dupl across diff scopes");
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
         }
         
         //lookupLocal: Empty SymTable Exception test
