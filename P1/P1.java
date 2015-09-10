@@ -251,7 +251,7 @@ public class P1 {
          returnSym = sampleST.lookupGlobal(sampleStr);
          if (!(returnSym.toString().equals(sampleSym.toString()))) {
             System.out.println(
-            "lookupLocal: Failed to return correct Sym value in first scope");
+         "lookupGlobal: Failed to return correct Sym value in first scope");
          }
          sampleStr = "Not Hello World!";
          sampleSym = new Sym("String");
@@ -308,13 +308,16 @@ public class P1 {
          returnSym = sampleST.lookupGlobal("Hello World!");
          if (!(returnSym.toString().equals("String"))) {
             System.out.println(
-      "lookupLocal: Failed to return 1st Sym value across diff scopes");
+      "lookupGlobal: Failed to return 1st Sym value across diff scopes");
          }
       }
       catch (Exception ex) {
          System.out.println(ex);
       }
       
+      //removeScope: Empty SymTable Exception test
+      //removeScope: Add 1 scope, then remove; confirm Sym deletion
+      //removeScope: Add 2 scopes, then remove all; check local, global lookup
    }
       
 }
