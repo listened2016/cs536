@@ -376,6 +376,17 @@ public class P1 {
          System.out.println("print:"+ex);
       }
       //print: 1 scope, empty
+      sampleST= new SymTable();
+      try {
+	  sampleST.addScope();
+	  sampleStr = "Hello World!";
+	  sampleSym = new Sym("Integer");
+	  sampleST.addDecl(sampleStr,sampleSym);
+	  sampleST.print();
+      }
+      catch (Exception ex) {
+	  System.out.println("print:"+ex);
+      }
       //print: 2 scopes, 1 sym each 
       
 
