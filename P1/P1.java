@@ -387,8 +387,29 @@ public class P1 {
       catch (Exception ex) {
 	  System.out.println("print:"+ex);
       }
-      //print: 2 scopes, 1 sym each 
-      
+      //print: 2 scopes, 2 sym each 
+      sampleST= new SymTable();
+      try {
+          sampleST.addScope();
+          sampleStr = "Hello World!";
+          sampleSym = new Sym("Integer");
+          sampleST.addDecl(sampleStr,sampleSym);
+	  sampleStr = "I'm Steve!";
+          sampleSym = new Sym("String");
+          sampleST.addDecl(sampleStr,sampleSym);
+	  sampleST.addScope();
+	  sampleStr = "Goodbye World!";
+          sampleSym = new Sym("char");
+          sampleST.addDecl(sampleStr,sampleSym);
+          sampleStr = "I'm Not Steve!";
+          sampleSym = new Sym("List");
+	  sampleST.addDecl(sampleStr,sampleSym);
+
+          sampleST.print();
+      }
+      catch (Exception ex) {
+          System.out.println("print:"+ex);
+      }
 
    }
       

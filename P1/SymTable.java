@@ -116,6 +116,7 @@ public class SymTable {
          System.out.print(symMapList.get(i).toString());
          System.out.print("\n");
       }
+      System.out.print("\n");
       return;
    }
 
