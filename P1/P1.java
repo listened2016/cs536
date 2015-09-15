@@ -12,7 +12,7 @@ public class P1 {
       //Constructor: NonEmpty String test
       sampleStr = "Integer";
       sampleSym = new Sym(sampleStr);
-        
+      
       //getType(): Expected value test
       sampleStr = "Integer";
       sampleSym = new Sym(sampleStr);
@@ -44,6 +44,7 @@ public class P1 {
      
       //addDecl: Empty SymTable Exception test
       sampleST= new SymTable();
+      sampleST.removeScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -59,7 +60,6 @@ public class P1 {
     
       //addDecl: Null name test
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = null;
       sampleSym = new Sym("Integer");
       try {
@@ -75,7 +75,6 @@ public class P1 {
      
       //addDecl: Null sym test
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = null;
       try {
@@ -91,7 +90,6 @@ public class P1 {
      
       //addDecl: Null name and sym test
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = null;
       sampleSym = null;
       try {
@@ -107,7 +105,6 @@ public class P1 {
      
       //addDecl: Duplicate Sym Exception test
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleStrB = "Hello World!";
       sampleSym = new Sym("Integer");
@@ -126,7 +123,6 @@ public class P1 {
      
       //addDecl: Duplicate Sym across diff scope
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleStrB = "Hello World!";
       sampleSym = new Sym("Integer");
@@ -146,6 +142,7 @@ public class P1 {
       
       //lookupLocal: Empty SymTable Exception test
       sampleST = new SymTable();
+      sampleST.removeScope();
       sampleStr = "Hello World!";
       try {
          sampleST.lookupLocal(sampleStr);
@@ -157,7 +154,6 @@ public class P1 {
       
       //lookupLocal: addDecl comparison (curr scope)
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -184,7 +180,6 @@ public class P1 {
       
       //lookupLocal: addDecl comparison (diff scope, null return)
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -211,7 +206,6 @@ public class P1 {
       
       //lookupLocal: addDecl comparison (duplicate ids, diff scope)
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -232,6 +226,7 @@ public class P1 {
       
       //lookupGlobal: Empty SymTable Exception test
       sampleST = new SymTable();
+      sampleST.removeScope();
       sampleStr = "Hello World!";
       try {
          sampleST.lookupGlobal(sampleStr);
@@ -243,7 +238,6 @@ public class P1 {
       
       //lookupGlobal: addDecl comparison (curr scope)
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -270,7 +264,6 @@ public class P1 {
       //lookupGlobal: addDecl comparison (diff scope)
       try {
          sampleST= new SymTable();
-         sampleST.addScope();
          sampleStr = "Hello World!";
          sampleSym = new Sym("Integer");
       
@@ -296,7 +289,6 @@ public class P1 {
       
       //lookupGlobal: addDecl comparison (duplicate ids, diff scope)
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -318,6 +310,7 @@ public class P1 {
       //removeScope: Empty SymTable Exception test
       sampleST = new SymTable();
       try {
+	 sampleST.removeScope();
          sampleST.removeScope();
          System.out.println(
          "removeScope: Failed to throw EmptySymTableException on scope removal");
@@ -327,7 +320,6 @@ public class P1 {
 
       //removeScope: Add 1 scope, delete it, check emptySymTable
       sampleST= new SymTable();
-      sampleST.addScope();
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -375,7 +367,7 @@ public class P1 {
       catch (Exception ex) {
          System.out.println("print:"+ex);
       }
-      //print: 1 scope, empty
+      //print: 2 scope, empty
       sampleST= new SymTable();
       try {
 	  sampleST.addScope();
@@ -390,7 +382,6 @@ public class P1 {
       //print: 2 scopes, 2 sym each 
       sampleST= new SymTable();
       try {
-          sampleST.addScope();
           sampleStr = "Hello World!";
           sampleSym = new Sym("Integer");
           sampleST.addDecl(sampleStr,sampleSym);

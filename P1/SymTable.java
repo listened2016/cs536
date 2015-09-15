@@ -18,6 +18,7 @@ public class SymTable {
    */
    public SymTable() {
       symMapList = new LinkedList<HashMap<String,Sym>>();
+      symMapList.add(0,new HashMap<String,Sym>());
    }
    
    /* Takes name of identifier and associated sym object
