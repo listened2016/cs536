@@ -44,7 +44,13 @@ public class P1 {
      
       //addDecl: Empty SymTable Exception test
       sampleST= new SymTable();
-      sampleST.removeScope();
+      try {
+	  sampleST.removeScope();
+      }
+      catch (Exception ex) {
+          System.out.println("addDecl:"+ex);
+      }
+
       sampleStr = "Hello World!";
       sampleSym = new Sym("Integer");
       try {
@@ -142,7 +148,13 @@ public class P1 {
       
       //lookupLocal: Empty SymTable Exception test
       sampleST = new SymTable();
-      sampleST.removeScope();
+      try {
+	  sampleST.removeScope();
+      }
+      catch (Exception ex) {
+          System.out.println("lookupLocal:"+ex);
+      }
+
       sampleStr = "Hello World!";
       try {
          sampleST.lookupLocal(sampleStr);
@@ -226,7 +238,12 @@ public class P1 {
       
       //lookupGlobal: Empty SymTable Exception test
       sampleST = new SymTable();
-      sampleST.removeScope();
+      try {
+	  sampleST.removeScope();
+      }
+      catch (Exception ex) {
+          System.out.println("lookupGlobal:"+ex);
+      }
       sampleStr = "Hello World!";
       try {
          sampleST.lookupGlobal(sampleStr);
