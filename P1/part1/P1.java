@@ -1,7 +1,16 @@
 /*Sahit Mandala, CS536*/
 
+/* This class contains the helped to be used to test
+ the SymTable class and associated classes on
+ boundary and non-boundary cases, testing for 
+ correct output, return values, and Exception
+ throwing
+ */
 public class P1 {
-    
+    /* Main function, containing all the test cases
+     * to be run. There are no expected parameters to 
+     * function. Called from commandline via java P1
+     */
    public static void main(String[] args) {
       String returnStr;
       String sampleStr, sampleStrB;
