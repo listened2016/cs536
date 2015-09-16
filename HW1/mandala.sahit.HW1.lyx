@@ -64,8 +64,23 @@
 
 \begin_body
 
+\begin_layout Title
+CS536: Homework 1
+\end_layout
+
+\begin_layout Author
+Sahit Mandala
+\end_layout
+
 \begin_layout Section*
 Problem 1
+\end_layout
+
+\begin_layout Standard
+Assumptions: Exactly @ symbol in string (rule 1 says only letter, digits,
+ ., _ are otherwise allowed).
+ Also, the 2 letter/digits before the @ can be either 2 letters, 2 digits,
+ or 1 number and 1 digit (anywhere in the substring before @)
 \end_layout
 
 \begin_layout Standard
@@ -83,7 +98,11 @@ Problem 2
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(-|(--)|\varepsilon)(letter^{+})[(-|(--))(letter)^{+}]^{*}(-|(--)|\varepsilon)$
+Assuming that there can be 3, but no more, dashed in a row.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(-|(--)|(---)|\varepsilon)(letter^{+})[(-|(--)|(---))(letter^{+})]^{*}(-|(--)|(---)|\varepsilon)$
 \end_inset
 
 

@@ -25,9 +25,10 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \use_mhchem 1
@@ -42,6 +43,10 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -59,49 +64,29 @@
 
 \begin_body
 
+\begin_layout Title
+CS536: Homework 1
+\end_layout
+
+\begin_layout Author
+Sahit Mandala
+\end_layout
+
 \begin_layout Section*
 Problem 1
 \end_layout
 
 \begin_layout Standard
-Here,
-\begin_inset Formula $S_{0}$
-\end_inset
-
- is the start state and 
-\begin_inset Formula $S_{6}$
-\end_inset
-
- is the accepting state
+Assumptions: Exactly @ symbol in string (rule 1 says only letter, digits,
+ ., _ are otherwise allowed).
+ Also, the 2 letter/digits before the @ can be either 2 letters, 2 digits,
+ or 1 number and 1 digit (anywhere in the substring before @)
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
 \begin_inset Graphics
 	filename /home/cig7/Drive/image0001.jpg
-	scale 10
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
+	width 17cm
 
 \end_inset
 
@@ -113,7 +98,7 @@ Problem 2
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(-|(--)|\varepsilon)(letter^{+})[(-|(--))(letter)^{+}]^{*}(-|(--)|\varepsilon)$
+\begin_inset Formula $(-|(--)|(---)|\varepsilon)(letter^{+})[(-|(--)|(---))(letter^{+})]^{*}(-|(--)|(---)|\varepsilon)$
 \end_inset
 
 
