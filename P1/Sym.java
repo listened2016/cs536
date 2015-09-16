@@ -2,6 +2,7 @@
 
 /*
 The Sym class stores the associated information for each identifier
+Currently stores a "type" string for identifier
 */
 public class Sym {
 
@@ -9,7 +10,7 @@ public class Sym {
    private String type;
    
    /* Constructor, initializes Sym to have the given type
-   * Takes String t as type*/
+   * @param t  String representing type*/
    public Sym(String t) {
       type = t;
    }

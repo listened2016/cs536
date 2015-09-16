@@ -21,8 +21,10 @@ public class SymTable {
       symMapList.add(0,new HashMap<String,Sym>());
    }
    
-   /* Takes name of identifier and associated sym object
-   * Adds the given name and sym to the first HashMap in the list.
+   /* Takes name of identifier and associated sym object,
+    * adds it to the first Hashmap in list
+   * @param name, name of the identifier
+   * @param sym, value of identifier.
    * 
    * Exceptions: 
    * If this SymTable's list is empty, throws an EmptySymTableException. 
@@ -55,6 +57,7 @@ public class SymTable {
    
    /* If the first HashMap in the list contains name as a key,
    * return the associated Sym; otherwise, return null.
+   * @param name, String of name of identifier to find locally
    * 
    * Exceptions:
    * If this SymTable's list is empty, throw an EmptySymTableException.
@@ -73,6 +76,7 @@ public class SymTable {
    
    /* If any HashMap in the list contains name as a key, return the 
    * first associated Sym; otherwise, return null.
+   * @param name, String of name of identifier to find globally
    * 
    * Exceptions:
    * If this SymTable's list is empty, throw an EmptySymTableException.
