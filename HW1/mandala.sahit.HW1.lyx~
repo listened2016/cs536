@@ -98,6 +98,10 @@ Problem 2
 \end_layout
 
 \begin_layout Standard
+Assuming that there can be 3, but no more, dashed in a row.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $(-|(--)|(---)|\varepsilon)(letter^{+})[(-|(--)|(---))(letter^{+})]^{*}(-|(--)|(---)|\varepsilon)$
 \end_inset
 

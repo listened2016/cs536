@@ -77,7 +77,7 @@ Problem 1
 \end_layout
 
 \begin_layout Standard
-Assumptions: Exactly @ symbol in string (rule 1 says only letter, digits,
+Assumptions: Exactly 1 @ symbol in string (rule 1 says only letter, digits,
  ., _ are otherwise allowed).
  Also, the 2 letter/digits before the @ can be either 2 letters, 2 digits,
  or 1 number and 1 digit (anywhere in the substring before @)
@@ -98,7 +98,7 @@ Problem 2
 \end_layout
 
 \begin_layout Standard
-Assuming that there can be 3, but no more, dashed in a row.
+Assuming that there can be 3, but no more, dashed lines in a row.
 \end_layout
 
 \begin_layout Standard
