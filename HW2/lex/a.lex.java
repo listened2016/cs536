@@ -208,7 +208,7 @@ class Yylex {
 	private int yy_nxt[][] = unpackFromString(5,5,
 "-1,3,-1:2,1,-1:7,4,-1:4,5,4,-1:2,2,-1:3");
 
-	public IntLit next_token; ()
+	public IntLit next_token ()
 		throws java.io.IOException {
 		int yy_lookahead;
 		int yy_anchor = YY_NO_ANCHOR;

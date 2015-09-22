@@ -6,7 +6,7 @@ SLASH     = [/]
 STAR      = [*]
 
 %type IntLit
-%function next_token;
+%function next_token
 
 %%
 
