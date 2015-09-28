@@ -56,8 +56,15 @@ class CharNum {
 }
 %%
 
-DIGIT=        [0-9]
 WHITESPACE=   [\040\t]
+NEWLINE = [\n]
+
+DIGIT=   [0-9]
+LETTER = [a-zA-Z]
+UNDSCR = [_]
+IQUOTE = [\"]
+BSLASH = [\\]
+
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -71,6 +78,8 @@ return new Symbol(sym.EOF);
 
 %%
 
+("//"|"#")(.)*{NEWLINE}* {CharNum.num = 1; //newline start}
+
 {DIGIT}+  { // NOTE: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
             int val = (new Integer(yytext())).intValue();
@@ -80,9 +89,31 @@ return new Symbol(sym.EOF);
             return S;
           }
 
-\n        { CharNum.num = 1; }
+\n        { CharNum.num = 1; //newline start}
 
 {WHITESPACE}+  { CharNum.num += yytext().length(); }
+
+"bool"	  {Symbol S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"int"	  {Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"void"    {Symbol S = new Symbol(sym.VOID, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"true"     {Symbol S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+({LETTER}|{UNDSCR})({LETTER}|{UNDSCR}|{DIGIT})* { 
+         Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
+         CharNum.num++;
+         return S;
+	  }
 
 "+"       { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
