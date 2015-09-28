@@ -80,7 +80,7 @@ return new Symbol(sym.EOF);
 
 ("//"|"#")(.)*{NEWLINE}* {CharNum.num = 1; //newline start}
 
-{DIGIT}+  { // NOTE: the following computation of the integer value does NOT
+{DIGIT}+  { // NOTETDODODODOODODODODODODOODODODODODO: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
             int val = (new Integer(yytext())).intValue();
             Symbol S = new Symbol(sym.INTLITERAL,
@@ -141,24 +141,52 @@ return new Symbol(sym.EOF);
             return S;}
 
 
-({LETTER}|{UNDSCR})({LETTER}|{UNDSCR}|{DIGIT})* { 
-         
-	 switch (yytext()) {
-	    int val = -1;
-            case "bool":
-               val = sym.INT
-            case "int":
-               val = INT
-               
-         Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
-         CharNum.num++;
-         return S;
-	  }
+({LETTER}|{UNDSCR})({LETTER}|{UNDSCR}|{DIGIT})* {               
+            Symbol S = new Symbol(sym.ID, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
 
 "+"       { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
+
+"-"       { Symbol S = new Symbol(sym.MINUS, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+"{"       { Symbol S = new Symbol(sym.LCURLY, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+"}"   	  { Symbol S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+"("  	  { Symbol S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+")"       { Symbol S = new Symbol(sym.RPAREN, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+";"   	    { Symbol S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
+","       { Symbol S = new Symbol(sym.COMMA, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++;
+            return S;
+          }
+
         
 .         { ErrMsg.fatal(yyline+1, CharNum.num,
                          "ignoring illegal character: " + yytext());
