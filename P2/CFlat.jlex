@@ -105,11 +105,51 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext.length();
             return S;}
 
-"true"     {Symbol S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num));
+"true"    {Symbol S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num));
             CharNum.num += yytext.length();
             return S;}
 
+"false"   {Symbol S = new Symbol(sym.FALSE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"struct"  {Symbol S = new Symbol(sym.STRUCT, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"cin"     {Symbol S = new Symbol(sym.CIN, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"cout"     {Symbol S = new Symbol(sym.COUT, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+"if"    {Symbol S = new Symbol(sym.IF, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"else"     {Symbol S = new Symbol(sym.ELSE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"while"    {Symbol S = new Symbol(sym.WHILE, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+"return"    {Symbol S = new Symbol(sym.RETURN, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
+
 ({LETTER}|{UNDSCR})({LETTER}|{UNDSCR}|{DIGIT})* { 
+         
+	 switch (yytext()) {
+	    int val = -1;
+            case "bool":
+               val = sym.INT
+            case "int":
+               val = INT
+               
          Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
          CharNum.num++;
          return S;
