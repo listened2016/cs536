@@ -82,9 +82,7 @@ return new Symbol(sym.EOF);
 
 %%
 
-("//"|"#")(.)*{NEWLINE}* {CharNum.num = 1; //newline start}
-
-{DIGIT}+  { // NOTETDODODODOODODODODODODOODODODODODO: the following computation of the integer value does NOT
+{DIGIT}+  { // NOTE: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
             int val = (new Integer(yytext())).intValue();
             Symbol S = new Symbol(sym.INTLITERAL,
@@ -93,66 +91,68 @@ return new Symbol(sym.EOF);
             return S;
           }
 
-\n        { CharNum.num = 1; //newline start}
-
-{WHITESPACE}+  { CharNum.num += yytext().length(); }
-
-"bool"	  {Symbol S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+"bool"	    {Symbol S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext().length();
             return S;}
 
-"int"	  {Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+"int"	      {Symbol S = new Symbol(sym.INT, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext().length();
             return S;}
 
 "void"    {Symbol S = new Symbol(sym.VOID, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "true"    {Symbol S = new Symbol(sym.TRUE, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "false"   {Symbol S = new Symbol(sym.FALSE, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "struct"  {Symbol S = new Symbol(sym.STRUCT, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "cin"     {Symbol S = new Symbol(sym.CIN, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "cout"     {Symbol S = new Symbol(sym.COUT, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 "if"    {Symbol S = new Symbol(sym.IF, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "else"     {Symbol S = new Symbol(sym.ELSE, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "while"    {Symbol S = new Symbol(sym.WHILE, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 "return"    {Symbol S = new Symbol(sym.RETURN, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
+
+\n        { CharNum.num = 1; }
+
+{WHITESPACE}+  { CharNum.num += yytext().length(); }
 
 
 ({LETTER}|{UNDSCR})({LETTER}|{UNDSCR}|{DIGIT})* {               
             Symbol S = new Symbol(sym.ID, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
-{DQSLASH}([^a]|{NEWLINE}|{TLINE}|{SQSLASH}|{DQSLASH}|{DSSLASH}|{QSLASH})*{DQSLASH} {
+{DQSLASH}([^\n\"\]|{NEWLINE}|{TSLASH}|{SQSLASH}|{DQSLASH}|{DSLASH}|{QSLASH})*{DQSLASH} {
+										       
+/*TEST MEMEMEMMEMEMEM*/
             Symbol S = new Symbol(sym.ID, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num += yytext.length();
+            CharNum.num += yytext().length();
             return S;}
 
 
@@ -171,12 +171,12 @@ return new Symbol(sym.EOF);
             return S;
           }
 
-"}"   	  { Symbol S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
+"}"   	    { Symbol S = new Symbol(sym.RCURLY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
 
-"("  	  { Symbol S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num));
+"("  	    { Symbol S = new Symbol(sym.LPAREN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
@@ -186,7 +186,7 @@ return new Symbol(sym.EOF);
             return S;
           }
 
-";"   	    { Symbol S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num));
+";"   	      { Symbol S = new Symbol(sym.SEMICOLON, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
           }
@@ -197,10 +197,9 @@ return new Symbol(sym.EOF);
           }
 
 "<="      { Symbol S = new Symbol(sym.LESSEQ, new TokenVal(yyline+1, CharNum.num));
-            CharNum.num++++;
+            CharNum.num += 2;
             return S;
           }
-
         
 .         { ErrMsg.fatal(yyline+1, CharNum.num,
                          "ignoring illegal character: " + yytext());
