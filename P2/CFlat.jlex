@@ -62,9 +62,13 @@ NEWLINE = [\n]
 DIGIT=   [0-9]
 LETTER = [a-zA-Z]
 UNDSCR = [_]
-IQUOTE = [\"]
-BSLASH = [\\]
 
+NEWLINE = [\n]
+TSLASH = [\t]
+SQSLASH = [\']
+DQSLASH = [\"]
+DSLASH = [\\]
+QSLASH = [\?]
 
 %implements java_cup.runtime.Scanner
 %function next_token
@@ -146,6 +150,11 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext.length();
             return S;}
 
+{DQSLASH}([^a]|{NEWLINE}|{TLINE}|{SQSLASH}|{DQSLASH}|{DSSLASH}|{QSLASH})*{DQSLASH} {
+            Symbol S = new Symbol(sym.ID, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num += yytext.length();
+            return S;}
+
 
 "+"       { Symbol S = new Symbol(sym.PLUS, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
@@ -184,6 +193,11 @@ return new Symbol(sym.EOF);
 
 ","       { Symbol S = new Symbol(sym.COMMA, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
+            return S;
+          }
+
+"<="      { Symbol S = new Symbol(sym.LESSEQ, new TokenVal(yyline+1, CharNum.num));
+            CharNum.num++++;
             return S;
           }
 
