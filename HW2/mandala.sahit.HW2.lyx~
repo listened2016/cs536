@@ -76,8 +76,8 @@ Sahit Mandala
 Problem 1
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}[^(*/)]*{STAR}{SLASH}
+\begin_layout Subsection*
+a){SLASH}{STAR}[^(*/)]*{STAR}{SLASH}
 \end_layout
 
 \begin_layout Standard
@@ -110,8 +110,8 @@ The pattern doesn't allows for the characters
  
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}(.)*{STAR}{SLASH}
+\begin_layout Subsection*
+b){SLASH}{STAR}(.)*{STAR}{SLASH}
 \end_layout
 
 \begin_layout Standard
@@ -135,12 +135,12 @@ The pattern allows for the characters
  would be deemed a valid comment.
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}([^*]*{STAR}+[^*/])*{STAR}+{SLASH}
+\begin_layout Subsection*
+c){SLASH}{STAR}([^*]*{STAR}+[^*/])*{STAR}+{SLASH}
 \end_layout
 
 \begin_layout Standard
-False Negative: The pattern requires that every non-empty comment body comtain
+False Negative: The pattern requires that every non-empty comment body contain
  atleast 1 star.
  For example, 
 \backslash
@@ -149,8 +149,8 @@ False Negative: The pattern requires that every non-empty comment body comtain
  would be deemed invalid because nothing in the body matches to {STAR}+.
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}([^*]|[^/])+{STAR}{SLASH}
+\begin_layout Subsection*
+d) {SLASH}{STAR}([^*]|[^/])+{STAR}{SLASH}
 \end_layout
 
 \begin_layout Standard
@@ -196,8 +196,8 @@ False positive.
  satisfies ([^/])[^*].
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}[^*]*{STAR}+{SLASH}+
+\begin_layout Subsection*
+e){SLASH}{STAR}[^*]*{STAR}+{SLASH}+
 \end_layout
 
 \begin_layout Standard
@@ -247,11 +247,15 @@ False positive: The pattern allows any nonzero number of leading
 \begin_inset Quotes erd
 \end_inset
 
- should be cut off.
+ should be cut off/ignored.
 \end_layout
 
 \begin_layout Section*
 Problem 2
+\end_layout
+
+\begin_layout Standard
+{SLASH}{STAR}([^*]|({STAR}+[^*/]))*{STAR}+{SLASH}
 \end_layout
 
 \end_body
