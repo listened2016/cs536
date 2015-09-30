@@ -77,11 +77,11 @@ Problem 1
 \end_layout
 
 \begin_layout Subsection*
-a) {SLASH}{STAR}[^(*/)]*{STAR}{SLASH}
+a){SLASH}{STAR}[^(*/)]*{STAR}{SLASH}
 \end_layout
 
 \begin_layout Standard
-False negative: The pattern doesn't allows for the characters 
+The pattern doesn't allows for the characters 
 \begin_inset Quotes eld
 \end_inset
 
@@ -89,23 +89,7 @@ False negative: The pattern doesn't allows for the characters
 \begin_inset Quotes erd
 \end_inset
 
-,
-\begin_inset Quotes erd
-\end_inset
-
-(
-\begin_inset Quotes erd
-\end_inset
-
-,
-\begin_inset Quotes erd
-\end_inset
-
-)
-\begin_inset Quotes erd
-\end_inset
-
-, or 
+ or 
 \begin_inset Quotes eld
 \end_inset
 
@@ -127,11 +111,11 @@ False negative: The pattern doesn't allows for the characters
 \end_layout
 
 \begin_layout Subsection*
-b) {SLASH}{STAR}(.)*{STAR}{SLASH}
+b){SLASH}{STAR}(.)*{STAR}{SLASH}
 \end_layout
 
 \begin_layout Standard
-False positive: The pattern allows for the characters 
+The pattern allows for the characters 
 \begin_inset Quotes eld
 \end_inset
 
@@ -152,7 +136,7 @@ False positive: The pattern allows for the characters
 \end_layout
 
 \begin_layout Subsection*
-c) {SLASH}{STAR}([^*]*{STAR}+[^*/])*{STAR}+{SLASH}
+c){SLASH}{STAR}([^*]*../[^*/])*{STAR}+{SLASH}
 \end_layout
 
 \begin_layout Standard
@@ -213,7 +197,7 @@ False positive.
 \end_layout
 
 \begin_layout Subsection*
-e) {SLASH}{STAR}[^*]*{STAR}+{SLASH}+
+e){SLASH}{STAR}[^*]*{STAR}+{SLASH}+
 \end_layout
 
 \begin_layout Standard
@@ -270,8 +254,8 @@ False positive: The pattern allows any nonzero number of leading
 Problem 2
 \end_layout
 
-\begin_layout Standard
-{SLASH}{STAR}([^*]|({STAR}+[^*/]))*{STAR}+{SLASH}
+\begin_layout Subsection*
+{SLASH}{STAR}([^*]|({STAR}*[^*/]))*{STAR}+{SLASH}
 \end_layout
 
 \end_body

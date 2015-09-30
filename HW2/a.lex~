@@ -1,0 +1,12 @@
+//Usercode
+class IntLit {
+}
+%%
+SLASH     = [/]
+STAR      = [*]
+
+%type IntLit
+
+%%
+
+{SLASH}{STAR}[^(*/)]*{STAR}{SLASH}
