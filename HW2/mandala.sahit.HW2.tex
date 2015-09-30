@@ -1,0 +1,69 @@
+%% LyX 2.0.8.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+\begin{document}
+
+\title{CS536: Homework 2}
+
+
+\author{Sahit Mandala}
+
+\maketitle
+
+\section*{Problem 1}
+
+
+\subsection*{a) \{SLASH\}\{STAR\}{[}\textasciicircum{}({*}/){]}{*}\{STAR\}\{SLASH\}}
+
+False negative: The pattern doesn't allows for the characters ``/'',''('','')'',
+or ``{*}'' to exist within the body of a comment. For example, ``/{*}
+Hello / World{*} {*}/'' would be deemed an invalid comment. 
+
+
+\subsection*{b) \{SLASH\}\{STAR\}(.){*}\{STAR\}\{SLASH\}}
+
+False positive: The pattern allows for the characters ``{*}/'' to
+appear within the comment body. For example, ``/{*} Hello {*}/ World
+{*}/'' would be deemed a valid comment.
+
+
+\subsection*{c) \{SLASH\}\{STAR\}({[}\textasciicircum{}{*}{]}{*}\{STAR\}+{[}\textasciicircum{}{*}/{]}){*}\{STAR\}+\{SLASH\}}
+
+False Negative: The pattern requires that every non-empty comment
+body contain atleast 1 star. For example, \textbackslash{}{*} Hello
+World {*}\textbackslash{} would be deemed invalid because nothing
+in the body matches to \{STAR\}+.
+
+
+\subsection*{d) \{SLASH\}\{STAR\}({[}\textasciicircum{}{*}{]}|{[}\textasciicircum{}/{]})+\{STAR\}\{SLASH\}}
+
+False negative: The pattern requires that the body contains atleast
+1 letter. For example, ``/{*}{*}/'' would fail with an empty body.
+
+False positive. The pattern allows ``{*}/'' to occur within the
+comment body. For example, ``/{*}{*}/{*}/'' would be a valid comment
+since ``{*}/'' satisfies ({[}\textasciicircum{}/{]}){[}\textasciicircum{}{*}{]}.
+
+
+\subsection*{e) \{SLASH\}\{STAR\}{[}\textasciicircum{}{*}{]}{*}\{STAR\}+\{SLASH\}+}
+
+False negative: The pattern does not allow ``{*}'' to occur before
+a letter in the comment body. For example, ``/{*}{*}HelloWorld{*}/''
+would be deemed an invalid comment.
+
+False positive: The pattern allows any nonzero number of leading ``/''.
+For example, ``/{*}{*}{*}////'' would be deemed a valid comment,
+even though the last 3 ``///'' should be cut off/ignored.
+
+
+\section*{Problem 2}
+
+\{SLASH\}\{STAR\}({[}\textasciicircum{}{*}{]}|(\{STAR\}+{[}\textasciicircum{}{*}/{]})){*}\{STAR\}+\{SLASH\}
+\end{document}
