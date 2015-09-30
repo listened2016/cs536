@@ -84,11 +84,18 @@ return new Symbol(sym.EOF);
 
 {DIGIT}+  { // NOTE: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
-            int val = (new Integer(yytext())).intValue();
-            Symbol S = new Symbol(sym.INTLITERAL,
+            try {
+				int val = (new Integer(yytext())).intValue();
+				Symbol S = new Symbol(sym.INTLITERAL,
                              new IntLitTokenVal(yyline+1, CharNum.num, val));
-            CharNum.num += yytext().length();
-            return S;
+				CharNum.num += yytext().length();
+				return S;
+				}
+			catch (Exception e) {
+			ErrMsg.fatal(yyline+1, CharNum.num,
+                         "ignoring illegal character: " + yytext());
+				
+			}
           }
 
 "bool"	    {Symbol S = new Symbol(sym.BOOL, new TokenVal(yyline+1, CharNum.num));
@@ -149,8 +156,9 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return S;}
 
-{DQSLASH}([^\n\"\]|{NEWLINE}|{TSLASH}|{SQSLASH}|{DQSLASH}|{DSLASH}|{QSLASH})*{DQSLASH} {
-										       
+ \"(\\("n"|"t"|"'"|"?")|[^\"\\.])*\" {
+			
+							       
 /*TEST MEMEMEMMEMEMEM*/
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new StrLitTokenVal(yyline+1, CharNum.num, val));
@@ -278,6 +286,11 @@ return new Symbol(sym.EOF);
 "="       { Symbol S = new Symbol(sym.ASSIGN, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
             return S;
+          }
+          
+{DQSLASH}([^\\n\"])*({NEWLINE}|{})       { ErrMsg.fatal(yyline+1, CharNum.num,
+                         "unterminated string literal: " + yytext());
+            CharNum.num++;
           }
         
 .         { ErrMsg.fatal(yyline+1, CharNum.num,
