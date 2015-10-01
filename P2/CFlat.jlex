@@ -156,15 +156,6 @@ return new Symbol(sym.EOF);
             CharNum.num += yytext().length();
             return S;}
 
- \"(\\("n"|"t"|"'"|"?")|[^\"\\.])*\" {
-			
-							       
-/*TEST MEMEMEMMEMEMEM*/
-			String val = yytext();
-            Symbol S = new Symbol(sym.ID, new StrLitTokenVal(yyline+1, CharNum.num, val));
-            CharNum.num += yytext().length();
-            return S;}
-
 
 "{"       { Symbol S = new Symbol(sym.LCURLY, new TokenVal(yyline+1, CharNum.num));
             CharNum.num++;
@@ -288,8 +279,26 @@ return new Symbol(sym.EOF);
             return S;
           }
           
-{DQSLASH}([^\\n\"])*({NEWLINE}|{})       { ErrMsg.fatal(yyline+1, CharNum.num,
+\"(\\("n"|"t"|"'"|"?")|[^\"\\.])*\" {
+			//Matches string literal in code
+			String val = yytext();
+            Symbol S = new Symbol(sym.ID, new StrLitTokenVal(yyline+1, CharNum.num, val));
+            CharNum.num += yytext().length();
+            return S;
+            }
+          
+\"(\\("n"|"t"|"'"|"?")|[^\"\\.])*(\\[^nt'?\"])(\\("n"|"t"|"'"|"?")|[^\"\\.])*(\n|<<EOF>>)      { 
+		ErrMsg.fatal(yyline+1, CharNum.num,"unterminated string literal with bad escaped character ignored");
+            CharNum.num++;
+          }
+          
+\"(\\("n"|"t"|"'"|"?")|[^\"\\.])*(\n|\z)      { ErrMsg.fatal(yyline+1, CharNum.num,
                          "unterminated string literal: " + yytext());
+            CharNum.num++;
+          }
+
+\"(\\("n"|"t"|"'"|"?")|[^\"\\.])*(\\[^nt'?\"])(\\("n"|"t"|"'"|"?")|[^\"\\.])*\"      {
+			ErrMsg.fatal(yyline+1, CharNum.num, "string literal with bad escaped character ignored");
             CharNum.num++;
           }
         
