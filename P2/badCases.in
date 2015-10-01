@@ -2,3 +2,8 @@
 "also unterminated \"
 "backslash followed by space: \ is not allowed"
 "bad escaped character: \a AND not terminated
+32749812749012749127409123749712491724
+\a
+345jhfjhdg
+"\k"
+"\k
