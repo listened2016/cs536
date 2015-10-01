@@ -445,7 +445,7 @@ return new Symbol(sym.EOF);
 				val = (new Integer(yytext())).intValue();
 				}
 			catch (NumberFormatException e) {
-				System.out.println("integer literal too large; using max value");
+				ErrMsg.warn(yyline+1, CharNum.num,"integer literal too large; using max value");
 				val  = Integer.MAX_VALUE;
 			}
 			finally {

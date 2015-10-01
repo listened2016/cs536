@@ -20,12 +20,19 @@ public class P2 {
 		testAllTokens("eof");
         CharNum.num = 1;
         
+        //Test of all basic tokens in YES
         System.out.println("testAllTokens: Running basicTest.in");
         testAllTokens("basicTest");
         CharNum.num = 1;
         
+        //Error checking examples, do not expect diff call
         System.out.println("testAllTokens: Running badCases.in");
         testAllTokens("badCases");
+        CharNum.num = 1;
+        
+        //Tests sample C++/YES codes in statements, blocks
+        System.out.println("testAllTokens: Running badCases.in");
+        testAllTokens("testcode");
         CharNum.num = 1;
         // ADD CALLS TO OTHER TEST METHODS HERE
     }
