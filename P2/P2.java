@@ -12,12 +12,15 @@ public class P2 {
     public static void main(String[] args) throws IOException {
                                            // exception may be thrown by yylex
         // test all tokens
+        System.out.println("testAllTokens: Running allTokens.in");
         testAllTokens("allTokens");
         CharNum.num = 1;
         
+        System.out.println("testAllTokens: Running eof.in");
 		testAllTokens("eof");
         CharNum.num = 1;
         
+        System.out.println("testAllTokens: Running eof.in");
         testAllTokens("basicTest");
         CharNum.num = 1;
         // ADD CALLS TO OTHER TEST METHODS HERE

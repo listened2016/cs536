@@ -302,34 +302,34 @@ class Yylex implements java_cup.runtime.Scanner {
 		/* 48 */ YY_NOT_ACCEPT,
 		/* 49 */ YY_NO_ANCHOR,
 		/* 50 */ YY_NO_ANCHOR,
-		/* 51 */ YY_NOT_ACCEPT,
-		/* 52 */ YY_NO_ANCHOR,
+		/* 51 */ YY_NO_ANCHOR,
+		/* 52 */ YY_NOT_ACCEPT,
 		/* 53 */ YY_NO_ANCHOR,
-		/* 54 */ YY_NOT_ACCEPT,
-		/* 55 */ YY_NO_ANCHOR,
+		/* 54 */ YY_NO_ANCHOR,
+		/* 55 */ YY_NOT_ACCEPT,
 		/* 56 */ YY_NO_ANCHOR,
-		/* 57 */ YY_NOT_ACCEPT,
-		/* 58 */ YY_NO_ANCHOR,
-		/* 59 */ YY_NOT_ACCEPT,
-		/* 60 */ YY_NO_ANCHOR,
+		/* 57 */ YY_NO_ANCHOR,
+		/* 58 */ YY_NOT_ACCEPT,
+		/* 59 */ YY_NO_ANCHOR,
+		/* 60 */ YY_NOT_ACCEPT,
 		/* 61 */ YY_NO_ANCHOR,
-		/* 62 */ YY_NO_ANCHOR,
+		/* 62 */ YY_NOT_ACCEPT,
 		/* 63 */ YY_NO_ANCHOR,
-		/* 64 */ YY_NO_ANCHOR,
+		/* 64 */ YY_NOT_ACCEPT,
 		/* 65 */ YY_NO_ANCHOR,
-		/* 66 */ YY_NO_ANCHOR,
+		/* 66 */ YY_NOT_ACCEPT,
 		/* 67 */ YY_NO_ANCHOR,
-		/* 68 */ YY_NO_ANCHOR,
-		/* 69 */ YY_NOT_ACCEPT,
-		/* 70 */ YY_NO_ANCHOR,
+		/* 68 */ YY_NOT_ACCEPT,
+		/* 69 */ YY_NO_ANCHOR,
+		/* 70 */ YY_NOT_ACCEPT,
 		/* 71 */ YY_NO_ANCHOR,
-		/* 72 */ YY_NO_ANCHOR,
+		/* 72 */ YY_NOT_ACCEPT,
 		/* 73 */ YY_NO_ANCHOR,
 		/* 74 */ YY_NO_ANCHOR,
 		/* 75 */ YY_NO_ANCHOR,
-		/* 76 */ YY_NO_ANCHOR,
-		/* 77 */ YY_NO_ANCHOR,
-		/* 78 */ YY_NO_ANCHOR,
+		/* 76 */ YY_NOT_ACCEPT,
+		/* 77 */ YY_NOT_ACCEPT,
+		/* 78 */ YY_NOT_ACCEPT,
 		/* 79 */ YY_NO_ANCHOR,
 		/* 80 */ YY_NO_ANCHOR,
 		/* 81 */ YY_NO_ANCHOR,
@@ -337,7 +337,7 @@ class Yylex implements java_cup.runtime.Scanner {
 		/* 83 */ YY_NO_ANCHOR,
 		/* 84 */ YY_NO_ANCHOR,
 		/* 85 */ YY_NO_ANCHOR,
-		/* 86 */ YY_NOT_ACCEPT,
+		/* 86 */ YY_NO_ANCHOR,
 		/* 87 */ YY_NO_ANCHOR,
 		/* 88 */ YY_NO_ANCHOR,
 		/* 89 */ YY_NO_ANCHOR,
@@ -347,49 +347,64 @@ class Yylex implements java_cup.runtime.Scanner {
 		/* 93 */ YY_NO_ANCHOR,
 		/* 94 */ YY_NO_ANCHOR,
 		/* 95 */ YY_NOT_ACCEPT,
-		/* 96 */ YY_NOT_ACCEPT,
-		/* 97 */ YY_NOT_ACCEPT
+		/* 96 */ YY_NO_ANCHOR,
+		/* 97 */ YY_NO_ANCHOR,
+		/* 98 */ YY_NO_ANCHOR,
+		/* 99 */ YY_NO_ANCHOR,
+		/* 100 */ YY_NO_ANCHOR,
+		/* 101 */ YY_NO_ANCHOR,
+		/* 102 */ YY_NO_ANCHOR,
+		/* 103 */ YY_NO_ANCHOR,
+		/* 104 */ YY_NOT_ACCEPT,
+		/* 105 */ YY_NOT_ACCEPT,
+		/* 106 */ YY_NOT_ACCEPT
 	};
 	private int yy_cmap[] = unpackFromString(1,130,
-"48:9,20,19,48:2,43,48:18,20,30,40,48:3,31,42,25,26,38,36,28,37,29,39,1:10,4" +
-"8,27,34,33,35,42,48,21:4,44,46,21:8,45,21:11,48,41,48:2,22,48,14,2,16,9,12," +
-"13,21,18,5,21:2,4,21,6,3,21:2,10,15,7,11,8,17,21:2,47,23,32,24,48:2,0:2")[0];
+"47:9,20,19,47:2,43,47:18,20,30,40,47:3,31,42,25,26,38,36,28,37,29,39,1:10,4" +
+"7,27,34,33,35,42,47,21:4,44,46,21:8,45,21:11,47,41,47:2,22,47,14,2,16,9,12," +
+"13,21,18,5,21:2,4,21,6,3,21:2,10,15,7,11,8,17,21:3,23,32,24,47:2,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,98,
+	private int yy_rmap[] = unpackFromString(1,107,
 "0,1,2,3,1,4,1:7,5,6,7,8,9,10,11,1:2,12,1:10,13,1,12:7,14,1,12:4,13,15,16,17" +
-",18,13,14,19,1,20,21,22,23,24,25,26,27,28,29,30,31,32,33,12,34,35,36,37,38," +
-"39,40,41,42,43,44,45,46,12,47,48,49,50,51,52,53,54,55,56,57,58")[0];
+",18,19,13,14,20,1,21,22,17,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38," +
+"39,40,41,12,42,43,44,45,46,47,48,49,50,51,52,53,54,12,55,56,57,58,59,60,61," +
+"62,63,64,65,66")[0];
 
-	private int yy_nxt[][] = unpackFromString(59,49,
-"1,2,3,85:2,49,85,88,89,85,90,85,91,92,85,93,68,94,85,4,5,85:2,6,7,8,9,10,11" +
-",12,13,14,50,15,16,17,18,19,20,21,53,56:2,-1,85:4,56,-1:50,2,-1:48,85:2,70," +
-"85:15,-1:2,85,71,-1:21,85:4,-1:21,5,-1:61,23,-1:46,24,-1:50,26,-1:48,27,28," +
-"-1:47,29,-1,30,-1:49,31,-1:49,32,-1:12,85:18,-1:2,85,71,-1:21,85:4,-1:2,48:" +
-"18,33,48:9,-1,48:10,34,51,48:5,33,48,-1,54:18,42,54:9,-1,54:4,97,54:5,43,57" +
-",54:7,-1,85:5,52,85:6,22,85:5,-1:2,85,71,-1:21,85:4,-1:33,25,-1:17,54:5,48:" +
-"2,54:32,-1,54,48,54:6,-1,85:6,35,85:11,-1:2,85,71,-1:21,85:4,-1:2,85:5,36,8" +
-"5:12,-1:2,85,71,-1:21,85:4,-1:7,54:2,-1:34,54,-1:7,85:3,37,85:14,-1:2,85,71" +
-",-1:21,85:4,-1:2,54:18,42,54:9,-1,54:4,97,42,54:4,43,57,54:7,-1,85:11,38,85" +
-":6,-1:2,85,71,-1:21,85:4,-1:2,85:8,39,85:9,-1:2,85,71,-1:21,85:4,-1:2,85:11" +
-",40,85:6,-1:2,85,71,-1:21,85:4,-1:2,85:6,41,85:11,-1:2,85,71,-1:21,85:4,-1:" +
-"2,85:11,44,85:6,-1:2,85,71,-1:21,85:4,-1:2,85:11,45,85:6,-1:2,85,71,-1:21,8" +
-"5:4,-1:2,85:5,46,85:12,-1:2,85,71,-1:21,85:4,-1:2,85:6,47,85:11,-1:2,85,71," +
-"-1:21,85:4,-1:2,85:2,78,85,55,85:13,-1:2,85,71,-1:21,85:4,-1:2,54:18,42,54:" +
-"9,-1,54:4,97,59,54:4,43,57,54:7,-1,85:2,58,85:15,-1:2,85,71,-1:21,85:4,-1:2" +
-",85:10,60,85:7,-1:2,85,71,-1:21,85:4,-1:2,85:4,61,85:13,-1:2,85,71,-1:21,85" +
-":4,-1:2,85:6,80,85:11,-1:2,85,71,-1:21,85:4,-1:2,85:14,62,85:3,-1:2,85,71,-" +
-"1:21,85:4,-1:2,85:3,81,85:14,-1:2,85,71,-1:21,85:4,-1:2,85:9,87,85:8,-1:2,8" +
-"5,71,-1:21,85:4,-1:2,85:10,63,85:7,-1:2,85,71,-1:21,85:4,-1:2,85:4,82,85:13" +
-",-1:2,85,71,-1:21,85:4,-1:2,85:10,83,85:7,-1:2,85,71,-1:21,85:4,-1:2,85:14," +
-"64,85:3,-1:2,85,71,-1:21,85:4,-1:2,85:3,65,85:14,-1:2,85,71,-1:21,85:4,-1:2" +
-",85:9,66,85:8,-1:2,85,71,-1:21,85:4,-1:2,85:15,67,85:2,-1:2,85,71,-1:21,85:" +
-"4,-1:2,54:18,42,54:9,-1,54:4,97,54:5,43,57,54:4,69,54:2,-1,85:10,84,85:7,-1" +
-":2,85,71,-1:21,85:4,-1:2,85:9,72,85:8,-1:2,85,71,-1:21,85:4,-1:2,85:2,73,85" +
-":15,-1:2,85,71,-1:21,85:4,-1:2,85:11,74,85:6,-1:2,85,71,-1:21,85:4,-1:2,85:" +
-"3,75,85:14,-1:2,85,71,-1:21,85:4,-1:2,85:13,76,85:4,-1:2,85,71,-1:21,85:4,-" +
-"1:2,85:6,77,85:11,-1:2,85,71,-1:21,85:4,-1:2,85:17,79,-1:2,85,71,-1:21,85:4" +
-",-1:2,54:18,42,54:9,-1,54:4,97,54:5,43,57,54:3,86,54:3,-1,54:18,42,54:9,-1," +
-"54:4,96,54:5,43,57,54:2,95,54:4,-1,54:18,42,54:9,-1,54:4,96,54:5,43,57,54:7");
+	private int yy_nxt[][] = unpackFromString(67,48,
+"1,2,3,94:2,49,94,97,98,94,99,94,100,101,94,102,75,103,94,4,5,94:2,6,7,8,9,1" +
+"0,11,12,13,14,50,15,16,17,18,19,20,21,54,57:2,-1,94:3,57,-1:49,2,-1:47,94:2" +
+",79,94:15,-1:2,94,80,-1:21,94:3,-1:21,5,-1:60,23,-1:45,24,-1:49,26,-1:47,27" +
+",28,-1:46,29,-1,30,-1:48,31,-1:48,32,-1:11,94:18,-1:2,94,80,-1:21,94:3,-1:2" +
+",48:18,33,48:9,-1,48:4,106,48:5,34,52,48:6,-1,55:18,42,55:9,-1,55:10,43,62," +
+"55:2,77,55:3,-1,94:5,53,94:6,22,94:5,-1:2,94,80,-1:21,94:3,-1:33,25,-1:16,6" +
+"0:18,51,60:9,-1,60:10,34,66,60:2,78,60:3,-1,55:5,48:2,55:32,58,60,48,55:5,-" +
+"1,94:6,35,94:11,-1:2,94,80,-1:21,94:3,-1:2,94:5,36,94:12,-1:2,94,80,-1:21,9" +
+"4:3,-1:2,58:28,-1,58:10,34,64,58:6,-1,94:3,37,94:14,-1:2,94,80,-1:21,94:3,-" +
+"1:2,94:11,38,94:6,-1:2,94,80,-1:21,94:3,-1:7,55:2,-1:34,55,-1:6,94:8,39,94:" +
+"9,-1:2,94,80,-1:21,94:3,-1:7,58:2,-1:32,58:3,-1:6,94:11,40,94:6,-1:2,94,80," +
+"-1:21,94:3,-1:7,60:2,-1:32,58:2,60,-1:6,94:6,41,94:11,-1:2,94,80,-1:21,94:3" +
+",-1:2,55:18,42,55:9,-1,55:10,43,62,55:2,77,55,42,55,-1,94:11,44,94:6,-1:2,9" +
+"4,80,-1:21,94:3,-1:2,60:18,51,60:9,-1,60:10,34,66,60:2,78,60,51,60,-1,94:11" +
+",45,94:6,-1:2,94,80,-1:21,94:3,-1:2,48:18,33,48:9,-1,48:4,106,33,48:4,34,52" +
+",48:6,-1,94:5,46,94:12,-1:2,94,80,-1:21,94:3,-1:2,94:6,47,94:11,-1:2,94,80," +
+"-1:21,94:3,-1:2,94:2,87,94,56,94:13,-1:2,94,80,-1:21,94:3,-1:2,48:18,33,48:" +
+"9,-1,48:4,106,72,48:4,34,52,48:6,-1,55:18,42,55:9,-1,55:10,43,62,55:2,77,68" +
+",55:2,-1,60:18,51,60:9,-1,60:10,34,66,60:2,78,70,60:2,-1,94:2,59,94:15,-1:2" +
+",94,80,-1:21,94:3,-1:2,94:10,61,94:7,-1:2,94,80,-1:21,94:3,-1:2,94:4,63,94:" +
+"13,-1:2,94,80,-1:21,94:3,-1:2,94:6,89,94:11,-1:2,94,80,-1:21,94:3,-1:2,94:1" +
+"4,65,94:3,-1:2,94,80,-1:21,94:3,-1:2,94:3,90,94:14,-1:2,94,80,-1:21,94:3,-1" +
+":2,94:9,96,94:8,-1:2,94,80,-1:21,94:3,-1:2,94:10,67,94:7,-1:2,94,80,-1:21,9" +
+"4:3,-1:2,94:4,91,94:13,-1:2,94,80,-1:21,94:3,-1:2,94:10,92,94:7,-1:2,94,80," +
+"-1:21,94:3,-1:2,94:14,69,94:3,-1:2,94,80,-1:21,94:3,-1:2,94:3,71,94:14,-1:2" +
+",94,80,-1:21,94:3,-1:2,94:9,73,94:8,-1:2,94,80,-1:21,94:3,-1:2,94:15,74,94:" +
+"2,-1:2,94,80,-1:21,94:3,-1:2,48:18,33,48:9,-1,48:4,106,48:5,34,52,48:4,76,4" +
+"8,-1,94:10,93,94:7,-1:2,94,80,-1:21,94:3,-1:2,94:9,81,94:8,-1:2,94,80,-1:21" +
+",94:3,-1:2,94:2,82,94:15,-1:2,94,80,-1:21,94:3,-1:2,94:11,83,94:6,-1:2,94,8" +
+"0,-1:21,94:3,-1:2,94:3,84,94:14,-1:2,94,80,-1:21,94:3,-1:2,94:13,85,94:4,-1" +
+":2,94,80,-1:21,94:3,-1:2,94:6,86,94:11,-1:2,94,80,-1:21,94:3,-1:2,94:17,88," +
+"-1:2,94,80,-1:21,94:3,-1:2,48:18,33,48:9,-1,48:4,106,48:5,34,52,48:3,95,48:" +
+"2,-1,48:18,33,48:9,-1,48:4,105,48:5,34,52,48:2,104,48:3,-1,48:18,33,48:9,-1" +
+",48:4,105,48:5,34,52,48:6");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -443,16 +458,19 @@ return new Symbol(sym.EOF);
 					case 2:
 						{ // NOTE: the following computation of the integer value does NOT
             //       check for overflow.  This must be changed.
+            int val = -1;
             try {
-				int val = (new Integer(yytext())).intValue();
+				val = (new Integer(yytext())).intValue();
+				}
+			catch (NumberFormatException e) {
+				System.out.println("integer literal too large; using max value");
+				val  = Integer.MAX_VALUE;
+			}
+			finally {
 				Symbol S = new Symbol(sym.INTLITERAL,
                              new IntLitTokenVal(yyline+1, CharNum.num, val));
 				CharNum.num += yytext().length();
 				return S;
-				}
-			catch (Exception e) {
-			ErrMsg.fatal(yyline+1, CharNum.num,
-                         "ignoring illegal character: " + yytext());
 			}
           }
 					case -3:
@@ -672,7 +690,7 @@ return new Symbol(sym.EOF);
 						{
 			//Matches string literal in code
 			String val = yytext();
-            Symbol S = new Symbol(sym.ID, new StrLitTokenVal(yyline+1, CharNum.num, val));
+            Symbol S = new Symbol(sym.STRINGLITERAL, new StrLitTokenVal(yyline+1, CharNum.num, val));
             CharNum.num += yytext().length();
             return S;
             }
@@ -773,45 +791,44 @@ return new Symbol(sym.EOF);
           }
 					case -50:
 						break;
-					case 52:
-						{
-			String val = yytext();
-            Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
-            CharNum.num += yytext().length();
-            return S;}
+					case 51:
+						{ 
+		ErrMsg.fatal(yyline+1, CharNum.num,"unterminated string literal with bad escaped character ignored");
+            CharNum.num++;
+          }
 					case -51:
 						break;
 					case 53:
-						{ ErrMsg.fatal(yyline+1, CharNum.num,
-                         "ignoring illegal character: " + yytext());
-            CharNum.num++;
-          }
-					case -52:
-						break;
-					case 55:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
             CharNum.num += yytext().length();
             return S;}
+					case -52:
+						break;
+					case 54:
+						{ ErrMsg.fatal(yyline+1, CharNum.num,
+                         "ignoring illegal character: " + yytext());
+            CharNum.num++;
+          }
 					case -53:
 						break;
 					case 56:
-						{ ErrMsg.fatal(yyline+1, CharNum.num,
-                         "ignoring illegal character: " + yytext());
-            CharNum.num++;
-          }
-					case -54:
-						break;
-					case 58:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
             CharNum.num += yytext().length();
             return S;}
+					case -54:
+						break;
+					case 57:
+						{ ErrMsg.fatal(yyline+1, CharNum.num,
+                         "ignoring illegal character: " + yytext());
+            CharNum.num++;
+          }
 					case -55:
 						break;
-					case 60:
+					case 59:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -827,7 +844,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -57:
 						break;
-					case 62:
+					case 63:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -835,7 +852,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -58:
 						break;
-					case 63:
+					case 65:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -843,7 +860,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -59:
 						break;
-					case 64:
+					case 67:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -851,7 +868,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -60:
 						break;
-					case 65:
+					case 69:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -859,7 +876,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -61:
 						break;
-					case 66:
+					case 71:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -867,7 +884,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -62:
 						break;
-					case 67:
+					case 73:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -875,7 +892,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -63:
 						break;
-					case 68:
+					case 74:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -883,7 +900,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -64:
 						break;
-					case 70:
+					case 75:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -891,7 +908,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -65:
 						break;
-					case 71:
+					case 79:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -899,7 +916,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -66:
 						break;
-					case 72:
+					case 80:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -907,7 +924,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -67:
 						break;
-					case 73:
+					case 81:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -915,7 +932,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -68:
 						break;
-					case 74:
+					case 82:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -923,7 +940,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -69:
 						break;
-					case 75:
+					case 83:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -931,7 +948,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -70:
 						break;
-					case 76:
+					case 84:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -939,7 +956,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -71:
 						break;
-					case 77:
+					case 85:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -947,7 +964,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -72:
 						break;
-					case 78:
+					case 86:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -955,7 +972,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -73:
 						break;
-					case 79:
+					case 87:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -963,7 +980,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -74:
 						break;
-					case 80:
+					case 88:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -971,7 +988,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -75:
 						break;
-					case 81:
+					case 89:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -979,7 +996,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -76:
 						break;
-					case 82:
+					case 90:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -987,7 +1004,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -77:
 						break;
-					case 83:
+					case 91:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -995,7 +1012,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -78:
 						break;
-					case 84:
+					case 92:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1003,7 +1020,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -79:
 						break;
-					case 85:
+					case 93:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1011,7 +1028,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -80:
 						break;
-					case 87:
+					case 94:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1019,7 +1036,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -81:
 						break;
-					case 88:
+					case 96:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1027,7 +1044,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -82:
 						break;
-					case 89:
+					case 97:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1035,7 +1052,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -83:
 						break;
-					case 90:
+					case 98:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1043,7 +1060,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -84:
 						break;
-					case 91:
+					case 99:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1051,7 +1068,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -85:
 						break;
-					case 92:
+					case 100:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1059,7 +1076,7 @@ return new Symbol(sym.EOF);
             return S;}
 					case -86:
 						break;
-					case 93:
+					case 101:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
@@ -1067,13 +1084,21 @@ return new Symbol(sym.EOF);
             return S;}
 					case -87:
 						break;
-					case 94:
+					case 102:
 						{
 			String val = yytext();
             Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
             CharNum.num += yytext().length();
             return S;}
 					case -88:
+						break;
+					case 103:
+						{
+			String val = yytext();
+            Symbol S = new Symbol(sym.ID, new IdTokenVal(yyline+1, CharNum.num, val));
+            CharNum.num += yytext().length();
+            return S;}
+					case -89:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
