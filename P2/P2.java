@@ -20,8 +20,12 @@ public class P2 {
 		testAllTokens("eof");
         CharNum.num = 1;
         
-        System.out.println("testAllTokens: Running eof.in");
+        System.out.println("testAllTokens: Running basicTest.in");
         testAllTokens("basicTest");
+        CharNum.num = 1;
+        
+        System.out.println("testAllTokens: Running badCases.in");
+        testAllTokens("badCases");
         CharNum.num = 1;
         // ADD CALLS TO OTHER TEST METHODS HERE
     }
