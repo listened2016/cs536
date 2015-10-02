@@ -1,0 +1,4 @@
+13:8 ***ERROR*** ignoring illegal character: @
+15:16 ***ERROR*** ignoring illegal character: \
+16:11 ***ERROR*** unterminated string literal
+17:12 ***ERROR*** string literal with bad escaped character ignored

@@ -1,17 +1,22 @@
+# Contains a bunch of bad cases for your consideration
+@$%^?
+@BadID
 "unterminated
 "also unterminated \"
 "backslash followed by space: \ is not allowed"
 "bad escaped character: \a AND not terminated
 32749812749012749127409123749712491724
-\1234
-\\Nor this
-345jhfjhdg
+\ ?
+\\
 "\k"
 "\k
-" \asd ""
+"\n
+"
+" \multiple errors on line " "\a
 "\t fox \n jumps \" \ moon"
-" \a jkdjfflajflkjasdf \"
-" \a jkdjfflajflkjasdf \""
+" \help " " \me with multiple separate escapes \"
+" \a  \" "
 " so \a many \s bad \escaped with unterm
 " so \a many \s bad \escaped"
-kjh "unterminated s\a ring (eof)
+" unterm, escaped at end \
+kjh "unterminated s\a ring

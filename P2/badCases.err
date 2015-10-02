@@ -1,1 +1,29 @@
-testAllTokens: Running badCases.in
+2:1 ***ERROR*** ignoring illegal character: @
+2:2 ***ERROR*** ignoring illegal character: $
+2:3 ***ERROR*** ignoring illegal character: %
+2:4 ***ERROR*** ignoring illegal character: ^
+2:5 ***ERROR*** ignoring illegal character: ?
+3:1 ***ERROR*** ignoring illegal character: @
+4:1 ***ERROR*** unterminated string literal
+5:1 ***ERROR*** unterminated string literal
+6:1 ***ERROR*** string literal with bad escaped character ignored
+7:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+8:1 ***WARNING*** integer literal too large; using max value
+9:1 ***ERROR*** ignoring illegal character: \
+9:3 ***ERROR*** ignoring illegal character: ?
+10:1 ***ERROR*** ignoring illegal character: \
+10:2 ***ERROR*** ignoring illegal character: \
+11:1 ***ERROR*** string literal with bad escaped character ignored
+12:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+13:1 ***ERROR*** unterminated string literal
+14:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+15:1 ***ERROR*** string literal with bad escaped character ignored
+15:30 ***ERROR*** unterminated string literal with bad escaped character ignored
+16:1 ***ERROR*** string literal with bad escaped character ignored
+17:1 ***ERROR*** string literal with bad escaped character ignored
+17:11 ***ERROR*** unterminated string literal with bad escaped character ignored
+18:1 ***ERROR*** string literal with bad escaped character ignored
+19:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+20:1 ***ERROR*** string literal with bad escaped character ignored
+21:1 ***ERROR*** unterminated string literal with bad escaped character ignored
+22:5 ***ERROR*** unterminated string literal with bad escaped character ignored

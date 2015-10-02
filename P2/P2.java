@@ -9,29 +9,35 @@ import java_cup.runtime.*;  // defines Symbol
  * numbers, values associated with tokens)
  */
 public class P2 {
+   
+   /**
+    * Runs the test cases using testAllTokens, testAllTokensNew
+    */
     public static void main(String[] args) throws IOException {
                                            // exception may be thrown by yylex
-        // test all tokens
+        // test allTokens.in (original file) with diff
         System.out.println("testAllTokens: Running allTokens.in");
         testAllTokens();
         CharNum.num = 1;
         
-        System.out.println("testAllTokens: Running eof.in");
+        //Tests eof.in sample, see eof.err for result
+        System.out.println("testAllTokensNew: Running eof.in");
 		testAllTokensNew("eof", false);
         CharNum.num = 1;
         
-        //Test of all basic tokens in YES
-        System.out.println("testAllTokens: Running basicTest.in");
+        //Test of all basic tokens in YES, runs diff on in, out
+        System.out.println("testAllTokensNew: Running basicTest.in");
         testAllTokensNew("basicTest", false);
         CharNum.num = 1;
         
-        //Error checking examples, do not expect diff call
-        System.out.println("testAllTokens: Running badCases.in");
+        //Error checking examples, errors printed to .err
+        System.out.println("testAllTokensNew: Running badCases.in");
         testAllTokensNew("badCases", true);
         CharNum.num = 1;
         
         //Tests sample C++/YES codes in statements, blocks
-        System.out.println("testAllTokens: Running badCases.in");
+        // We diff this annotated output against testcode.line
+        System.out.println("testAllTokensNew: Running testcode.in");
         testAllTokensNew("testcode", true);
         CharNum.num = 1;
         // ADD CALLS TO OTHER TEST METHODS HERE
@@ -45,18 +51,21 @@ public class P2 {
      * For each token read, write the corresponding string to allTokens.out
      * If the input file contains all tokens, one per line, we can verify
      * correctness of the scanner by comparing the input and output files
-     * (e.g., using a 'diff' command).
+     * (e.g., using a 'diff' command). Errors are written to name.err
+     * file (e.g. eof.err)
      * If lineCheck is true, output file will contain
      * line, charnum information next to each token val
      */
-    private static void testAllTokensNew(String name, Boolean lineCheck) throws IOException {
+    private static void testAllTokensNew(String name, Boolean lineCheck) 
+        throws IOException {
         // open input and output files
         FileReader inFile = null;
         PrintWriter outFile = null;
         try {
             inFile = new FileReader(name+".in");
             outFile = new PrintWriter(new FileWriter(name + ".out"));
-            System.setOut(new PrintStream(new FileOutputStream(name+".err")));
+            //All errors printed to name.err file for easy access
+            System.setErr(new PrintStream(new FileOutputStream(name+".err")));
         } catch (FileNotFoundException ex) {
             System.err.println("File allTokens.in not found.");
             System.exit(-1);
