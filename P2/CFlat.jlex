@@ -284,7 +284,7 @@ return new Symbol(sym.EOF);
             CharNum.num = 1;
           }
           
-\"(({ESC}|[^\"\n\\])*(\\[^nt'?\"])*)*\\{NEWLINE}     { 
+\"(({ESC}|[^\"\n\\])*(\\[^nt'?\"\n])*)*\\{NEWLINE}     { 
 		// Error on unterminated string literal with newline after \
 		ErrMsg.fatal(yyline+1, CharNum.num,
             "unterminated string literal with bad escaped character ignored");

@@ -1,3 +1,8 @@
+/*
+ * CS536, P2 
+ * P2.java by Sahit Mandala
+*/
+
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;  // defines Symbol
@@ -30,7 +35,7 @@ public class P2 {
         testAllTokensNew("basicTest", false);
         CharNum.num = 1;
         
-        //Error checking examples, errors printed to .err
+        //Error checking examples, errors printed to baseCases.err
         System.out.println("testAllTokensNew: Running badCases.in");
         testAllTokensNew("badCases", true);
         CharNum.num = 1;
@@ -67,10 +72,10 @@ public class P2 {
             //All errors printed to name.err file for easy access
             System.setErr(new PrintStream(new FileOutputStream(name+".err")));
         } catch (FileNotFoundException ex) {
-            System.err.println("File allTokens.in not found.");
+            System.err.println("File "+name+".in"+"in not found.");
             System.exit(-1);
         } catch (IOException ex) {
-            System.err.println("allTokens.out cannot be opened.");
+            System.err.println(name + ".out"+" cannot be opened.");
             System.exit(-1);
         }
 
