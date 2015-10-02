@@ -1,4 +1,7 @@
-2147483647
-a
-345
-jhfjhdg
+(5,1):[INTLIT]:2147483647
+(6,2):[INTLIT]:1234
+(7,3):[ID]:Nor
+(7,7):[ID]:this
+(8,1):[INTLIT]:345
+(8,4):[ID]:jhfjhdg
+(17,1):[ID]:kjh
