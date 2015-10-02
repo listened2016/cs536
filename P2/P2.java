@@ -1,3 +1,9 @@
+/*
+ * CS536, Project 2
+ * P2.java file
+ * Author: Sahit Mandala
+ */
+
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.*;  // defines Symbol
