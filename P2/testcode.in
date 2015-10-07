@@ -1,1 +1,18 @@
-
+#How about some comments
+//Who likes comments
+// We "love" these comememens "
+# A sample programming highlighting the line, char positioning is right
+int main()
+{
+    string a;
+    if(q == "Please?") {
+        a = "Okay!";
+    }
+    //else statement
+    else {
+       @ a = "You forgot the magic word!";
+    }
+    print(nope \
+    print("sdfjasldkfjasdf; # unterminated);
+    return "sdfjasldk\fjasdf" + 120
+}
