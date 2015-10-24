@@ -76,6 +76,8 @@ non terminal ProgramNode      program;
 non terminal LinkedList       declList;
 non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
+non terminal StructDeclNode   structDecl;
+non terminal DeclListNode     structParams;
 non terminal TypeNode         type;
 non terminal IdNode           id;
  
@@ -123,7 +125,7 @@ structDecl      ::= STRUCT id:name LCURLY structParams:params RCURLY SEMICOLON
                 ;
 
 
-structParams    :: = varDeclList:vds
+structParams    ::= declList:vds
                 {: RESULT = new DeclListNode(vds);
                 :}
                 ;

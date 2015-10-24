@@ -4,3 +4,7 @@ bool a;
 bool b;
 void s;
 void t;
+struct magic {
+    int i;
+    bool b;
+};

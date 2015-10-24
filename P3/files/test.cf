@@ -7,4 +7,4 @@ void t;
 struct magic {
 	int i;
 	bool b;
-}
+};
