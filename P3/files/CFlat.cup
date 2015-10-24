@@ -119,6 +119,16 @@ type            ::= INT
                 :}
                 ;
 
+type		::= BOOL
+		{: RESULT = new BoolNode();
+		:}
+		;
+
+type		::= VOID
+		{: RESULT = new VoidNode(); 
+		:}
+		;
+
 id              ::= ID:i
                 {: RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
                 :}
