@@ -107,10 +107,24 @@ declList        ::= declList:dl decl:d
 decl            ::= varDecl:v
                 {: RESULT = v;
                 :}
-                ;
+                | structDecl:s
+                {: RESULT = s;
+                :}
+                ;                
 
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
+                :}
+                ;
+
+structDecl      ::= STRUCT id:name LCURLY structParams:params RCURLY SEMICOLON
+                {: RESULT = new StructDeclNode(name, params);
+                :}
+                ;
+
+
+structParams    :: = varDeclList:vds
+                {: RESULT = new DeclListNode(vds);
                 :}
                 ;
 
@@ -119,15 +133,16 @@ type            ::= INT
                 :}
                 ;
 
-type		::= BOOL
-		{: RESULT = new BoolNode();
-		:}
-		;
+type	       	::= BOOL
+		        {: RESULT = new BoolNode();
+		        :}
+		        ;
 
-type		::= VOID
-		{: RESULT = new VoidNode(); 
-		:}
-		;
+type		    ::= VOID
+		        {: RESULT = new VoidNode(); 
+		        :}
+		        ;
+  
 
 id              ::= ID:i
                 {: RESULT = new IdNode(i.linenum, i.charnum, i.idVal);
