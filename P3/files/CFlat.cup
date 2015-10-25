@@ -166,13 +166,15 @@ formalsLList    ::= formalDecl:f
                 :}
                 ;
 
+/* Individual parameter declaration */
 formalDecl      ::= type:t id:n
                 {: RESULT = new FormalDeclNode(t,n);
                 :}
                 ;
 
-fnBody          ::= 
-                {: RESULT = new FnBodyNode(null, null);
+/* Main body of a function, with declarations and stmts*/
+fnBody          ::= declList:ds
+                {: RESULT = new FnBodyNode(d, null);
                 :}
                 ;
 
