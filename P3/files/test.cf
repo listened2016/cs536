@@ -8,3 +8,7 @@ struct magic {
 	int i;
 	bool b;
 };
+
+int funcTest(int a, bool b) {
+
+}

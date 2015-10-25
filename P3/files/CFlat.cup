@@ -77,6 +77,11 @@ non terminal LinkedList       declList;
 non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
 non terminal StructDeclNode   structDecl;
+non terminal FnDeclNode       fnDecl;
+non terminal FormalsListNode   formalsList;
+non terminal LinkedList       formalsLList;
+non terminal FormalDeclNode   formalDecl;
+non terminal FnBodyNode       fnBody;
 non terminal DeclListNode     structParams;
 non terminal TypeNode         type;
 non terminal IdNode           id;
@@ -112,6 +117,9 @@ decl            ::= varDecl:v
                 | structDecl:s
                 {: RESULT = s;
                 :}
+                | fnDecl:func
+                {: RESULT = func;
+                :}
                 ;                
 
 varDecl         ::= type:t id:i SEMICOLON
@@ -119,17 +127,57 @@ varDecl         ::= type:t id:i SEMICOLON
                 :}
                 ;
 
+/* Defined a struct declaration */
 structDecl      ::= STRUCT id:name LCURLY structParams:params RCURLY SEMICOLON
                 {: RESULT = new StructDeclNode(name, params);
                 :}
                 ;
 
-
+/* Processes inner parameters/decls of a struct */
 structParams    ::= declList:vds
                 {: RESULT = new DeclListNode(vds);
                 :}
                 ;
 
+fnDecl          ::= type:t id:n LPAREN formalsList:fs RPAREN LCURLY fnBody:b RCURLY
+                {: RESULT = new FnDeclNode(t,n,fs,b);
+                :}
+                ;
+
+/* Represents entire list of function parameters; uses helper nonterminal formalsLList for
+    managing trailing commas */
+formalsList     ::= formalsLList:formals
+                {: RESULT = new FormalsListNode(formals);
+                :} 
+                |
+                {: RESULT = new FormalsListNode(new LinkedList<FormalDeclNode>());
+                :}
+                ;
+
+formalsLList    ::= formalDecl:f
+                {: LinkedList<FormalDeclNode> lst = new LinkedList<FormalDeclNode>();
+                    lst.add(0,f);
+                    RESULT  = lst;
+                :}
+                | formalDecl:f COMMA formalsLList:fs
+                {:
+                    fs.add(0,f);
+                    RESULT = fs;
+                :}
+                ;
+
+formalDecl      ::= type:t id:n
+                {: RESULT = new FormalDeclNode(t,n);
+                :}
+                ;
+
+fnBody          ::= 
+                {: RESULT = new FnBodyNode(null, null);
+                :}
+                ;
+
+
+/* Primitive types */
 type            ::= INT
                 {: RESULT = new IntNode();
                 :}
