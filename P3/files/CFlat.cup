@@ -28,8 +28,8 @@ public void syntax_error(Symbol currToken) {
 terminal                INT;
 terminal                BOOL;
 terminal                VOID;
-terminal                TRUE;
-terminal                FALSE;
+terminal TokenVal       TRUE;
+terminal TokenVal       FALSE;
 terminal                STRUCT;
 terminal                CIN;
 terminal                COUT;
@@ -77,18 +77,38 @@ non terminal LinkedList       declList;
 non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
 non terminal StructDeclNode   structDecl;
+non terminal DeclListNode     structParams;
 non terminal FnDeclNode       fnDecl;
-non terminal FormalsListNode   formalsList;
+non terminal FormalsListNode  formalsList;
 non terminal LinkedList       formalsLList;
 non terminal FormalDeclNode   formalDecl;
 non terminal FnBodyNode       fnBody;
-non terminal DeclListNode     structParams;
+non terminal LinkedList       stmtList;
+non terminal StmtNode         stmt;
+non terminal IfStmtNode       ifStmt;
+non terminal IfElseStmtNode   ifElseStmt;
+non terminal WhileStmtNode    whileStmt;
+
+non terminal ExpNode exp;
+non terminal AssignNode assignExp;
+non terminal ExpNode var;
+non terminal ExpNode literal;
+
 non terminal TypeNode         type;
 non terminal IdNode           id;
  
  
 /* NOTE: Add precedence and associativity declarations here */
+precedence right ASSIGN;
+precedence left OR;
+precedence left AND;
+// Relational, equality operators
+precedence nonassoc LESS, GREATER, LESSEQ, GREATEREQ, EQUALS, NOTEQUALS;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence nonassoc MINUS, NOT;
 
+//TODO: Dot operator assoc, pres
 
 start with program;
 
@@ -139,6 +159,8 @@ structParams    ::= declList:vds
                 :}
                 ;
 
+//TODO: Struct node ???
+
 fnDecl          ::= type:t id:n LPAREN formalsList:fs RPAREN LCURLY fnBody:b RCURLY
                 {: RESULT = new FnDeclNode(t,n,fs,b);
                 :}
@@ -173,11 +195,162 @@ formalDecl      ::= type:t id:n
                 ;
 
 /* Main body of a function, with declarations and stmts*/
-fnBody          ::= declList:ds
-                {: RESULT = new FnBodyNode(d, null);
+fnBody          ::= declList:ds stmtList:ss
+                {: RESULT = new FnBodyNode(new DeclListNode(ds), 
+                    new StmtListNode(ss));
                 :}
                 ;
 
+/* Statement rules */
+stmtList        ::= stmtList:ss stmt:s
+                {: ss.addLast(s);
+                   RESULT = ss;
+                :}
+                | /* epsilon */
+                {: RESULT = new LinkedList<StmtNode>();
+                :}
+                ;
+
+stmt            ::= ifStmt:s      //If statement
+                {: RESULT = s;
+                :}
+                | ifElseStmt:s      //If else statement
+                {: RESULT = s;
+                :}
+                | whileStmt:s      //While
+                {: RESULT = s;
+                :}
+                | assignExp:e SEMICOLON      //Assignment
+                {: RESULT = new AssignStmtNode(e);
+                :}
+                | exp:e PLUSPLUS SEMICOLON      //Increment
+                {: RESULT = new PostIncStmtNode(e);
+                :}
+                | exp:e MINUSMINUS SEMICOLON      //Decrement
+                {: RESULT = new PostDecStmtNode(e);
+                :}
+                ;
+
+ifStmt          ::= IF LPAREN exp:e RPAREN LCURLY declList:ds stmtList:ss RCURLY
+                {: RESULT = new IfStmtNode(e, 
+                    new DeclListNode(ds), 
+                    new StmtListNode(ss));
+                :}
+                ;
+
+ifElseStmt      ::= IF LPAREN exp:e1 RPAREN LCURLY declList:ds1 stmtList:ss1 RCURLY ELSE LCURLY declList:ds2 stmtList:ss2 RCURLY
+                {: RESULT = new IfElseStmtNode(e1, 
+                    new DeclListNode(ds1), 
+                    new StmtListNode(ss1),
+                    new DeclListNode(ds2), 
+                    new StmtListNode(ss2));
+                :}
+                ;
+
+whileStmt      ::= WHILE LPAREN exp:e RPAREN LCURLY declList:ds stmtList:ss RCURLY
+                {: RESULT = new WhileStmtNode(e, 
+                    new DeclListNode(ds), 
+                    new StmtListNode(ss));
+                :}
+                ; 
+
+//TODO: Add fncall              
+
+exp             ::= exp:e1 PLUS exp:e2
+                {: RESULT = new PlusNode(e1,e2);
+                :}
+                | exp:e1 MINUS exp:e2
+                {: RESULT = new MinusNode(e1,e2);
+                :}
+                | exp:e1 TIMES exp:e2
+                {: RESULT = new TimesNode(e1,e2);
+                :}
+                | exp:e1 DIVIDE exp:e2
+                {: RESULT = new DivideNode(e1,e2);
+                :}
+                | exp:e1 AND exp:e2
+                {: RESULT = new AndNode(e1,e2);
+                :}
+                | exp:e1 OR exp:e2
+                {: RESULT = new OrNode(e1,e2);
+                :}
+                | exp:e1 EQUALS exp:e2
+                {: RESULT = new EqualsNode(e1,e2);
+                :}
+                | exp:e1 NOTEQUALS exp:e2
+                {: RESULT = new NotEqualsNode(e1,e2);
+                :}
+                | exp:e1 LESS exp:e2
+                {: RESULT = new LessNode(e1,e2);
+                :}
+                | exp:e1 GREATER exp:e2
+                {: RESULT = new GreaterNode(e1,e2);
+                :}
+                | exp:e1 LESSEQ exp:e2
+                {: RESULT = new LessEqNode(e1,e2);
+                :}
+                | exp:e1 GREATEREQ exp:e2
+                {: RESULT = new GreaterEqNode(e1,e2);
+                :}
+                /* Unary Operators */
+                | NOT exp:e1
+                {: RESULT = new NotNode(e1);
+                :}
+                | MINUS exp:e1
+                {: RESULT = new UnaryMinusNode(e1);
+                :}
+                | var:v
+                {: RESULT = v; 
+                :}
+                | literal:l
+                {: RESULT = l;
+                :}
+                ;  
+
+assignExp       ::= var:v ASSIGN exp:e
+                {: RESULT = new AssignNode(v,e);
+                :}
+                ; 
+
+var             ::= id:i
+                {: RESULT = i;
+                :}
+                /*
+                | var:v DOT id:i
+                {::}
+                */
+                ;
+
+//TODO: Add dot operator
+
+literal         ::= INTLITERAL:intl
+                {: RESULT = new IntLitNode(intl.linenum,
+                     intl.charnum,
+                     intl.intVal);
+                :}
+                | STRINGLITERAL:str
+                {: RESULT = new StringLitNode(str.linenum, 
+                     str.charnum, 
+                     str.strVal);
+                :}
+                | TRUE:t1
+                {: 
+                    TokenVal t = (TokenVal) t1;
+                    RESULT = new TrueNode(t.linenum, t.charnum);
+                :}
+                | FALSE:f1
+                {:  TokenVal f = (TokenVal) f1;
+                    RESULT = new FalseNode(f.linenum, f.charnum);
+                :}
+                | LPAREN exp:e1 RPAREN
+                {: RESULT = e1;
+                :}
+                /*
+                | fnCall:f
+                {: RESULT = f;
+                :}
+                */
+                ;
 
 /* Primitive types */
 type            ::= INT

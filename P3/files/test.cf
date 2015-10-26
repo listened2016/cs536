@@ -10,5 +10,25 @@ struct magic {
 };
 
 int funcTest(int a, bool b) {
+	int x;
+	void y;
+	if (x==1) {
+		int x;
+		bool y;
+	}
 
+	if (y+5<2) {
+		int You;
+		bool I;
+		y = 2 + 4;
+	}
+	else {
+		void me;
+
+	}
+
+	while (5 <= 2) {
+		void us;
+		us = ((1-2+3)*4/2);
+	}
 }
