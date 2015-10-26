@@ -92,10 +92,9 @@ non terminal WhileStmtNode    whileStmt;
 non terminal ExpNode exp;
 non terminal LinkedList expList;
 non terminal AssignNode assignExp;
-non terminal CallExpNode fnExp;
-non terminal LinkedList   paramList;
-non terminal ExpNode var;
-non terminal ExpNode literal;
+non terminal CallExpNode fnCall;
+non terminal ExpNode loc;
+non terminal ExpNode term;
 
 non terminal TypeNode         type;
 non terminal IdNode           id;
@@ -227,10 +226,10 @@ stmt            ::= ifStmt:s      //If statement
                 | assignExp:e SEMICOLON      //Assignment
                 {: RESULT = new AssignStmtNode(e);
                 :}
-                |  var:v PLUSPLUS SEMICOLON      //Increment
+                |  loc:v PLUSPLUS SEMICOLON      //Increment
                 {: RESULT = new PostIncStmtNode(v);
                 :}
-                |  var:v MINUSMINUS SEMICOLON      //Decrement
+                |  loc:v MINUSMINUS SEMICOLON      //Decrement
                 {: RESULT = new PostDecStmtNode(v);
                 :}
                 | CIN READ exp:e SEMICOLON      //Increment
@@ -239,7 +238,7 @@ stmt            ::= ifStmt:s      //If statement
                 | COUT WRITE exp:e  SEMICOLON      //Decrement
                 {: RESULT = new WriteStmtNode(e);
                 :}
-                |fnExp:fc SEMICOLON            //Function call
+                |fnCall:fc SEMICOLON            //Function call
                 {: RESULT = new CallStmtNode(fc);
                 :}
                 | RETURN SEMICOLON        //return void
@@ -317,21 +316,11 @@ exp             ::= exp:e1 PLUS exp:e2
                 | MINUS exp:e1
                 {: RESULT = new UnaryMinusNode(e1);
                 :}
-                | var:v
+                | term:v
                 {: RESULT = v; 
                 :}
-                | literal:l
-                {: RESULT = l;
-                :}
-                | LPAREN exp:e1 RPAREN
-                {: RESULT = e1;
-                :}
-                | fnExp:f
-                {: RESULT = f;
-                :}
                 ; 
-                
-                
+
 expList         ::= expList:es COMMA exp:s   //Comma separated expressions
                 {: es.addLast(s);
                     RESULT = es;
@@ -343,34 +332,7 @@ expList         ::= expList:es COMMA exp:s   //Comma separated expressions
                 :}
                 ;
 
-assignExp       ::= var:v ASSIGN exp:e
-                {: RESULT = new AssignNode(v,e);
-                :}
-                ; 
-                
-fnExp          ::= id:i LPAREN paramList:ps RPAREN
-                {:  RESULT = new CallExpNode(i,new ExpListNode(ps));
-                :}
-                ;
-                
-paramList       ::= expList:es
-                {: RESULT = es;
-                :}
-                |
-                {: RESULT = new LinkedList<ExpNode>();
-                :}
-                ;
-
-var             ::= id:i
-                {: RESULT = i;
-                :}
-                | var:v DOT id:i
-                {: RESULT = new DotAccessExpNode(v,i); 
-                :}
-                ;
-
-
-literal         ::= INTLITERAL:intl
+term        ::= INTLITERAL:intl
                 {: RESULT = new IntLitNode(intl.linenum,
                      intl.charnum,
                      intl.intVal);
@@ -389,20 +351,49 @@ literal         ::= INTLITERAL:intl
                 {:  TokenVal f = (TokenVal) f1;
                     RESULT = new FalseNode(f.linenum, f.charnum);
                 :}
+                | LPAREN exp:e1 RPAREN
+                {: RESULT = e1;
+                :}
+                | loc:v
+                {: RESULT = v;
+                :}
+                | fnCall:f
+                {: RESULT = f;
+                :}
                 ;
+
+assignExp       ::= loc:v ASSIGN exp:e
+                {: RESULT = new AssignNode(v,e);
+                :}
+                ; 
+                
+fnCall         ::= id:i LPAREN expList:ss RPAREN
+                {:  RESULT = new CallExpNode(i,new ExpListNode(ss));
+                :}
+                | id:i LPAREN RPAREN
+                {:  RESULT = new CallExpNode(i,new ExpListNode(new LinkedList<ExpNode>()));
+                :}
+                ;
+                
+
+loc            ::= id:i
+                {: RESULT = i;
+                :}
+                | loc:v DOT id:i
+                {: RESULT = new DotAccessExpNode(v,i); 
+                :}
+                ;
+
+
 
 /* Primitive types */
 type            ::= INT
                 {: RESULT = new IntNode();
                 :}
-                ;
-
-type	       	::= BOOL
+                | BOOL
 		        {: RESULT = new BoolNode();
 		        :}
-		        ;
-
-type		    ::= VOID
+		        | VOID
 		        {: RESULT = new VoidNode(); 
 		        :}
 		        ;

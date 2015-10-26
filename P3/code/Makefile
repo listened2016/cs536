@@ -40,8 +40,8 @@ ErrMsg.class: ErrMsg.java
 
 ##test
 test:
-	java   P3 testFiles/test_p1.cf test_p1.out
-	java   P3 testFiles/test_p2.cf test_p2.out
+	java   P3 testFiles/test_p1.cf testFiles/test_p1.out
+	java   P3 testFiles/test_p2.cf testFiles/test_p2.out
 
 ###
 # clean
