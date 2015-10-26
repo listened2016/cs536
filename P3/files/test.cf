@@ -31,4 +31,5 @@ int funcTest(int a, bool b) {
 		void us;
 		us = ((1-2+3)*4/2);
 	}
+    functionCall(123+123,"wORLDS");
 }

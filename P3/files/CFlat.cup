@@ -90,7 +90,10 @@ non terminal IfElseStmtNode   ifElseStmt;
 non terminal WhileStmtNode    whileStmt;
 
 non terminal ExpNode exp;
+non terminal LinkedList expList;
 non terminal AssignNode assignExp;
+non terminal CallExpNode fnExp;
+non terminal LinkedList   paramList;
 non terminal ExpNode var;
 non terminal ExpNode literal;
 
@@ -223,11 +226,23 @@ stmt            ::= ifStmt:s      //If statement
                 | assignExp:e SEMICOLON      //Assignment
                 {: RESULT = new AssignStmtNode(e);
                 :}
-                | exp:e PLUSPLUS SEMICOLON      //Increment
-                {: RESULT = new PostIncStmtNode(e);
+                |  var:v PLUSPLUS SEMICOLON      //Increment
+                {: RESULT = new PostIncStmtNode(v);
                 :}
-                | exp:e MINUSMINUS SEMICOLON      //Decrement
-                {: RESULT = new PostDecStmtNode(e);
+                |  var:v MINUSMINUS SEMICOLON      //Decrement
+                {: RESULT = new PostDecStmtNode(v);
+                :}
+                | CIN READ exp:e SEMICOLON      //Increment
+                {: RESULT = new ReadStmtNode(e);
+                :}
+                | COUT WRITE exp:e  SEMICOLON      //Decrement
+                {: RESULT = new WriteStmtNode(e);
+                :}
+                |fnExp:fc SEMICOLON            //Function call
+                {: RESULT = new CallStmtNode(fc);
+                :}
+                | RETURN exp:e SEMICOLON        //return
+                {: RESULT = new ReturnStmtNode(e);
                 :}
                 ;
 
@@ -253,8 +268,7 @@ whileStmt      ::= WHILE LPAREN exp:e RPAREN LCURLY declList:ds stmtList:ss RCUR
                     new StmtListNode(ss));
                 :}
                 ; 
-
-//TODO: Add fncall              
+             
 
 exp             ::= exp:e1 PLUS exp:e2
                 {: RESULT = new PlusNode(e1,e2);
@@ -305,12 +319,37 @@ exp             ::= exp:e1 PLUS exp:e2
                 | literal:l
                 {: RESULT = l;
                 :}
-                ;  
+                ; 
+                
+                
+expList         ::= expList:es COMMA exp:s   //Comma separated expressions
+                {: es.addLast(s);
+                    RESULT = es;
+                :}
+                | exp:s
+                {: LinkedList<ExpNode> es = new LinkedList<ExpNode>();
+                   es.addLast(s);
+                   RESULT = es;
+                :}
+                ;
 
 assignExp       ::= var:v ASSIGN exp:e
                 {: RESULT = new AssignNode(v,e);
                 :}
                 ; 
+                
+fnExp          ::= id:i LPAREN paramList:ps RPAREN
+                {:  RESULT = new CallExpNode(i,new ExpListNode(ps));
+                :}
+                ;
+                
+paramList       ::= expList:es
+                {: RESULT = es;
+                :}
+                |
+                {: RESULT = new LinkedList<ExpNode>();
+                :}
+                ;
 
 var             ::= id:i
                 {: RESULT = i;
@@ -345,11 +384,9 @@ literal         ::= INTLITERAL:intl
                 | LPAREN exp:e1 RPAREN
                 {: RESULT = e1;
                 :}
-                /*
-                | fnCall:f
+                | fnExp:f
                 {: RESULT = f;
                 :}
-                */
                 ;
 
 /* Primitive types */

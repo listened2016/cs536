@@ -217,11 +217,16 @@ class ExpListNode extends ASTnode {
     public ExpListNode(List<ExpNode> S) {
         myExps = S;
     }
-
+    
+    /*Print comma separated expressions in list  */
     public void unparse(PrintWriter p, int indent) {
         Iterator it = myExps.iterator();
         try {
+            if(it.hasNext()) {
+                ((ExpNode)it.next()).unparse(p, indent);
+            } 
             while (it.hasNext()) {
+                p.print(",");
                 ((ExpNode)it.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
