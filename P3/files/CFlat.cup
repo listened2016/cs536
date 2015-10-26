@@ -109,9 +109,9 @@ precedence left AND;
 precedence nonassoc LESS, GREATER, LESSEQ, GREATEREQ, EQUALS, NOTEQUALS;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
-precedence nonassoc MINUS, NOT;
+precedence right NOT;
+precedence left DOT;
 
-//TODO: Dot operator assoc, pres
 
 start with program;
 
@@ -148,6 +148,9 @@ decl            ::= varDecl:v
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
                 :}
+                | STRUCT id:struct id:id SEMICOLON  //Struct with type name, id
+                {: RESULT = new VarDeclNode(new StructNode(struct), id,0);
+                :}   //TODO: WHAT IS SIZE?
                 ;
 
 /* Defined a struct declaration */
@@ -161,8 +164,6 @@ structParams    ::= declList:vds
                 {: RESULT = new DeclListNode(vds);
                 :}
                 ;
-
-//TODO: Struct node ???
 
 fnDecl          ::= type:t id:n LPAREN formalsList:fs RPAREN LCURLY fnBody:b RCURLY
                 {: RESULT = new FnDeclNode(t,n,fs,b);
@@ -354,13 +355,11 @@ paramList       ::= expList:es
 var             ::= id:i
                 {: RESULT = i;
                 :}
-                /*
                 | var:v DOT id:i
-                {::}
-                */
+                {: RESULT = new DotAccessExpNode(v,i); 
+                :}
                 ;
 
-//TODO: Add dot operator
 
 literal         ::= INTLITERAL:intl
                 {: RESULT = new IntLitNode(intl.linenum,

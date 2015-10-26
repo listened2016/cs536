@@ -1,0 +1,46 @@
+int x;
+int y;
+bool a;
+bool b;
+void s;
+void t;
+struct Magic {
+    int i;
+    bool b;
+};
+int funcTest(int a, bool b) {
+    int x;
+    void y;
+    if (x == 1) {
+        int x;
+        bool y;
+    }
+    if (y+5 < 2) {
+        int You;
+        bool I;
+        y = 2+4;
+    }
+    else {
+        void me;
+    }
+    while (5 <= 2) {
+        void us;
+        us = 1-2+3*4/2;
+    }
+    functionCall(123+123, "wORLDS");
+}
+int IOTest() {
+    int a;
+    void x;
+    cin >> x+1;
+    cout << "a";
+    return 0;
+}
+int StructTest() {
+    int a;
+    struct Magic apples;
+    apples.i = 1;
+    apples.b = true;
+    IOTest();
+    return apples.i;
+}
