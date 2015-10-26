@@ -242,7 +242,10 @@ stmt            ::= ifStmt:s      //If statement
                 |fnExp:fc SEMICOLON            //Function call
                 {: RESULT = new CallStmtNode(fc);
                 :}
-                | RETURN exp:e SEMICOLON        //return
+                | RETURN SEMICOLON        //return void
+                {: RESULT = new ReturnStmtNode(null);
+                :}
+                | RETURN exp:e SEMICOLON        //return exp
                 {: RESULT = new ReturnStmtNode(e);
                 :}
                 ;
@@ -320,6 +323,12 @@ exp             ::= exp:e1 PLUS exp:e2
                 | literal:l
                 {: RESULT = l;
                 :}
+                | LPAREN exp:e1 RPAREN
+                {: RESULT = e1;
+                :}
+                | fnExp:f
+                {: RESULT = f;
+                :}
                 ; 
                 
                 
@@ -379,12 +388,6 @@ literal         ::= INTLITERAL:intl
                 | FALSE:f1
                 {:  TokenVal f = (TokenVal) f1;
                     RESULT = new FalseNode(f.linenum, f.charnum);
-                :}
-                | LPAREN exp:e1 RPAREN
-                {: RESULT = e1;
-                :}
-                | fnExp:f
-                {: RESULT = f;
                 :}
                 ;
 
