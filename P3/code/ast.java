@@ -684,9 +684,11 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        myLoc.unparse(p,indent);
+        p.print("(");
+	myLoc.unparse(p,indent);
         p.print(".");
         myId.unparse(p,indent);
+	p.print(")");
     }
 
     // 2 kids

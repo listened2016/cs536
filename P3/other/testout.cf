@@ -1,0 +1,56 @@
+int x;
+int w;
+int ret;
+bool y;
+struct node {
+    int data;
+    bool isEmpty;
+};
+int add(int x, int w) {
+    if ((((x != 0) && (w >= 0)) || (!z))){
+        ret = (x + w);
+    }
+    else {
+        ret = (-1);
+    }
+    return ret;
+}
+void printError() {
+    s = "Error!";
+    cout << s;
+    cout << "Would you like to continue? y/n";
+    cin >> b;
+    return;
+}
+void main() {
+    struct node myNode;
+    x = 7;
+    if ((b == (-1))){
+        x = ((4 + (3 * 5)) - y);
+        while (c) {
+            y = ((y * 2) + x);
+        }
+    }
+    else {
+        x = 0;
+    }
+    i1 = (((((a).b).c).d).e).f;
+    if (((myNode).data >= 0)){
+        y = true;
+    }
+    else {
+        y = false;
+    }
+    while ((x >= 0)) {
+        while ((!y)) {
+            x = 5;
+            if ((!(myNode).isEmpty)){
+                if ((w == 0)){
+                    add();
+                    x++;
+                }
+            }
+        }
+    }
+    return;
+}

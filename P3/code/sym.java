@@ -9,6 +9,7 @@ public class sym {
   public static final int PLUSPLUS = 26;
   public static final int DIVIDE = 31;
   public static final int EQUALS = 35;
+  public static final int UMINUS = 42;
   public static final int GREATER = 38;
   public static final int LPAREN = 19;
   public static final int INT = 2;
@@ -90,7 +91,8 @@ public class sym {
   "GREATER",
   "LESSEQ",
   "GREATEREQ",
-  "ASSIGN"
+  "ASSIGN",
+  "UMINUS"
   };
 }
 

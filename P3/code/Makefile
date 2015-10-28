@@ -42,6 +42,11 @@ ErrMsg.class: ErrMsg.java
 test:
 	java   P3 testFiles/test_p1.cf testFiles/test_p1.out
 	java   P3 testFiles/test_p2.cf testFiles/test_p2.out
+	#Bad cases/ Will fail
+	-java   P3 testFiles/test_bad1.cf testFiles/test_bad1.out
+	-java   P3 testFiles/test_bad2.cf testFiles/test_bad2.out
+	-java   P3 testFiles/test_bad3.cf testFiles/test_bad3.out
+	-java   P3 testFiles/test_bad4.cf testFiles/test_bad4.out
 
 ###
 # clean

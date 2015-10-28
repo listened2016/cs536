@@ -1,0 +1,12 @@
+
+int f() {
+    a > b > c
+}
+
+int g(int a,) {
+
+}
+
+void c() {
+
+}

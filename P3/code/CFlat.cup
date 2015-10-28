@@ -65,6 +65,7 @@ terminal                GREATER;
 terminal                LESSEQ;
 terminal                GREATEREQ;
 terminal                ASSIGN;
+terminal                UMINUS;
 
 
 /* Nonterminals
@@ -108,7 +109,7 @@ precedence left AND;
 precedence nonassoc LESS, GREATER, LESSEQ, GREATEREQ, EQUALS, NOTEQUALS;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
-precedence right NOT;
+precedence right NOT, UMINUS;
 precedence left DOT;
 
 
@@ -198,7 +199,7 @@ formalDecl      ::= type:t id:n
                 ;
 
 /* Main body of a function, with declarations and stmts*/
-fnBody          ::= declList:ds stmtList:ss
+fnBody          ::= declList:ds stmtList:ss 
                 {: RESULT = new FnBodyNode(new DeclListNode(ds), 
                     new StmtListNode(ss));
                 :}
@@ -232,8 +233,8 @@ stmt            ::= ifStmt:s      //If statement
                 |  loc:v MINUSMINUS SEMICOLON      //Decrement
                 {: RESULT = new PostDecStmtNode(v);
                 :}
-                | CIN READ exp:e SEMICOLON      //Increment
-                {: RESULT = new ReadStmtNode(e);
+                | CIN READ loc:l SEMICOLON      //Increment
+                {: RESULT = new ReadStmtNode(l);
                 :}
                 | COUT WRITE exp:e  SEMICOLON      //Decrement
                 {: RESULT = new WriteStmtNode(e);
@@ -309,6 +310,9 @@ exp             ::= exp:e1 PLUS exp:e2
                 | exp:e1 GREATEREQ exp:e2
                 {: RESULT = new GreaterEqNode(e1,e2);
                 :}
+		|assignExp:e
+		{: RESULT = e;
+		:}
                 /* Unary Operators */
                 | NOT exp:e1
                 {: RESULT = new NotNode(e1);
@@ -316,6 +320,7 @@ exp             ::= exp:e1 PLUS exp:e2
                 | MINUS exp:e1
                 {: RESULT = new UnaryMinusNode(e1);
                 :}
+                %prec UMINUS
                 | term:v
                 {: RESULT = v; 
                 :}
