@@ -145,7 +145,8 @@ class DeclListNode extends ASTnode {
                 ((DeclNode)it.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+            "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
     }
@@ -170,7 +171,8 @@ class FormalsListNode extends ASTnode {
                 ((FormalDeclNode)itr.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in FormalDeclListNode.print");
+            System.err.println(
+            "unexpected NoSuchElementException in FormalDeclListNode.print");
             System.exit(-1);
         }
     }
@@ -207,7 +209,8 @@ class StmtListNode extends ASTnode {
                 (it.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in StmtListNode.print");
+            System.err.println(
+            "unexpected NoSuchElementException in StmtListNode.print");
             System.exit(-1);
         }
     }
@@ -233,7 +236,8 @@ class ExpListNode extends ASTnode {
                 (it.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in ExpListNode.print");
+            System.err.println(
+            "unexpected NoSuchElementException in ExpListNode.print");
             System.exit(-1);
         }
     }
@@ -291,7 +295,7 @@ class FnDeclNode extends DeclNode {
         p.print("(");
         myFormalsList.unparse(p,indent);
         p.println(") {");
-        myBody.unparse(p,indent + 4);
+        myBody.unparse(p,indent + 4); //Indent the body
         doIndent(p, indent);
         p.println("}");
     }
@@ -509,7 +513,8 @@ class IfElseStmtNode extends StmtNode {
         myElseDeclList = dlist2;
         myElseStmtList = slist2;
     }
-
+    /* We print all the substmts separately, for each if, else
+     *  We also indent the bodies*/
     public void unparse(PrintWriter p, int indent) {
         doIndent(p,indent);
         p.print("if (");
@@ -583,7 +588,7 @@ class ReturnStmtNode extends StmtNode {
     public void unparse(PrintWriter p, int indent) {
         doIndent(p,indent);
         p.print("return");
-        if (!(myExp==null)) {
+        if (!(myExp==null)) { //In case that there is no return statement
             p.print(" ");
             myExp.unparse(p,indent);   
         }
@@ -596,6 +601,7 @@ class ReturnStmtNode extends StmtNode {
 
 // **********************************************************************
 // ExpNode and its subclasses
+// In all expressions, we print parens around the printed expression
 // **********************************************************************
 
 abstract class ExpNode extends ASTnode {
@@ -685,10 +691,10 @@ class DotAccessExpNode extends ExpNode {
 
     public void unparse(PrintWriter p, int indent) {
         p.print("(");
-	myLoc.unparse(p,indent);
+        myLoc.unparse(p,indent);
         p.print(".");
         myId.unparse(p,indent);
-	p.print(")");
+        p.print(")");
     }
 
     // 2 kids

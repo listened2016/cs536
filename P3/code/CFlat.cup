@@ -124,7 +124,7 @@ program         ::= declList: d
                 {: RESULT = new ProgramNode(new DeclListNode(d));
                 :}
                 ;
-
+                
 declList        ::= declList:dl decl:d
                 {: dl.addLast(d);
                    RESULT = dl;
@@ -170,8 +170,8 @@ fnDecl          ::= type:t id:n LPAREN formalsList:fs RPAREN LCURLY fnBody:b RCU
                 :}
                 ;
 
-/* Represents entire list of function parameters; uses helper nonterminal formalsLList for
-    managing trailing commas */
+/* Represents entire list of function parameters; uses helper 
+ * nonterminal formalsLList for managing trailing commas */
 formalsList     ::= formalsLList:formals
                 {: RESULT = new FormalsListNode(formals);
                 :} 
@@ -325,7 +325,7 @@ exp             ::= exp:e1 PLUS exp:e2
                 {: RESULT = v; 
                 :}
                 ; 
-
+/* List of expressions*/
 expList         ::= expList:es COMMA exp:s   //Comma separated expressions
                 {: es.addLast(s);
                     RESULT = es;
@@ -366,12 +366,13 @@ term        ::= INTLITERAL:intl
                 {: RESULT = f;
                 :}
                 ;
-
+                
+/*Assignment expression*/
 assignExp       ::= loc:v ASSIGN exp:e
                 {: RESULT = new AssignNode(v,e);
                 :}
                 ; 
-                
+            
 fnCall         ::= id:i LPAREN expList:ss RPAREN
                 {:  RESULT = new CallExpNode(i,new ExpListNode(ss));
                 :}
@@ -380,7 +381,7 @@ fnCall         ::= id:i LPAREN expList:ss RPAREN
                 :}
                 ;
                 
-
+/* Local Vars */
 loc            ::= id:i
                 {: RESULT = i;
                 :}

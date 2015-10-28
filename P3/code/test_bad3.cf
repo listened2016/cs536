@@ -1,0 +1,3 @@
+if (true) {
+   print("This stmt has no function wrapping it");
+}
