@@ -1,0 +1,26 @@
+int x;
+int b;
+struct Node{
+    int a;
+    void b;
+};
+
+int createNode(int a, void b) {
+    struct Node n;
+    int x;
+    int y;
+    int c;
+    c(int) = true;
+    (n).a = a(int);
+    (n).b = b(void);
+    if ((b(void) == (-1))) {
+        x(int) = ((4 + (3 * 5)) - y(int));
+        while (c(int)) {
+            y(int) = ((y(int) * 2) + x(int));
+        }
+    }
+    else {
+        x(int) = 0;
+    }
+}
+

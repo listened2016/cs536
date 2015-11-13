@@ -1,10 +1,8 @@
 public class SemSym {
     private String type;
-    private String name;
     
-    public SemSym(String type, String name) {
+    public SemSym(String type) {
         this.type = type;
-        this.name = name;
     }
     
     public String getType() {
@@ -12,6 +10,6 @@ public class SemSym {
     }
     
     public String toString() {
-        return name;
+        return type;
     }
 }
