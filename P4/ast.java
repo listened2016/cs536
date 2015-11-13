@@ -354,6 +354,17 @@ class FnDeclNode extends DeclNode {
         p.println("}\n");
     }
 
+    public void nameAnalysis(SymTable sTable) {
+
+//TODO: Analyze idnode uniquely when associated with function (add new func)
+	myType.nameAnalysis(sTable);
+	myId.nameAnalysis(sTable, myFormalsList.getFormalsListTypes(), myType.getId());
+	addScope(sTable);
+	myFormalsList.nameAnalysis(sTable);
+	myBody.nameAnalysis(sTable);
+	removeScope(sTable);
+    } 
+
     // 4 kids
     private TypeNode myType;
     private IdNode myId;
@@ -371,6 +382,12 @@ class FormalDeclNode extends DeclNode {
         myType.unparse(p, 0);
         p.print(" ");
         myId.unparse(p, 0);
+    }
+
+    public void nameAnalysis(SymTable sTable) {
+ //TODO: Deal with type on id when declared
+	myType.nameAnalysis(sTable);
+	myId.nameAnalysis(sTable, myType.getId());
     }
 
     // 2 kids
