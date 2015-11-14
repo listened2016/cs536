@@ -43,6 +43,7 @@ class StructVarSym extends SemSym {
         return id;
     }
     
+    
     public String toString() {
         return null;
     }
