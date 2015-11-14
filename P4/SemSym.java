@@ -13,3 +13,37 @@ public class SemSym {
         return type;
     }
 }
+
+class StructDeclSym extends SemSym {
+    private SymTable fields;
+    
+    public StructDeclSym(SymTable fields) {
+        super(null);
+        this.fields = fields;
+    }
+    
+    public SymTable getFields() {
+        return fields;
+    }
+    
+    public String toString() {
+        return null;
+    }
+}
+
+class StructVarSym extends SemSym {
+    private String id;
+    
+    public StructVarSym(String id) {
+        super(null);
+        this.id = id;
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    public String toString() {
+        return null;
+    }
+}

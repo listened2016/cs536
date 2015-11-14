@@ -155,11 +155,37 @@ class DeclListNode extends ASTnode {
         }
     }
 
+    /* Applies name analysis methodology to the DeclListNode class
+     * Uses sTable provided to add new declarations to
+     * */
     public void nameAnalysis(SymTable sTable) {
 	Iterator it = myDecls.iterator();
         try {
             while (it.hasNext()) {
                 ((DeclNode)it.next()).nameAnalysis(sTable);
+            }
+        } catch (NoSuchElementException ex) {
+            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.exit(-1);
+        }
+    }
+
+    /* Applies name analysis methodology to the DeclListNode class
+     * Used for declaration list within a struct
+     * Uses sTable provided to check for other structs,
+     * adds field declarations to structTable
+     * */    
+    public void nameAnalysis(SymTable structTable, SymTable sTable) {
+	Iterator it = myDecls.iterator();
+        try {
+            while (it.hasNext()) {
+                DeclNode next = ((DeclNode)it.next());
+                if (next instanceof VarDeclNode) {
+                    ((VarDeclNode)next).nameAnalysis(structTable, sTable);
+                }
+                else {
+                    next.nameAnalysis(sTable);
+                }
             }
         } catch (NoSuchElementException ex) {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
@@ -300,6 +326,10 @@ class VarDeclNode extends DeclNode {
         p.println(";");
     }
 
+    /* Applies name analysis method on VarDeclNode
+     * Adds variable declaration to symbol table, based on primitive
+     * or struct. Checks for multiply declared vars, improper struct decl
+     * */
     public void nameAnalysis(SymTable sTable) {
         SemSym sym = new SemSym(this.myType.getType());
         if (this.myType.getType().equals("void")) {
@@ -310,6 +340,40 @@ class VarDeclNode extends DeclNode {
     
             if (!(this.myType instanceof StructNode)){
                 sTable.addDecl(this.myId.getId(), sym);
+            }
+    
+            else {
+
+//                StructNode sn = (StructNode)myType;
+//                s = new StructVarSym(sn.getStructType()); //create new StructVarSym for ms
+    
+//                sTable.addDecl(this.myId.getId(), s);
+            }
+    
+        } 
+        catch (DuplicateSymException e) {
+            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
+                "Multiply declared identifier");
+        } 
+        catch (EmptySymTableException e) {
+            //e.printStackTrace();
+        }
+    }
+    
+    /* Applies name analysis method on VarDeclNode
+     * Adds variable declaration to symbol table, based on primitive
+     * or struct. Checks for multiply declared vars, improper struct decl
+     * */
+    public void nameAnalysis(SymTable structTable, SymTable sTable) {
+        SemSym sym = new SemSym(this.myType.getType());
+        if (this.myType.getType().equals("void")) {
+            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
+            "Non-function declared void");
+        }
+        try {
+    
+            if (!(this.myType instanceof StructNode)){
+                structTable.addDecl(this.myId.getId(), sym);
             }
     
             else {
@@ -449,8 +513,25 @@ class StructDeclNode extends DeclNode {
 
     }
     
-    public void nameAnalysis(SymbolTable sTable) {
+    public void nameAnalysis(SymTable sTable) {
         
+        //Construct symTable entry for usage
+        SymTable structTable = new SymTable();
+        myDeclList.nameAnalysis(structTable, sTable);
+        StructDeclSym sds = new StructDeclSym(structTable);
+        
+        
+        //Check if name defined in SymbolTable already, add
+        try {
+            structTable.addDecl(myId.getId(),sds);
+            myId.setSym(sds);
+        }
+        catch (DuplicateSymException ex) {
+            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
+                "Multiply declared identifier");
+        }
+        catch (EmptySymTableException ex) {
+        }
     }
 
     // 2 kids
@@ -907,15 +988,17 @@ class IdNode extends ExpNode {
     }
 
     public void nameAnalysis(SymTable sTable) {
-	SemSym sym = sTable.lookupGlobal(myStrVal);
-	//Undeclared identifier used
-	if (sym == null) {
-	    ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
-	}
-	else {
-	    this.setSym(sym);
-	}
-
+        SemSym sym = sTable.lookupGlobal(myStrVal);
+        //Undeclared identifier used
+        if (sym == null) {
+            ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
+        }
+        else if (sym instanceof StructDeclSym) {
+            //TODO: Struct stuff?
+        }
+        else {
+            this.setSym(sym);
+        }
     }
 
     public SemSym getSym() {
@@ -964,15 +1047,15 @@ class DotAccessExpNode extends ExpNode {
         myLoc.nameAnalysis(sTable);
         
         if (myLoc instanceof IdNode) {
-            sym = ((IdNode)id).sym();
+            sym = ((IdNode)myId).getSym();
             
-            if sym (!=null) {
-                if (sym instanceof StructSym) {
-                    subTable = ((StructDefSym)((StructSym)sym).getStructType().sym()).getSymTable();
+            if (sym !=null) {
+                if (sym instanceof StructVarSym) {
+                    //subTable = ((StructDeclSym)((StructVarSym)sym).getStructType().getSym()).getSymTable();
                 }
              
-                else if (){  // LHS is not a struct type
-                    ErrMsg.fatal(id.lineNum(), id.charNum(), 
+                else if (false){  // LHS is not a struct type
+                    ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                              "Dot-access of non-struct type");
                 }    
             }
