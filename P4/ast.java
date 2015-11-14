@@ -331,70 +331,57 @@ class VarDeclNode extends DeclNode {
      * or struct. Checks for multiply declared vars, improper struct decl
      * */
     public void nameAnalysis(SymTable sTable) {
-        SemSym sym = new SemSym(this.myType.getType());
-        if (this.myType.getType().equals("void")) {
-            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
-            "Non-function declared void");
-        }
-        try {
-    
-            if (!(this.myType instanceof StructNode)){
-                sTable.addDecl(this.myId.getId(), sym);
-            }
-    
-            else {
-
-//                StructNode sn = (StructNode)myType;
-//                s = new StructVarSym(sn.getStructType()); //create new StructVarSym for ms
-    
-//                sTable.addDecl(this.myId.getId(), s);
-            }
-    
-        } 
-        catch (DuplicateSymException e) {
-            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
-                "Multiply declared identifier");
-        } 
-        catch (EmptySymTableException e) {
-            //e.printStackTrace();
-        }
+        nameAnalysis(sTable,sTable); //Treat sTable like a "struct" scope
     }
     
-    /* Applies name analysis method on VarDeclNode
+    /* Applies name analysis method on VarDeclNode for struct fields
      * Adds variable declaration to symbol table, based on primitive
      * or struct. Checks for multiply declared vars, improper struct decl
      * */
     public void nameAnalysis(SymTable structTable, SymTable sTable) {
-        SemSym sym = new SemSym(this.myType.getType());
+        SemSym sym = null;
         if (this.myType.getType().equals("void")) {
             ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
             "Non-function declared void");
         }
-        try {
-    
-            if (!(this.myType instanceof StructNode)){
-                structTable.addDecl(this.myId.getId(), sym);
+        else if (!(this.myType instanceof StructNode)){
+                sym = new SemSym(this.myType.getType());
             }
-    
+        else {
+            IdNode id  = ((StructNode)(this.myType)).getId();
+            SemSym structDeclSym = sTable.lookupGlobal(id.getId());
+            if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
+                id.setSym(structDeclSym);
+                sym = new StructVarSym(id);
+            }
             else {
-
-//                StructNode sn = (StructNode)myType;
-//                s = new StructVarSym(sn.getStructType()); //create new StructVarSym for ms
-    
-//                sTable.addDecl(this.myId.getId(), s);
+                ErrMsg.fatal(id.getCharNum(),id.getCharNum(),
+                    "Invalid name of struct type");
             }
-    
-        } 
-        catch (DuplicateSymException e) {
-            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
-                "Multiply declared identifier");
-        } 
-        catch (EmptySymTableException e) {
-            //e.printStackTrace();
+        }
+        
+        if (sTable.lookupLocal(myId.getId()) != null) {
+            ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
+                         "Multiply declared identifier");
+        }
+        else if (sym != null){
+        
+            try {
+                structTable.addDecl(this.myId.getId(),sym);
+                myId.setSym(sym);
+        
+            } 
+            catch (DuplicateSymException e) {
+                System.out.println(
+                    "Compiler Error: Duplicate Sym, Line 366");
+            } 
+            catch (EmptySymTableException e) {
+                //e.printStackTrace();
+            }
         }
     }
-
-    // 3 kids
+    
+       // 3 kids
     private TypeNode myType;
     private IdNode myId;
     private int mySize;  // use value NOT_STRUCT if this is not a struct type
@@ -599,6 +586,10 @@ class StructNode extends TypeNode {
     
     public String getType() {
         return myId.getId();
+    }
+    
+    public IdNode getId() {
+        return myId;
     }
 //TODO: add return type function
 	

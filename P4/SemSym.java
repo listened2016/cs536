@@ -32,14 +32,14 @@ class StructDeclSym extends SemSym {
 }
 
 class StructVarSym extends SemSym {
-    private String id;
+    private IdNode id;
     
-    public StructVarSym(String id) {
+    public StructVarSym(IdNode id) {
         super(null);
         this.id = id;
     }
     
-    public String getId() {
+    public IdNode getId() {
         return id;
     }
     
