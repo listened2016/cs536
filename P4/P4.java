@@ -52,13 +52,14 @@ public class P4 {
             root = P.parse(); // do the parse
             System.out.println ("program parsed correctly.");
             ((ASTnode)root.value).nameAnalysis(new SymTable()); // do the name analysis
-            System.out.println ("name analysis successful.");
-//TODO; Maybe print all errors here?
+
         } catch (Exception ex){
             System.err.println("Exception occured during parse: " + ex);
             System.exit(-1);
         }
-        ((ASTnode)root.value).unparse(outFile, 0);
+        if (!ErrMsg.hasError()) {
+            ((ASTnode)root.value).unparse(outFile, 0);
+        }
         outFile.close();
 
         return;

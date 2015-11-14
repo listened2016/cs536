@@ -279,7 +279,6 @@ class ExpListNode extends ASTnode {
 // DeclNode and its subclasses
 // **********************************************************************
 
-//TODO: make sure void is not returnedf
 
 abstract class DeclNode extends ASTnode {
     public void nameAnalysis(SymTable sTable){
@@ -303,6 +302,10 @@ class VarDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable sTable) {
         SemSym sym = new SemSym(this.myType.getType());
+        if (this.myType.getType().equals("void")) {
+            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
+            "Non-function declared void");
+        }
         try {
     
             if(this.mySize == NOT_STRUCT){
