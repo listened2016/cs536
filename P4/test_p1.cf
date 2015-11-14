@@ -1,14 +1,31 @@
+struct Point {
+    int x;
+    int y;
+};
+int f(int x, bool b) { }
+void g() {
+    int a;
+    bool b;
+    struct Point p;
+    p.x = a;
+    b = a == 3;
+    f(a + p.y*2, b);
+    g();
+}
+
 int x;
 int b;
 struct Node {
    int a;
    void b;
 };
+bool z;
 int createNode(int a, void b) {
     struct Node n;
     int x;
     int y;
     int c;
+    z = 1;
     c = true;
     n.a = a;
     n.b = b;

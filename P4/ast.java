@@ -308,12 +308,12 @@ class VarDeclNode extends DeclNode {
         }
         try {
     
-            if(this.mySize == NOT_STRUCT){
+            if (!(this.myType instanceof StructNode)){
                 sTable.addDecl(this.myId.getId(), sym);
             }
     
-            else{
-//TODO: adds struct supporrt
+            else {
+
 //                StructNode sn = (StructNode)myType;
 //                s = new StructVarSym(sn.getStructType()); //create new StructVarSym for ms
     
@@ -447,6 +447,10 @@ class StructDeclNode extends DeclNode {
         doIndent(p, indent);
         p.println("};\n");
 
+    }
+    
+    public void nameAnalysis(SymbolTable sTable) {
+        
     }
 
     // 2 kids
@@ -952,6 +956,36 @@ class DotAccessExpNode extends ExpNode {
 		p.print(").");
 		myId.unparse(p, 0);
     }
+    
+    public void nameAnalysis(SymTable sTable){
+        SymTable subTable = null;
+        SemSym sym = null;
+        
+        myLoc.nameAnalysis(sTable);
+        
+        if (myLoc instanceof IdNode) {
+            sym = ((IdNode)id).sym();
+            
+            if sym (!=null) {
+                if (sym instanceof StructSym) {
+                    subTable = ((StructDefSym)((StructSym)sym).getStructType().sym()).getSymTable();
+                }
+             
+                else if (){  // LHS is not a struct type
+                    ErrMsg.fatal(id.lineNum(), id.charNum(), 
+                             "Dot-access of non-struct type");
+                }    
+            }
+        }
+        else if (myLoc instanceof DotAccessExpNode) {
+            
+        }
+        
+        if (subTable!=null) {
+            
+        }
+//TODO: Struct management
+    }
 
     // 2 kids
     private ExpNode myLoc;	
@@ -974,7 +1008,7 @@ class AssignNode extends ExpNode {
 
     public void nameAnalysis(SymTable sTable){
         myLhs.nameAnalysis(sTable);
-	myExp.nameAnalysis(sTable);
+        myExp.nameAnalysis(sTable);
     }
 
     // 2 kids
