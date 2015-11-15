@@ -1,7 +1,7 @@
 public class SemSym {
     private String type;
     
-    public SemSym(String type) {
+    public SemSym(String type) { 
         this.type = type;
     }
     
@@ -17,8 +17,8 @@ public class SemSym {
 class StructDeclSym extends SemSym {
     private SymTable fields;
     
-    public StructDeclSym(SymTable fields) {
-        super(null);
+    public StructDeclSym(SymTable fields, String type) {
+        super(type);
         this.fields = fields;
     }
     
@@ -27,6 +27,7 @@ class StructDeclSym extends SemSym {
     }
     
     public String toString() {
+        fields.print();
         return null;
     }
 }
@@ -34,8 +35,8 @@ class StructDeclSym extends SemSym {
 class StructVarSym extends SemSym {
     private IdNode id;
     
-    public StructVarSym(IdNode id) {
-        super(null);
+    public StructVarSym(IdNode id,String type) {
+        super(type);
         this.id = id;
     }
     

@@ -307,7 +307,7 @@ class ExpListNode extends ASTnode {
 
 
 abstract class DeclNode extends ASTnode {
-    public void nameAnalysis(SymTable sTable){
+    public void nameAnalysis(SymTable sTable) {
     }
 }
 
@@ -322,7 +322,7 @@ class VarDeclNode extends DeclNode {
         doIndent(p, indent);
         myType.unparse(p, 0);
         p.print(" ");
-        myId.unparse(p, 0);
+        myId.unparse(p, 0, false);
         p.println(";");
     }
 
@@ -352,15 +352,15 @@ class VarDeclNode extends DeclNode {
             SemSym structDeclSym = sTable.lookupGlobal(id.getId());
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
-                sym = new StructVarSym(id);
+                sym = new StructVarSym(id, id.getId());
             }
             else {
-                ErrMsg.fatal(id.getCharNum(),id.getCharNum(),
+                ErrMsg.fatal(id.getLineNum(),id.getCharNum(),
                     "Invalid name of struct type");
             }
         }
         
-        if (sTable.lookupLocal(myId.getId()) != null) {
+        if (structTable.lookupLocal(myId.getId()) != null) {
             ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                          "Multiply declared identifier");
         }
@@ -404,7 +404,7 @@ class FnDeclNode extends DeclNode {
         doIndent(p, indent);
         myType.unparse(p, 0);
         p.print(" ");
-        myId.unparse(p, 0);
+        myId.unparse(p, 0, false);
         p.print("(");
         myFormalsList.unparse(p, 0);
         p.println(") {");
@@ -462,6 +462,11 @@ class FormalDeclNode extends DeclNode {
 
     public void nameAnalysis(SymTable sTable) {
 //TODO: Deal with type on id when declared
+        if (this.myType.getType().equals("void")) {
+            ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
+            "Non-function declared void");
+            return;
+        }
  
         SemSym sym = new SemSym(this.myType.getType());
         try {
@@ -492,7 +497,7 @@ class StructDeclNode extends DeclNode {
     public void unparse(PrintWriter p, int indent) {
         doIndent(p, indent);
         p.print("struct ");
-		myId.unparse(p, 0);
+		myId.unparse(p, 0, false);
 		p.println("{");
         myDeclList.unparse(p, indent+4);
         doIndent(p, indent);
@@ -502,15 +507,15 @@ class StructDeclNode extends DeclNode {
     
     public void nameAnalysis(SymTable sTable) {
         
-        //Construct symTable entry for usage
+        //Construct symTable sym for usage
         SymTable structTable = new SymTable();
         myDeclList.nameAnalysis(structTable, sTable);
-        StructDeclSym sds = new StructDeclSym(structTable);
+        StructDeclSym sds = new StructDeclSym(structTable, myId.getId());
         
         
         //Check if name defined in SymbolTable already, add
         try {
-            structTable.addDecl(myId.getId(),sds);
+            sTable.addDecl(myId.getId(),sds);
             myId.setSym(sds);
         }
         catch (DuplicateSymException ex) {
@@ -972,8 +977,12 @@ class IdNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
+        unparse(p,indent,true);
+    }
+    
+    public void unparse(PrintWriter p, int indent, boolean printType) {
         p.print(myStrVal);
-        if(mySym!=null) {
+        if(mySym!=null && printType) {
             p.print("("+mySym.getType()+")");
         }
     }

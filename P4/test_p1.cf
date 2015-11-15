@@ -17,10 +17,10 @@ int x;
 int b;
 struct Node {
    int a;
-   void b;
+   bool b;
 };
 bool z;
-int createNode(int a, void b) {
+int createNode(int a, bool b) {
     struct Node n;
     int x;
     int y;
