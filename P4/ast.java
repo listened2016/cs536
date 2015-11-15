@@ -371,6 +371,7 @@ class VarDeclNode extends DeclNode {
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
                 sym = new StructVarSym((StructDeclSym)structDeclSym, id.getId());
+                System.out.println(id.getId());
             }
             else {
                 ErrMsg.fatal(id.getLineNum(),id.getCharNum(),
