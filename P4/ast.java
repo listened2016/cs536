@@ -229,7 +229,10 @@ class FormalsListNode extends ASTnode {
         it = myFormals.iterator();
         try {
             while (it.hasNext()) {
-                lst.add(((FormalDeclNode)it.next()).getType());
+                String str = ((FormalDeclNode)it.next()).getType();
+                if (str != null) {
+                    lst.add(str);
+                }
             }
         } catch (NoSuchElementException ex) {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
@@ -371,7 +374,6 @@ class VarDeclNode extends DeclNode {
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
                 sym = new StructVarSym((StructDeclSym)structDeclSym, id.getId());
-                System.out.println(id.getId());
             }
             else {
                 ErrMsg.fatal(id.getLineNum(),id.getCharNum(),
@@ -472,7 +474,7 @@ class FormalDeclNode extends DeclNode {
     public void unparse(PrintWriter p, int indent) {
         myType.unparse(p, 0);
         p.print(" ");
-        myId.unparse(p, 0);
+        myId.unparse(p, 0, false);
     }
 
     public void nameAnalysis(SymTable sTable) {

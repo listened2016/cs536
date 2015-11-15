@@ -5,14 +5,20 @@ struct Node {
    int a;
    void b;
 };
+struct Tree {
+   struct Node n;
+   struct Magic m;
+};
 int createNode(int a, void b) {
     struct Node n;
     int x;
     int y;
     int c;
     c = true;
+    hello = world; //undeclared identifiers, both
     n.a = a;
-    n.b = b;
+    n.b = b; //Invalid struct field name
+    t.pt.z = 5;
     if (b == -1) { 
         x = 4+3*5-y; 
         while (c) { 
@@ -25,4 +31,27 @@ int createNode(int a, void b) {
     
     undeclaredVar = 0;
 }
+
+int main(int arg){
+     int x;
+     int arg; //Multiply declared
+     struct Node n;
+     struct Tree t;
+     struct IDontExist s; //Invalid name of struct type
+     n.a  = 5;
+     n.z = "True"; //Invalid struct field name
+     n.z.a = "true"; //Invalid struct field name
+     n.a.a = 123; //Dot-access of non-struct (print once)
+     s.y = 5; //Undeclared Identifier
+     x.y = 5; // Dot-access of non-struct type
+     s = 5; //Undeclared identifier
+     n = 5;
+
+
+    t.c = t.n; //Invalid struct field name
+    t.m++; //Invalid struct field name
+    t.n.a = t.n.z; //Invalid struct field name
+
+     a.b.c.d.e.f = 0;
+ }
 
