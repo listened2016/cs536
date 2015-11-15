@@ -40,13 +40,13 @@ class StructVarSym extends SemSym {
     private StructDeclSym structDeclId;
     private String type;
     
-    public StructVarSym(IdNode id,String type) {
+    public StructVarSym(StructDeclSym id,String type) {
         super(type);
         this.StructDeclId = id;
     }
     
     public StructDeclSym getDecl() {
-        return id;
+        return structDeclId;
     }
     
     
