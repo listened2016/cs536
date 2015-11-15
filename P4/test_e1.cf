@@ -48,9 +48,9 @@ int main(int arg){
      n = 5;
 
 
-    t.c = t.n; //Invalid struct field name
-    t.m++; //Invalid struct field name
-    t.n.a = t.n.z; //Invalid struct field name
+     t.c = t.n; //Invalid struct field name
+     t.m++; //Invalid struct field name
+     t.n.a = t.n.z; //Invalid struct field name
 
      a.b.c.d.e.f = 0; //Undeclared identifier (print once)
      n.a.a.a--; ///Dot-access of non-struct (print once)

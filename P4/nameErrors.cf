@@ -1,1 +1,69 @@
+int x;
+void x;        //Non-function declared void & Multiply declared identifier
+int b;
+struct Node {
+   int a;
+   void b;
+   bool a;     //Multiply declared identifier
+   void a;    //Non-function declared void & Multiply declared identifier
+};
+struct Tree {
+   struct Node n;
+   struct Magic m;
+};
+int createNode(int a, void b) {
+    struct Node n;
+    int x;
+    int y;
+    void c;
+    c = true; //Undeclared Identifier
+    hello = world; //undeclared identifiers, both
+    n.a = a;
+    n.b = b; //Invalid struct field name
+    t.pt.z = 5; //Undeclared Identifier
+    if (imNotDeclared == -1) {  //Undeclared Identifier
+        int hello;
+        void world; //Bad declaration
+        x = 4+3*5-MeNeither;  //Undeclared Identifier
+        while (c) { //Undeclared Identifier
+            y = y*2+x.b; ////Dot access of non-struct
+            y = x==n.m; // Invalid struct name field
+        } 
+    } 
+    else {
+        hello = 0; //Undeclared Identifier
+    }
+    
+    undeclaredVar = 0; //Undeclared identifier
+}
+
+int main(int arg, bool arg){ //Multiply declared identifier
+     int x;
+     int arg; //Multiply declared
+     struct Node n;
+     struct Tree t;
+     struct IDontExist s; //Invalid name of struct type
+     n.a  = 5;
+     n.z = "True"; //Invalid struct field name
+     n.z.a = "true"; //Invalid struct field name
+     n.a.a = 123; //Dot-access of non-struct (print once)
+     s.y = 5; //Undeclared Identifier
+     x.y = 5; // Dot-access of non-struct type
+     s = 5; //Undeclared identifier
+     n = 5;
+     while (true) {
+        struct Node abc;
+        int abc; //Multiply declared
+        struct Magic abc; ////Invalid name of struct type & Multiply declared identifier
+     }
+     x = abc.a; //Undeclared identifier
+
+     t.c = t.n; //Invalid struct field name
+     t.m++; //Invalid struct field name
+     t.n.a = t.n.z; //Invalid struct field name
+
+     a.b.c.d.e.f = 0; //Undeclared identifier (print once)
+     n.a.a.a--; ///Dot-access of non-struct (print once)
+     n.j.i.k = 2; //Invalid field name (print once)
+ }
 

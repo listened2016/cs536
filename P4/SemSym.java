@@ -62,9 +62,8 @@ class StructVarSym extends SemSym {
     }
 }
 
-/* SemSym for variables declared of type struct. Carrys ptr to
- * StructDeclSym associated with StructDeclSym, type is name
- * of struct type
+/* SemSym for functions declared . Carrys returntype, 
+ * and list of string indicating types on formals
  */
 class FnDeclSym extends SemSym {
     private String returnType;
@@ -85,6 +84,7 @@ class FnDeclSym extends SemSym {
         return this.formalsTypes;
     }
 
+    //Constructs function signature for unparsing
     public String toString() {
         String sol = "";
         Iterator<String> itr = this.formalsTypes.iterator();

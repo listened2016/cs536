@@ -150,7 +150,8 @@ class DeclListNode extends ASTnode {
                 ((DeclNode)it.next()).unparse(p, indent);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+                "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
     }
@@ -165,7 +166,8 @@ class DeclListNode extends ASTnode {
                 ((DeclNode)it.next()).nameAnalysis(sTable);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+                "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
     }
@@ -188,7 +190,8 @@ class DeclListNode extends ASTnode {
                 }
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+                "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
     }
@@ -221,7 +224,8 @@ class FormalsListNode extends ASTnode {
                 ((FormalDeclNode)it.next()).nameAnalysis(sTable);
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+                "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
 
@@ -235,7 +239,8 @@ class FormalsListNode extends ASTnode {
                 }
             }
         } catch (NoSuchElementException ex) {
-            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.err.println(
+                "unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
     }
@@ -361,16 +366,18 @@ class VarDeclNode extends DeclNode {
      * */
     public void nameAnalysis(SymTable structTable, SymTable sTable) {
         SemSym sym = null;
-        if (this.myType.getType().equals("void")) {
+        if (this.myType.getType().equals("void")) {  //Void variabe type case
             ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
             "Non-function declared void");
         }
-        else if (!(this.myType instanceof StructNode)){
+        else if (!(this.myType instanceof StructNode)){ //Not struct node
                 sym = new SemSym(this.myType.getType());
-            }
-        else {
+        }
+        else {  //Is a struct node, find struct decl in symtable
             IdNode id  = ((StructNode)(this.myType)).getId();
             SemSym structDeclSym = sTable.lookupGlobal(id.getId());
+            
+            // if we find in symtable, create a struct var sym
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
                 sym = new StructVarSym((StructDeclSym)structDeclSym, id.getId());
@@ -381,11 +388,12 @@ class VarDeclNode extends DeclNode {
             }
         }
         
+        //If scope contains variable, we have duplicate
         if (structTable.lookupLocal(myId.getId()) != null) {
             ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                          "Multiply declared identifier");
         }
-        else if (sym != null){
+        else if (sym != null){ //otherwise, we add sym as var
         
             try {
                 structTable.addDecl(this.myId.getId(),sym);
@@ -432,10 +440,16 @@ class FnDeclNode extends DeclNode {
         p.println("}\n");
     }
 
+
+    /* Runs name analysis on function declaration,
+     * connecting function name with parameters, return
+     * type in SymTable
+     */
     public void nameAnalysis(SymTable sTable) {
 
 //TODO: Analyze idnode uniquely when associated with function (add new func)
-        SemSym sym = new FnDeclSym(this.myFormalsList.getFormalsTypes(),this.myType.getType());
+        SemSym sym = new FnDeclSym(this.myFormalsList.getFormalsTypes(),
+            this.myType.getType());
         try {
             sTable.addDecl(this.myId.getId(), sym);
             this.myId.setSym(sym);
@@ -447,11 +461,11 @@ class FnDeclNode extends DeclNode {
         catch (EmptySymTableException e) {
             //e.printStackTrace();
         }
-        sTable.addScope();
+        sTable.addScope(); //New scope within function
         myFormalsList.nameAnalysis(sTable);
         myBody.nameAnalysis(sTable);
         try {
-            sTable.removeScope();
+            sTable.removeScope(); //End of function scope
         }
         catch (EmptySymTableException e) {
             System.out.println("SYSTEM ERROR: EMPTY SCOPE LIST");
@@ -499,6 +513,7 @@ class FormalDeclNode extends DeclNode {
         
     }
 
+    //Returns the type on formal var
     public String getType() {
         if (this.myId.getSym()!=null)
             return this.myId.getSym().getType();
@@ -530,7 +545,7 @@ class StructDeclNode extends DeclNode {
     
     public void nameAnalysis(SymTable sTable) {
         
-        //Construct symTable sym for usage
+        //Construct symTable sym for usage,populate with inner decls
         SymTable structTable = new SymTable();
         myDeclList.nameAnalysis(structTable, sTable);
         StructDeclSym sds = new StructDeclSym(structTable, myId.getId());
@@ -1047,7 +1062,12 @@ class IdNode extends ExpNode {
     private String myStrVal;
     private SemSym mySym;
 }
-
+/* Name analysis on Dot access node
+ * Checks if RHS is struct, LHS is field of struct
+ * Associates Node with a mySym
+ * Uses hasFailed to signify name analysis error,
+ * prevents chained error printing from multiple dot accesses 
+ */
 class DotAccessExpNode extends ExpNode {
     public DotAccessExpNode(ExpNode loc, IdNode id) {
         myLoc = loc;	
@@ -1067,7 +1087,7 @@ class DotAccessExpNode extends ExpNode {
         
         myLoc.nameAnalysis(sTable);
         
-        //Get subtable to check for var
+        //Get subtable from sym to check for var
         if (myLoc instanceof IdNode) {
             SemSym locSym = ((IdNode)myLoc).getSym();
             
@@ -1080,13 +1100,15 @@ class DotAccessExpNode extends ExpNode {
                 return;
             }
             else {  // LHS is not a struct type
-                ErrMsg.fatal(((IdNode)myLoc).getLineNum(), ((IdNode)myLoc).getCharNum(), 
-                             "Dot-access of non-struct type");
+                ErrMsg.fatal(((IdNode)myLoc).getLineNum(), 
+                    ((IdNode)myLoc).getCharNum(), 
+                    "Dot-access of non-struct type");
                 this.hasFailed = true;
                 return;
             }    
             
         }
+        //If Dot Access, use sym value from recursive call
         else if (myLoc instanceof DotAccessExpNode) {
             if (((DotAccessExpNode)myLoc).hasFailed()) {
                 this.hasFailed = true;
@@ -1106,14 +1128,15 @@ class DotAccessExpNode extends ExpNode {
                 else {
                     //SemSym structDecl = ((StructDeclSym)locSym).getId().getSym();
                     if (locSym !=null && (locSym instanceof StructVarSym)) {
-                        StructDeclSym structDecl = ((StructVarSym)locSym).getDecl();
+                        StructDeclSym structDecl = 
+                            ((StructVarSym)locSym).getDecl();
                         subTable = ((StructDeclSym)structDecl).getFields();
                     }
                 }
             }
         }
     
-        
+        //Check if field name exists in struct
         if (subTable!=null) {
             SemSym sym = subTable.lookupGlobal(this.myId.getId());
             if (sym==null) {

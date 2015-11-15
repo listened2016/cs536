@@ -40,9 +40,10 @@ ErrMsg.class: ErrMsg.java
 
 ##test
 test:
-	java   P4 test_p1.cf test_p1.out
+	#Good cases
+	java   P4 test.cf test.out
 	#Error cases
-	java   P4 test_e1.cf test_e1.out
+	java   P4 nameErrors.cf nameErrors.out
 
 ###
 # clean
