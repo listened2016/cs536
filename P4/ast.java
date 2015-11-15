@@ -200,6 +200,7 @@ class DeclListNode extends ASTnode {
 class FormalsListNode extends ASTnode {
     public FormalsListNode(List<FormalDeclNode> S) {
         myFormals = S;
+        formalsTypes = new LinkedList<String>();
     }
 
     public void unparse(PrintWriter p, int indent) {
@@ -223,10 +224,8 @@ class FormalsListNode extends ASTnode {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
-    }
 
-    public List<String> getFormalsTypes() {
-        List<String> lst = new LinkedList<String>();
+        List<String> lst = formalsTypes;
         Iterator it = myFormals.iterator();
         try {
             while (it.hasNext()) {
@@ -236,14 +235,18 @@ class FormalsListNode extends ASTnode {
             System.err.println("unexpected NoSuchElementException in DeclListNode.print");
             System.exit(-1);
         }
+    }
 
-        return lst;
+    public List<String> getFormalsTypes() {
+
+        return formalsTypes;
     }
 
     
 
     // list of kids (FormalDeclNodes)
     private List<FormalDeclNode> myFormals;
+    private List<String> formalsTypes;
 }
 
 class FnBodyNode extends ASTnode {
@@ -429,10 +432,6 @@ class FnDeclNode extends DeclNode {
     public void nameAnalysis(SymTable sTable) {
 
 //TODO: Analyze idnode uniquely when associated with function (add new func)
-        
-        sTable.addScope();
-        myFormalsList.nameAnalysis(sTable);
-
         SemSym sym = new FnDeclSym(this.myFormalsList.getFormalsTypes(),this.myType.getType());
         try {
             sTable.addDecl(this.myId.getId(), sym);
@@ -445,7 +444,8 @@ class FnDeclNode extends DeclNode {
         catch (EmptySymTableException e) {
             //e.printStackTrace();
         }
-
+        sTable.addScope();
+        myFormalsList.nameAnalysis(sTable);
         myBody.nameAnalysis(sTable);
         try {
             sTable.removeScope();
