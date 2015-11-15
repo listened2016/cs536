@@ -225,6 +225,21 @@ class FormalsListNode extends ASTnode {
         }
     }
 
+    public List<String> getFormalsTypes() {
+        List<String> lst = new LinkedList<String>();
+        Iterator it = myFormals.iterator();
+        try {
+            while (it.hasNext()) {
+                lst.add(((FormalDeclNode)it.next()).getType());
+            }
+        } catch (NoSuchElementException ex) {
+            System.err.println("unexpected NoSuchElementException in DeclListNode.print");
+            System.exit(-1);
+        }
+
+        return lst;
+    }
+
     
 
     // list of kids (FormalDeclNodes)
@@ -368,7 +383,7 @@ class VarDeclNode extends DeclNode {
         
             try {
                 structTable.addDecl(this.myId.getId(),sym);
-                this.myId.setSym(sym);
+                
             } 
             catch (DuplicateSymException e) {
                 System.out.println(
@@ -414,10 +429,21 @@ class FnDeclNode extends DeclNode {
     public void nameAnalysis(SymTable sTable) {
 
 //TODO: Analyze idnode uniquely when associated with function (add new func)
+        
+        sTable.addScope();
+        myFormalsList.nameAnalysis(sTable);
+        myBody.nameAnalysis(sTable);
+        try {
+            sTable.removeScope();
+        }
+        catch (EmptySymTableException e) {
+            System.out.println("SYSTEM ERROR: EMPTY SCOPE LIST");
+        }
 
-        SemSym sym = new SemSym(this.myType.getType());
+        SemSym sym = new FnDeclSym(this.myFormalsList.getFormalsTypes(),this.myType.getType());
         try {
             sTable.addDecl(this.myId.getId(), sym);
+            this.myId.setSym(sym);
         } 
         catch (DuplicateSymException e) {
             ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
@@ -427,18 +453,7 @@ class FnDeclNode extends DeclNode {
             //e.printStackTrace();
         }
         
-        sTable.addScope();
-        myFormalsList.nameAnalysis(sTable);
-        myBody.nameAnalysis(sTable);
-        try {
-            sTable.removeScope();
-        }
-
-        catch (EmptySymTableException e) {
-            System.out.println("SYSTEM ERROR: EMPTY SCOPE LIST");
-        }
-        
-    } 
+    }
     // 4 kids
     private TypeNode myType;
     private IdNode myId;
@@ -467,8 +482,8 @@ class FormalDeclNode extends DeclNode {
  
         SemSym sym = new SemSym(this.myType.getType());
         try {
-    
             sTable.addDecl(this.myId.getId(), sym);
+            this.myId.setSym(sym);
         } 
         catch (DuplicateSymException e) {
             ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
@@ -479,6 +494,10 @@ class FormalDeclNode extends DeclNode {
         }
         
     }
+
+    public String getType() {
+        return this.myId.getSym().getType();
+    } 
 
     // 2 kids
     private TypeNode myType;
@@ -981,7 +1000,7 @@ class IdNode extends ExpNode {
     public void unparse(PrintWriter p, int indent, boolean printType) {
         p.print(myStrVal);
         if(mySym!=null && printType) {
-            p.print("("+mySym.getType()+")");
+            p.print("("+mySym.toString()+")");
         }
     }
 
