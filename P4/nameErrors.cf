@@ -73,6 +73,9 @@ int main(int arg, bool arg){ //Multiply declared identifier
  int hello(int x, void y) { //multiply & void
     struct Nope x;  //Multiply & Invalid struct
     bool x; //Multiply
+
+    struct Nope no; //Invalid struct
+    int no; //Okay!
  }
 
 
