@@ -59,6 +59,7 @@ public class P4 {
             System.exit(-1);
         }
         if (!ErrMsg.hasError()) {
+            System.out.println ("program passed name analysis.");
             ((ASTnode)root.value).unparse(outFile, 0);
         }
         outFile.close();
