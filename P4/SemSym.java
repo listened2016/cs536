@@ -91,7 +91,7 @@ class FnDeclSym extends SemSym {
         if (itr.hasNext()) {
             sol+=itr.next();
         } 
-        while (itr.hasNext) {
+        while (itr.hasNext()) {
             sol += ","+itr.next();
         }
         return sol+"->"+this.returnType;
