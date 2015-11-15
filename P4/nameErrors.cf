@@ -15,7 +15,7 @@ int createNode(int a, void b) {
     struct Node n;
     int x;
     int y;
-    void c;
+    void c;   //Void
     c = true; //Undeclared Identifier
     hello = world; //undeclared identifiers, both
     n.a = a;
@@ -66,4 +66,13 @@ int main(int arg, bool arg){ //Multiply declared identifier
      n.a.a.a--; ///Dot-access of non-struct (print once)
      n.j.i.k = 2; //Invalid field name (print once)
  }
+
+ int hello() {
+    int x;
+ }
+ int hello(int x, void y) { //multiply & void
+    int x;
+    bool x; //Multiply
+ }
+
 
