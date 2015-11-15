@@ -500,7 +500,10 @@ class FormalDeclNode extends DeclNode {
     }
 
     public String getType() {
-        return this.myId.getSym().getType();
+        if (this.myId.getSym()!=null)
+            return this.myId.getSym().getType();
+        else
+            return null;
     } 
 
     // 2 kids
