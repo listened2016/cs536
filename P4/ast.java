@@ -352,7 +352,7 @@ class VarDeclNode extends DeclNode {
             SemSym structDeclSym = sTable.lookupGlobal(id.getId());
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
-                sym = new StructVarSym(structDeclSym, id.getId());
+                sym = new StructVarSym((StructDeclSym)structDeclSym, id.getId());
             }
             else {
                 ErrMsg.fatal(id.getLineNum(),id.getCharNum(),
@@ -1079,7 +1079,7 @@ class DotAccessExpNode extends ExpNode {
                 else {
                     //SemSym structDecl = ((StructDeclSym)locSym).getId().getSym();
                     if (locSym !=null && (locSym instanceof StructVarSym)) {
-                        StructDeclSym structDecl = locSym).getDecl();
+                        StructDeclSym structDecl = ((StructDeclSym)locSym).getDecl();
                         subTable = ((StructDeclSym)structDecl).getFields();
                     }
                 }
