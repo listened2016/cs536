@@ -1080,7 +1080,7 @@ class DotAccessExpNode extends ExpNode {
                 return;
             }
             else {  // LHS is not a struct type
-                ErrMsg.fatal((IdNode)myLoc.getLineNum(), (IdNode)myLoc.getCharNum(), 
+                ErrMsg.fatal(((IdNode)myLoc).getLineNum(), ((IdNode)myLoc).getCharNum(), 
                              "Dot-access of non-struct type");
                 this.hasFailed = true;
                 return;
