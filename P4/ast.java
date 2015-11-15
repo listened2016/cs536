@@ -439,7 +439,6 @@ class FnDeclNode extends DeclNode {
         }
         
     } 
-//TODO: Return struct?
     // 4 kids
     private TypeNode myType;
     private IdNode myId;
@@ -460,7 +459,6 @@ class FormalDeclNode extends DeclNode {
     }
 
     public void nameAnalysis(SymTable sTable) {
-//TODO: Deal with type on id when declared
         if (this.myType.getType().equals("void")) {
             ErrMsg.fatal(this.myId.getLineNum(), this.myId.getCharNum(),
             "Non-function declared void");
@@ -1119,7 +1117,6 @@ class DotAccessExpNode extends ExpNode {
         else {
             System.out.println("Compiler Error, line 1071");
         }
-//TODO: Struct management
     }
     
     public SemSym getSym() {
