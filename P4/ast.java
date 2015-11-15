@@ -1079,7 +1079,7 @@ class DotAccessExpNode extends ExpNode {
                 else {
                     //SemSym structDecl = ((StructDeclSym)locSym).getId().getSym();
                     if (locSym !=null && (locSym instanceof StructVarSym)) {
-                        StructDeclSym structDecl = ((StructDeclSym)locSym).getDecl();
+                        StructDeclSym structDecl = ((StructVarSym)locSym).getDecl();
                         subTable = ((StructDeclSym)structDecl).getFields();
                     }
                 }

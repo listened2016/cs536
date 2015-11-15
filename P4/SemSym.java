@@ -42,7 +42,7 @@ class StructVarSym extends SemSym {
     
     public StructVarSym(StructDeclSym id,String type) {
         super(type);
-        this.StructDeclId = id;
+        this.structDeclId = id;
     }
     
     public StructDeclSym getDecl() {
