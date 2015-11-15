@@ -71,7 +71,7 @@ int main(int arg, bool arg){ //Multiply declared identifier
     int x;
  }
  int hello(int x, void y) { //multiply & void
-    int x;
+    struct Nope x;  //Multiply & Invalid struct
     bool x; //Multiply
  }
 
