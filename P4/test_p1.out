@@ -1,46 +1,50 @@
-struct Point(Point){
-    int x(int);
-    int y(int);
+struct Point{
+    int x;
+    int y;
 };
 
 int f(int x, bool b) {
 }
 
 void g() {
-    int a(int);
-    bool b(bool);
-    struct Point(Point) p(Point);
+    int a;
+    bool b;
+    struct Point(Point) p;
     p(Point).x(int) = a(int);
     b(bool) = (a(int) == 3);
     f(int)((a(int) + (p(Point).y(int) * 2)), b);
     g(void)();
 }
 
-int x(int);
-int b(int);
-struct Node(Node){
-    int a(int);
-    bool b(bool);
+int x;
+int b;
+struct Node{
+    struct Point(Point) pt;
 };
 
-bool z(bool);
-int createNode(int a, bool b) {
-    struct Node(Node) n(Node);
-    int x(int);
-    int y(int);
-    int c(int);
+bool z;
+int createNode(int a) {
+    struct Node(Node) n;
+    int x;
+    int y;
+    int pt;
     z(bool) = 1;
-    c(int) = true;
-    n(Node).a(int) = a(int);
-    n(Node).b(bool) = b(bool);
-    if ((b(bool) == (-1))) {
+    n(Node).pt(Point).x(int) = 1;
+    z(bool) = (n(Node).pt(Point).y(int) + 1);
+    n(Node).pt(Point).x(int) = a(int);
+    n(Node).pt(Point) = b(int);
+    if ((b(int) == (-1))) {
         x(int) = ((4 + (3 * 5)) - y(int));
-        while (c(int)) {
+        while (true) {
             y(int) = ((y(int) * 2) + x(int));
         }
     }
     else {
         x(int) = 0;
     }
+}
+
+int m(int x, bool b) {
+    return 5;
 }
 

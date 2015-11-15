@@ -295,7 +295,7 @@ class ExpListNode extends ASTnode {
         Iterator<ExpNode> it = myExps.iterator();
         if (it.hasNext()) { // if there is at least one element                      
             it.next().nameAnalysis(sTable);
-	}
+        }
     }
     // list of kids (ExpNodes)
     private List<ExpNode> myExps;
@@ -368,8 +368,7 @@ class VarDeclNode extends DeclNode {
         
             try {
                 structTable.addDecl(this.myId.getId(),sym);
-                myId.setSym(sym);
-        
+                this.myId.setSym(sym);
             } 
             catch (DuplicateSymException e) {
                 System.out.println(
@@ -511,7 +510,7 @@ class StructDeclNode extends DeclNode {
         SymTable structTable = new SymTable();
         myDeclList.nameAnalysis(structTable, sTable);
         StructDeclSym sds = new StructDeclSym(structTable, myId.getId());
-        
+
         
         //Check if name defined in SymbolTable already, add
         try {
@@ -524,6 +523,7 @@ class StructDeclNode extends DeclNode {
         }
         catch (EmptySymTableException ex) {
         }
+        
     }
 
     // 2 kids
@@ -586,7 +586,7 @@ class StructNode extends TypeNode {
 
     public void unparse(PrintWriter p, int indent) {
         p.print("struct ");
-		myId.unparse(p, 0);
+		myId.unparse(p, 0, false);
     }
     
     public String getType() {
@@ -993,20 +993,17 @@ class IdNode extends ExpNode {
         if (sym == null) {
             ErrMsg.fatal(myLineNum, myCharNum, "Undeclared identifier");
         }
-        else if (sym instanceof StructDeclSym) {
-            //TODO: Struct stuff?
-        }
         else {
             this.setSym(sym);
         }
     }
 
     public SemSym getSym() {
-	return mySym;
+        return mySym;
     }
 
     public void setSym(SemSym sym) {
-	mySym = sym;
+        this.mySym = sym;
     }
     
     public int getLineNum() {
@@ -1041,6 +1038,7 @@ class DotAccessExpNode extends ExpNode {
     }
     
     public void nameAnalysis(SymTable sTable){
+
         SymTable subTable = null;
         
         myLoc.nameAnalysis(sTable);
@@ -1059,18 +1057,22 @@ class DotAccessExpNode extends ExpNode {
                     return;
                 }
             }
-            else if (locSym == null) { 
+            else if (locSym == null) {
+                this.hasFailed = true; 
                 return;
             }
             else {  // LHS is not a struct type
                 ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                              "Dot-access of non-struct type");
+                             this.hasFailed = true;
                 return;
             }    
             
         }
         else if (myLoc instanceof DotAccessExpNode) {
-            if (false) {
+            if (((DotAccessExpNode)myLoc).hasFailed()) {
+                this.hasFailed = true;
+                return;
             }
             else {
                 SemSym locSym = ((DotAccessExpNode)myLoc).getSym();
@@ -1078,32 +1080,38 @@ class DotAccessExpNode extends ExpNode {
                 if (locSym == null) {
                     ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                              "Dot-access of non-struct type");
+                    this.hasFailed = true;
                     return;
                 }
                 //Get symbol table for struct
                 else {
-                    SemSym structDecl = ((StructVarSym)locSym).getId().getSym();
-                    if (structDecl instanceof StructDeclSym) {
-                        subTable = ((StructDeclSym)structDecl).getFields();
-                    }
-                    else {
-                        System.out.println("Compiler Error: line 1080");
-                        return;
+                    //SemSym structDecl = ((StructDeclSym)locSym).getId().getSym();
+                    if (locSym !=null && (locSym instanceof StructVarSym)) {
+                        SemSym structDecl = ((StructVarSym)locSym).getId().getSym();
+                        if (structDecl instanceof StructDeclSym) {
+                            subTable = ((StructDeclSym)structDecl).getFields();
+                        }
+                        else {
+                            System.out.println("Compiler Error: line 1050");
+                            return;
+                        }
                     }
                 }
             }
         }
+    
         
         if (subTable!=null) {
             SemSym sym = subTable.lookupGlobal(this.myId.getId());
             if (sym==null) {
                 ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                              "Invalid struct field name");
+                             this.hasFailed = true;
             }
             else {
                 myId.setSym(sym);
                 if (sym instanceof StructVarSym) {
-                    mySym = ((StructVarSym)sym).getId().getSym();
+                    this.mySym = ((StructVarSym)sym);
                 }
             }
             
@@ -1115,13 +1123,18 @@ class DotAccessExpNode extends ExpNode {
     }
     
     public SemSym getSym() {
-        return mySym;
+        return this.mySym;
+    }
+    
+    public boolean hasFailed() {
+        return this.hasFailed;
     }
 
     // 2 kids
     private ExpNode myLoc;	
     private IdNode myId;
     private SemSym mySym;
+    private boolean hasFailed;
 }
 
 class AssignNode extends ExpNode {

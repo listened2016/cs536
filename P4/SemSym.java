@@ -10,12 +10,13 @@ public class SemSym {
     }
     
     public String toString() {
-        return type;
+        return this.type;
     }
 }
 
 class StructDeclSym extends SemSym {
     private SymTable fields;
+    private String type;
     
     public StructDeclSym(SymTable fields, String type) {
         super(type);
@@ -27,13 +28,13 @@ class StructDeclSym extends SemSym {
     }
     
     public String toString() {
-        fields.print();
-        return null;
+        return type;
     }
 }
 
 class StructVarSym extends SemSym {
     private IdNode id;
+    private String type;
     
     public StructVarSym(IdNode id,String type) {
         super(type);
@@ -46,6 +47,6 @@ class StructVarSym extends SemSym {
     
     
     public String toString() {
-        return null;
+        return type;
     }
 }
