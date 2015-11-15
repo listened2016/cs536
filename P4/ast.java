@@ -432,13 +432,6 @@ class FnDeclNode extends DeclNode {
         
         sTable.addScope();
         myFormalsList.nameAnalysis(sTable);
-        myBody.nameAnalysis(sTable);
-        try {
-            sTable.removeScope();
-        }
-        catch (EmptySymTableException e) {
-            System.out.println("SYSTEM ERROR: EMPTY SCOPE LIST");
-        }
 
         SemSym sym = new FnDeclSym(this.myFormalsList.getFormalsTypes(),this.myType.getType());
         try {
@@ -451,6 +444,14 @@ class FnDeclNode extends DeclNode {
         } 
         catch (EmptySymTableException e) {
             //e.printStackTrace();
+        }
+
+        myBody.nameAnalysis(sTable);
+        try {
+            sTable.removeScope();
+        }
+        catch (EmptySymTableException e) {
+            System.out.println("SYSTEM ERROR: EMPTY SCOPE LIST");
         }
         
     }
@@ -1188,7 +1189,7 @@ class CallExpNode extends ExpNode {
 
     public void nameAnalysis(SymTable sTable){
         myId.nameAnalysis(sTable);
-	myExpList.nameAnalysis(sTable);
+	    myExpList.nameAnalysis(sTable);
     }
 
     // 2 kids
