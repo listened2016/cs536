@@ -34,7 +34,7 @@ class StructDeclSym extends SemSym {
     }
     
     public String toString() {
-        return this.type;
+        super.getType();
     }
 }
 
@@ -58,7 +58,7 @@ class StructVarSym extends SemSym {
     
     
     public String toString() {
-        return this.type;
+        super.getType();
     }
 }
 
