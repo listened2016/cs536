@@ -18,7 +18,7 @@ int createNode(int a, void b) {
     hello = world; //undeclared identifiers, both
     n.a = a;
     n.b = b; //Invalid struct field name
-    t.pt.z = 5;
+    t.pt.z = 5; //Undeclared Identifier
     if (b == -1) { 
         x = 4+3*5-y; 
         while (c) { 
@@ -52,6 +52,8 @@ int main(int arg){
     t.m++; //Invalid struct field name
     t.n.a = t.n.z; //Invalid struct field name
 
-     a.b.c.d.e.f = 0;
+     a.b.c.d.e.f = 0; //Undeclared identifier (print once)
+     n.a.a.a--; ///Dot-access of non-struct (print once)
+     n.j.i.k = 2; //Invalid field name (print once)
  }
 

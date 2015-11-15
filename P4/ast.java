@@ -1080,7 +1080,7 @@ class DotAccessExpNode extends ExpNode {
                 return;
             }
             else {  // LHS is not a struct type
-                ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
+                ErrMsg.fatal((IdNode)myLoc.getLineNum(), (IdNode)myLoc.getCharNum(), 
                              "Dot-access of non-struct type");
                 this.hasFailed = true;
                 return;
@@ -1096,7 +1096,8 @@ class DotAccessExpNode extends ExpNode {
                 SemSym locSym = ((DotAccessExpNode)myLoc).getSym();
                 //No struct in myLoc
                 if (locSym == null) {
-                    ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
+                    IdNode id = ((DotAccessExpNode)myLoc).getId();
+                    ErrMsg.fatal(id.getLineNum(), id.getCharNum(), 
                              "Dot-access of non-struct type");
                     this.hasFailed = true;
                     return;
@@ -1135,6 +1136,10 @@ class DotAccessExpNode extends ExpNode {
     
     public SemSym getSym() {
         return this.mySym;
+    }
+
+    public IdNode getId() {
+        return this.myId;
     }
     
     public boolean hasFailed() {
