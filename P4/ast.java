@@ -226,7 +226,7 @@ class FormalsListNode extends ASTnode {
         }
 
         List<String> lst = formalsTypes;
-        Iterator it = myFormals.iterator();
+        it = myFormals.iterator();
         try {
             while (it.hasNext()) {
                 lst.add(((FormalDeclNode)it.next()).getType());
