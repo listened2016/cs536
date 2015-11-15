@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SemSym {
     private String type;
-    
+
     public SemSym(String type) { 
         this.type = type;
     }
@@ -44,10 +44,10 @@ class StructDeclSym extends SemSym {
  */
 class StructVarSym extends SemSym {
     private StructDeclSym structDeclId;
-    private String structType;
+    private String type;
     
     public StructVarSym(StructDeclSym id,String type) {
-        this.structType = type;
+        super(type);
         this.structDeclId = id;
     }
     
@@ -58,7 +58,7 @@ class StructVarSym extends SemSym {
     
     
     public String toString() {
-        return structType;
+        return type;
     }
 }
 
@@ -69,8 +69,10 @@ class StructVarSym extends SemSym {
 class FnDeclSym extends SemSym {
     private String returnType;
     private List<String> formalsTypes;
+    private String type;
     
     public FnDeclSym(List<String> formalsTypes,String returnType) {
+        super(null);
         this.returnType = returnType;
         this.formalsTypes = formalsTypes;
     }
