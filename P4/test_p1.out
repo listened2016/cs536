@@ -3,28 +3,28 @@ struct Point{
     int y;
 };
 
-int f(int x, bool b) {
+int f(int x(int), bool b(bool)) {
 }
 
 void g() {
     int a;
     bool b;
-    struct Point(Point) p;
+    struct Point p;
     p(Point).x(int) = a(int);
     b(bool) = (a(int) == 3);
-    f(int)((a(int) + (p(Point).y(int) * 2)), b);
-    g(void)();
+    f(int,bool->int)((a(int) + (p(Point).y(int) * 2)), b(bool));
+    g(->void)();
 }
 
 int x;
 int b;
 struct Node{
-    struct Point(Point) pt;
+    struct Point pt;
 };
 
 bool z;
-int createNode(int a) {
-    struct Node(Node) n;
+int createNode(int a(int)) {
+    struct Node n;
     int x;
     int y;
     int pt;
@@ -44,7 +44,7 @@ int createNode(int a) {
     }
 }
 
-int m(int x, bool b) {
+int m(int x(int), bool b(bool)) {
     return 5;
 }
 
