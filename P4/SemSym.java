@@ -8,7 +8,7 @@ public class SemSym {
     }
     
     public String getType() {
-        return type;
+        return this.type;
     }
     
     public String toString() {
@@ -34,7 +34,7 @@ class StructDeclSym extends SemSym {
     }
     
     public String toString() {
-        return type;
+        return this.type;
     }
 }
 
@@ -58,7 +58,7 @@ class StructVarSym extends SemSym {
     
     
     public String toString() {
-        return type;
+        return this.type;
     }
 }
 

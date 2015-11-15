@@ -311,7 +311,7 @@ class ExpListNode extends ASTnode {
 
     public void nameAnalysis(SymTable sTable) {
         Iterator<ExpNode> it = myExps.iterator();
-        if (it.hasNext()) { // if there is at least one element                      
+        while (it.hasNext()) { // if there is at least one element                      
             it.next().nameAnalysis(sTable);
         }
     }
@@ -1076,7 +1076,7 @@ class DotAccessExpNode extends ExpNode {
             else {  // LHS is not a struct type
                 ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), 
                              "Dot-access of non-struct type");
-                             this.hasFailed = true;
+                this.hasFailed = true;
                 return;
             }    
             
