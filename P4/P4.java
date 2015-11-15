@@ -55,6 +55,7 @@ public class P4 {
 
         } catch (Exception ex){
             System.err.println("Exception occured during parse: " + ex);
+            e.printStackTrace(System.out);
             System.exit(-1);
         }
         if (!ErrMsg.hasError()) {
