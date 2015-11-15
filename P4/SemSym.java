@@ -32,16 +32,20 @@ class StructDeclSym extends SemSym {
     }
 }
 
+/* SemSym for variables declared of type struct. Carrys ptr to
+ * StructDeclSym associated with StructDeclSym
+ *
+ */
 class StructVarSym extends SemSym {
-    private IdNode id;
+    private StructDeclSym structDeclId;
     private String type;
     
     public StructVarSym(IdNode id,String type) {
         super(type);
-        this.id = id;
+        this.StructDeclId = id;
     }
     
-    public IdNode getId() {
+    public StructDeclSym getDecl() {
         return id;
     }
     

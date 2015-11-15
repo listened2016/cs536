@@ -352,7 +352,7 @@ class VarDeclNode extends DeclNode {
             SemSym structDeclSym = sTable.lookupGlobal(id.getId());
             if (structDeclSym != null && structDeclSym instanceof StructDeclSym) {
                 id.setSym(structDeclSym);
-                sym = new StructVarSym(id, id.getId());
+                sym = new StructVarSym(structDeclSym, id.getId());
             }
             else {
                 ErrMsg.fatal(id.getLineNum(),id.getCharNum(),
@@ -1046,14 +1046,8 @@ class DotAccessExpNode extends ExpNode {
             SemSym locSym = ((IdNode)myLoc).getSym();
             
             if (locSym !=null && (locSym instanceof StructVarSym)) {
-                SemSym structDecl = ((StructVarSym)locSym).getId().getSym();
-                if (structDecl instanceof StructDeclSym) {
-                    subTable = ((StructDeclSym)structDecl).getFields();
-                }
-                else {
-                    System.out.println("Compiler Error: line 1050");
-                    return;
-                }
+                StructDeclSym structDecl = ((StructVarSym)locSym).getDecl();
+                subTable = structDecl.getFields();
             }
             else if (locSym == null) {
                 this.hasFailed = true; 
@@ -1085,14 +1079,8 @@ class DotAccessExpNode extends ExpNode {
                 else {
                     //SemSym structDecl = ((StructDeclSym)locSym).getId().getSym();
                     if (locSym !=null && (locSym instanceof StructVarSym)) {
-                        SemSym structDecl = ((StructVarSym)locSym).getId().getSym();
-                        if (structDecl instanceof StructDeclSym) {
-                            subTable = ((StructDeclSym)structDecl).getFields();
-                        }
-                        else {
-                            System.out.println("Compiler Error: line 1050");
-                            return;
-                        }
+                        StructDeclSym structDecl = locSym).getDecl();
+                        subTable = ((StructDeclSym)structDecl).getFields();
                     }
                 }
             }
