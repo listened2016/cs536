@@ -1,0 +1,324 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+CS536: Homework 8
+\end_layout
+
+\begin_layout Author
+Sahit Mandala
+\end_layout
+
+\begin_layout Section*
+Problem 1
+\end_layout
+
+\begin_layout Standard
+In this case, we need to add rules to allow the grammer to accept structs
+ and other typedefs as possible 
+\begin_inset Quotes eld
+\end_inset
+
+types
+\begin_inset Quotes erd
+\end_inset
+
+ in the typedef definition.
+ So we should add the following rules:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $typedef$
+\end_inset
+
+ 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ TYPEDEF STRUCT ID ID SEMICOLON //accepts structs in typedefs declarations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $typedef$
+\end_inset
+
+ 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ TYPEDEF ID ID SEMICOLON //accepts typedefs in typedef declarations
+\end_layout
+
+\begin_layout Section*
+Problem 2
+\end_layout
+
+\begin_layout Subsection*
+a)
+\end_layout
+
+\begin_layout Standard
+Each symbol table entry will be indexed on name.
+ As for the values within a specific entry, the table will store (either
+ as a field, boolean, or tailored symbol structure) whether the name is
+ associated with a variable, primitive type, a struct, or a typedef.
+ If a primitive type, we just store which type (e.g.
+ int, boolean).
+ For structs, we can store a internal symbol table with all the associated
+ fields within the struct, mapping field names to symbol entries.
+ Typedefs should store a pointer to the symbol they are associated with
+ (e.g.
+ for typedef struct Pair Point, we have a pointer to the Pair's symbol object)
+\end_layout
+
+\begin_layout Subsection*
+b)
+\end_layout
+
+\begin_layout Standard
+First, T should be checked to verify that it is either a valid primitive
+ type, an already defined struct type, or an already defined typedef.
+ Primitives can be checked directly, but the structs and typedefs can be
+ checked in the symbol table on a query; also, T must be formated as 
+\begin_inset Quotes eld
+\end_inset
+
+struct ID
+\begin_inset Quotes erd
+\end_inset
+
+ when typedefing a struct type (so typedef Pair Point is not acceptable).
+ 
+\end_layout
+
+\begin_layout Standard
+xxx should be checked globally in the symbol table to make sure it is not
+ already associated with any other symbols (variables, functions, structs,
+ typedefs, etc) to avoid duplicate declarations.
+ 
+\end_layout
+
+\begin_layout Standard
+If these conditions are met, we should create a new symbol table entry on
+ xxx with stores the fact that xxx is a typedef as well as a pointer to
+ what it extends (e.g.
+ Point should point to the struct Pair's symbol table entry)
+\end_layout
+
+\begin_layout Subsection*
+c)
+\end_layout
+
+\begin_layout Standard
+First, T should be checked to verify that it is either a valid primitive
+ type, an already defined struct type, or an already defined typedef; Primitives
+ can be checked directly, but the structs and typedefs can be checked globally
+ in the symbol table on a query.
+ Also, T must be formated as 
+\begin_inset Quotes eld
+\end_inset
+
+struct ID
+\begin_inset Quotes erd
+\end_inset
+
+ when typedefing a struct type (so typedef Pair Point is not acceptable).
+ 
+\end_layout
+
+\begin_layout Standard
+xxx should be checked globally in the symbol table to make sure it is not
+ already associated with any other symbols (variables, functions, structs,
+ typedefs, etc) to avoid duplicate declarations.
+ 
+\end_layout
+
+\begin_layout Standard
+If these conditions are met, we should create a new symbol table entry on
+ xxx with stores the fact that xxx is a variable as well as a field/ptr
+ to its associated type T symbol (e.g.
+ int, Point, struct Pair, etc).
+\end_layout
+
+\begin_layout Subsection*
+d)
+\end_layout
+
+\begin_layout Standard
+The xxx can directly be looked up in the symbol table globally to verify
+ that xxx has been declared/defined previously.
+ If the use is within a typedef statement (e.g.
+ typedef money dollars is a use of typedef money), then we should verify
+ that money is a typedef using the symbol table.
+ Similarly, if xx is used as a struct in a declaration, as we mentioned
+ in part b/c, we should verify it exists and is a struct.
+ More relevently, if xxx is in any other usage, we need to verify that it
+ is an actual variable (again, checking its associated symbol in the symbol
+ table).
+\end_layout
+
+\begin_layout Standard
+Note: the notation 
+\begin_inset Quotes eld
+\end_inset
+
+type: ID
+\begin_inset Quotes erd
+\end_inset
+
+ is pseudocode for a ptr/structure for the type's sym object; so 
+\begin_inset Quotes eld
+\end_inset
+
+type: moreDollars
+\begin_inset Quotes erd
+\end_inset
+
+ means we store a reference to moreDollar's sym object TypedefSym{ type:
+ dollars})
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+MonthDayYear: StructSym{ fields:{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+	month:VarSym{type: int}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	day:VarSym{type: int}, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	year:VarSym{type: int}
+\end_layout
+
+\begin_layout Plain Layout
+
+}}
+\end_layout
+
+\begin_layout Plain Layout
+
+date : TypedefSym{type: MonthDayYear} 
+\end_layout
+
+\begin_layout Plain Layout
+
+today: VarSym{type: date} 
+\end_layout
+
+\begin_layout Plain Layout
+
+dollars: TypedefSym{ type: int} 
+\end_layout
+
+\begin_layout Plain Layout
+
+salary: VarSym{type: dollars}
+\end_layout
+
+\begin_layout Plain Layout
+
+moreDollars: TypedefSym{ type: dollars} 
+\end_layout
+
+\begin_layout Plain Layout
+
+md: VarSym{type: moreDollars} 
+\end_layout
+
+\begin_layout Plain Layout
+
+d: VarSym{type: int} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
