@@ -136,7 +136,7 @@ class ProgramNode extends ASTnode {
     }
     
     public boolean typeCheck(){
-    	// TODO: You'll have to change this
+    	myDeclList.typeCheck();
     	return false;
     }
     
