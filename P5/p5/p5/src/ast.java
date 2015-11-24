@@ -815,7 +815,17 @@ class PostIncStmtNode extends StmtNode {
     	// operands of these operators. The result of applying an arithmetic operator to 
     	// int operand(s) is int.
     	
-    	return false; 
+    	myExp.typeCheck();
+    	if (myExp.getType().isErrorType()) {
+    		//TODO: Do More? Save error?
+    		return false;
+    	}
+    	else if (!myExp.getType().isIntType()) {
+    		ErrMsg.fatal(myExp.getLineNum(), myExp.getLineNum(), 
+    				"Arithmetic operator applied to non-numeric operand");
+    		return false;
+    	}
+    	return true;
     }
     
     public void unparse(PrintWriter p, int indent) {
@@ -842,9 +852,7 @@ class PostDecStmtNode extends StmtNode {
     }
     
     public boolean typeCheck() {
-    	//TODO: arithmetic and relational operators: Only integer expressions can be used as 
-    	// operands of these operators. The result of applying an arithmetic operator to 
-    	// int operand(s) is int.
+    	//TODO: Copy from post increment
     	
     	return false; 
     }
@@ -878,6 +886,29 @@ class ReadStmtNode extends StmtNode {
     	// cin. Note that the identifier can be a field of a struct type
     	// (accessed using . ) as long as the field is an int or a bool.
     	
+    	myExp.typeCheck();
+    	if (myExp.getType().isErrorType()) {
+    		//TODO: Do more? save error?
+    		return false;
+    	}
+    	else if(myExp.getType().isFnType()) {
+    		//setType(new ErrorType());
+    		ErrMsg.fatal(myExp.getLineNum(), myExp.getLineNum(), 
+    				"Attempt to read a function");
+    		return false;
+    	}
+    	else if(myExp.getType().isStructDefType()) {
+    		//setType(new ErrorType());
+    		ErrMsg.fatal(myExp.getLineNum(), myExp.getLineNum(), 
+    				"Attempt to read a struct name");
+    		return false;
+    	}
+    	else if(myExp.getType().isStructType()) {
+    		//setType(new ErrorType());
+    		ErrMsg.fatal(myExp.getLineNum(), myExp.getLineNum(), 
+    				"Attempt to read a struct variable");
+    		return false;
+    	}
     	return false; 
     }
     
@@ -913,10 +944,7 @@ class WriteStmtNode extends StmtNode {
     }
     
     public boolean typeCheck() {
-    	//TODO: Only an int or bool expression or a string literal can be 
-    	// printed by cout. Only an int or bool identifer can be read by 
-    	// cin. Note that the identifier can be a field of a struct type
-    	// (accessed using . ) as long as the field is an int or a bool.
+    	//TODO: Copy from READ above
     	
     	return false; 
     }
@@ -954,8 +982,25 @@ class IfStmtNode extends StmtNode {
         }
     }
     
+    //TODO: Add type object?
     public boolean typeCheck() {
-    	return (myExp.typeCheck() && myStmtList.typeCheck());
+    	myExp.typeCheck();
+    	myStmtList.typeCheck();
+    	
+    	if (myExp.getType().isErrorType()) {
+    		//setType(new ErrorType())
+    		return false;
+    	}
+    	else if (myExp.getType().isErrorType()) {
+    		//setType(new ErrorType());
+    		ErrMsg.fatal(myExp.getLineNum(), myExp.getLineNum(), 
+    				"Non-bool expression used as an if condition");
+    		return false;
+    	}
+    	
+    	//
+    	return true;
+    	
     }
     
     public void unparse(PrintWriter p, int indent) {
@@ -987,9 +1032,13 @@ class IfElseStmtNode extends StmtNode {
     }
     
     public boolean typeCheck() {
-    	return (myExp.typeCheck() 
-    			&& myThenStmtList.typeCheck()
-    			&& myElseStmtList.typeCheck());
+    	myExp.typeCheck();
+    	myThenStmtList.typeCheck();
+    	myElseStmtList.typeCheck();
+    	
+    	//TODO: Steal from if statement
+    	
+    	return true;
     }
     
     /**
@@ -1082,7 +1131,10 @@ class WhileStmtNode extends StmtNode {
     }
     
     public boolean typeCheck() {
-    	return myExp.typeCheck() && myStmtList.typeCheck();
+    	myExp.typeCheck();
+    	myStmtList.typeCheck();
+    	
+    	//TODO: Steal from if statement
     	
     }
     
@@ -1146,7 +1198,9 @@ class ReturnStmtNode extends StmtNode {
         }
     }
     
+    //TODO: add type chekcing on return
     public boolean typeCheck() {
+    	
     	return myExp.typeCheck();
     }
 

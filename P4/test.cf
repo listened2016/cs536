@@ -44,6 +44,27 @@ int createNode(int a) {
 }
 
 int m(int x, bool b) {
+    if (z == false) {
+    int l;
+    }
+    else {
+    }
     return 5;
 }
 
+struct struct1{
+       int foo;
+};
+
+struct struct2{
+        struct struct1 s;
+};
+struct struct3{
+       struct struct2 v;
+};
+
+int test()
+{
+ struct struct3 z;
+ z.v.s.foo = 100;
+}
