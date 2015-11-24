@@ -1635,6 +1635,42 @@ class CallExpNode extends ExpNode {
         myId = name;
         myExpList = new ExpListNode(new LinkedList<ExpNode>());
     }
+    
+    /* Type check for function calls
+     * Catches error for 1 of following:
+     * 1. Call on non-function name
+     * 2. Wrong number of parameters
+     * 3. Wrong types on parameters 
+     * */
+    public boolean typeCheck() {
+    	SemSym sym = myId.sym();
+    	if (sym == null) {
+    		System.out.println("Type Check Error: Null sym at CallExpNode");
+    	}
+    	if (!sym instanceof FnSym) {
+    		ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Attempt to call a non-function");
+    		return false;
+    	}
+    	else if (myExpList.getSize() != ((FnSym)sym).getNumParams()) {
+    		ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Function call with wrong number of args");
+    		return false;
+    	}
+    	
+    	myExpList.typeCheck();
+    	List<Type> actualTypes = myExpList.getTypes();
+    	List<Type> paramTypes = ((FnSym)sym).getParamTypes();
+    	for (int i = 0; i<paramTypes.size(); i++) {
+    		if (actualTypes.get(i).isErrorType() || paramTypes.get(i).isErrorType()) {
+    			
+    		}
+    		else if (!(actualTypes.get(i).isBoolType() && paramTypes.get(i).isBoolType()) &&
+    				 !(actualTypes.get(i).isIntType() && paramTypes.get(i).isIntType())) {
+    			ErrMsg.fatal(0, 0, "FType of actual does not match type of formal");
+    	//TODO: Print line correctly in error
+    		}
+    	}
+    	
+    }
 
     /**
      * nameAnalysis
