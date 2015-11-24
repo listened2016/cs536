@@ -525,7 +525,11 @@ class FnDeclNode extends DeclNode {
     }
     
     public boolean typeCheck() {
-    	return myBody.typeCheck();
+    	myBody.typeCheck();
+    	
+    	Type fnType = this.myType.type();
+    	List<Type> retType = myBody.getRetypes();
+    	
     }
     
     public void unparse(PrintWriter p, int indent) {
