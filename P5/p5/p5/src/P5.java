@@ -138,6 +138,7 @@ public class P5 {
 	public int process(){
 		Symbol cfgRoot = parseCFG();
 		
+		
 		if (ErrMsg.getErr()) {  
 			return P5.RESULT_SYNTAX_ERROR;
 		}
@@ -204,7 +205,7 @@ public class P5 {
 	
     public static void main(String[] args){
     	P5 instance = new P5(args);
-    	System.out.println("Welp");
+    	
     	instance.run();
     }
 }

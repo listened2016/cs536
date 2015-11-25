@@ -295,7 +295,8 @@ class StmtListNode extends ASTnode {
     public boolean typeCheck(Type t) {
     	boolean noError = true;
     	for (StmtNode node : myStmts) {
-            noError = noError && node.typeCheck(t);
+            boolean err = node.typeCheck(t);
+            noError = noError && err;
     	}
     	
     	
@@ -552,7 +553,7 @@ class FnDeclNode extends DeclNode {
         return null;
     }
     
-    public boolean typeCheck(Type returnType) {
+    public boolean typeCheck() {
     	
     	Type fnType = this.myType.type();
     	return myBody.typeCheck(fnType);
@@ -811,6 +812,7 @@ class AssignStmtNode extends StmtNode {
     }
     
     public boolean typeCheck(Type t) {
+
     	return myAssign.typeCheck();
     }
     
@@ -1640,36 +1642,47 @@ class AssignNode extends ExpNode {
     }
     
     public boolean typeCheck() {
+    	
     	boolean noError = myLhs.typeCheck() && myExp.typeCheck();
     	//TODO: Line number  
     	
+    	if (myLhs.getType().isErrorType() || myExp.getType().isErrorType()) {
+    		setType(new ErrorType());
+    		return false;
+    	}
     	if (myLhs.getType().isBoolType() && myExp.getType().isBoolType()) {
-    		
+    		setType(new BoolType());
+    		return true;
     	}
     	
     	else if (myLhs.getType().isIntType() && myExp.getType().isIntType()) {
-    		
+    		setType(new IntType());
+    		return true;
     	}
     	//Assigning a function to a function; e.g., "f = g;", where f and g are function names.
     	else if (myLhs.getType().isFnType() && myExp.getType().isFnType()){
+    		setType(new ErrorType());
     		ErrMsg.fatal(0, 0, "Function assignment");
     		noError = false;
     	}
     	else if (myLhs.getType().isStructType() && myExp.getType().isStructType()){
+    		setType(new ErrorType());
     		ErrMsg.fatal(0, 0, "Struct name assignment");
     		noError = false;
     	}
     	else if (myLhs.getType().isStructDefType() && myExp.getType().isStructDefType()){
+    		setType(new ErrorType());
     		ErrMsg.fatal(0, 0, "Struct variable assignment");
     		noError = false;
     	}
     	else {
+    		setType(new ErrorType());
     		ErrMsg.fatal(0,0, "Type mismatch");
     		noError = false;
     	//TODO	  	
     	}
     	
-    	return noError;
+    	return true;
     }
     
     public void unparse(PrintWriter p, int indent) {
@@ -2176,6 +2189,30 @@ class EqualsNode extends BinaryExpNode {
     		setType(new ErrorType());
     		return false;
     	}
+    	else if (myExp1.getType().isVoidType() && myExp2.getType().isVoidType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to void functions");
+    		return false;
+    	}
+    	else if (myExp1.getType().isFnType() && myExp2.getType().isFnType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to functions");
+    		return false;
+    	}
+    	else if (myExp1.getType().isStructDefType() && myExp2.getType().isStructDefType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to struct names");
+    		return false;
+    	}
+    	else if (myExp1.getType().isStructType() && myExp2.getType().isStructType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to struct variables");
+    		return false;
+    	}
     	else if (!(myExp1.getType().isBoolType() && myExp2.getType().isBoolType()) &&
     				!(myExp1.getType().isIntType() && myExp2.getType().isIntType())) {
     		setType(new ErrorType());
@@ -2188,7 +2225,7 @@ class EqualsNode extends BinaryExpNode {
     		System.exit(-1);
     	}
     	
-    	setType(new IntType());
+    	setType(new BoolType());
     	return true;
     	
     }
@@ -2215,6 +2252,30 @@ class NotEqualsNode extends BinaryExpNode {
     		setType(new ErrorType());
     		return false;
     	}
+    	else if (myExp1.getType().isVoidType() && myExp2.getType().isVoidType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to void functions");
+    		return false;
+    	}
+    	else if (myExp1.getType().isFnType() && myExp2.getType().isFnType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to functions");
+    		return false;
+    	}
+    	else if (myExp1.getType().isStructDefType() && myExp2.getType().isStructDefType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to struct names");
+    		return false;
+    	}
+    	else if (myExp1.getType().isStructType() && myExp2.getType().isStructType()) {
+    		setType(new ErrorType());
+    		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
+    				"Equality operator applied to struct variables");
+    		return false;
+    	}
     	else if (!(myExp1.getType().isBoolType() && myExp2.getType().isBoolType()) &&
     				!(myExp1.getType().isIntType() && myExp2.getType().isIntType())) {
     		setType(new ErrorType());
@@ -2227,7 +2288,7 @@ class NotEqualsNode extends BinaryExpNode {
     		System.exit(-1);
     	}
     	
-    	setType(new IntType());
+    	setType(new BoolType());
     	return true;
     	
     }
@@ -2257,7 +2318,7 @@ class LessNode extends BinaryExpNode {
     	else if (!myExp1.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
@@ -2268,12 +2329,12 @@ class LessNode extends BinaryExpNode {
     	else if (!myExp2.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp2.getLineNum(), myExp2.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
     	if (noError) {
-    		setType(new IntType());
+    		setType(new BoolType());
     	}
     	
     	return noError;
@@ -2305,7 +2366,7 @@ class GreaterNode extends BinaryExpNode {
     	else if (!myExp1.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
@@ -2316,12 +2377,12 @@ class GreaterNode extends BinaryExpNode {
     	else if (!myExp2.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp2.getLineNum(), myExp2.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
     	if (noError) {
-    		setType(new IntType());
+    		setType(new BoolType());
     	}
     	
     	return noError;
@@ -2353,7 +2414,7 @@ class LessEqNode extends BinaryExpNode {
     	else if (!myExp1.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
@@ -2364,12 +2425,12 @@ class LessEqNode extends BinaryExpNode {
     	else if (!myExp2.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp2.getLineNum(), myExp2.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
     	if (noError) {
-    		setType(new IntType());
+    		setType(new BoolType());
     	}
     	
     	return noError;
@@ -2401,7 +2462,7 @@ class GreaterEqNode extends BinaryExpNode {
     	else if (!myExp1.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp1.getLineNum(), myExp1.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
@@ -2412,12 +2473,12 @@ class GreaterEqNode extends BinaryExpNode {
     	else if (!myExp2.getType().isIntType()) {
     		setType(new ErrorType());
     		ErrMsg.fatal(myExp2.getLineNum(), myExp2.getLineNum(), 
-    				"Arithmetic operator applied to non-numeric operand");
+    				"Relational operator applied to non-numeric operand");
     		noError = false;
     	}
     	
     	if (noError) {
-    		setType(new IntType());
+    		setType(new BoolType());
     	}
     	
     	return noError;
