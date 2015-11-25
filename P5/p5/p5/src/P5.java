@@ -130,6 +130,7 @@ public class P5 {
 	        parser P = new parser(new Yylex(inFile));
 	        return P.parse();
 		} catch (Exception e){
+			System.out.println("Welp");
 			return null;
 		}
 	}
@@ -203,6 +204,7 @@ public class P5 {
 	
     public static void main(String[] args){
     	P5 instance = new P5(args);
+    	System.out.println("Welp");
     	instance.run();
     }
 }
