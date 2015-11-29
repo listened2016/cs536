@@ -1,0 +1,137 @@
+bool bbb;
+struct S { int a; };
+struct S t;
+
+void f(int p1, bool p2) {
+}
+
+void main() {
+    int aaa;
+
+    // some errors involving illegal operations on functions
+    aaa = f + f;
+    bbb = f == 3;
+    bbb = f > main;
+    bbb = f == f;
+
+    // some errors involving bad function calls 
+    aaa();
+    f();
+    f(5);
+    f(aaa, aaa);
+    f(t, t.a);
+    S();
+
+    // some errors involving structs 
+    t = 5;
+    t = t;
+    cin >> S;
+    t = true || 3;
+    bbb = S && t.a;
+
+    // error involving return
+    return 10;
+
+    // other type errors 
+    aaa = aaa + (!false);
+    aaa = aaa + "foo";
+    bbb = aaa;
+
+    // don't give too many or too few error messages here 
+    bbb = (aaa + true) && (bbb < true);
+    return 2; //Return with a value in a void function
+}
+
+void main2() {
+}
+
+struct Q { struct S q; };
+struct R { int a; 
+			bool b;};
+
+int nonvoid(int x, bool y) {
+	int a;
+	bool g;
+	struct S s;
+	struct S ss;
+	struct R r;
+	struct Q qs;
+	
+    cout << main;  //Attempt to write a function name
+    cout << S;    //Attempt to write a struct type
+    cout << s;    //Attempt to write a struct var
+    cout << main(); //Attempt to write void
+    
+    cin >> main;  //Attempt to read a function name
+    cin >> S;    //Attempt to read a struct type
+    cin >> s;    //Attempt to read a struct var
+    
+    s(); //Attempt to call non function
+    
+    nonvoid(); 	//Function call with wrong number of args
+    nonvoid(s,1+2);	// Type of actual does not match type of formal
+    return; // Missing return value
+    return true; //Bad return value
+    
+    if(0) {//Non-bool expression used as an if condition
+        return false; //Bad return value
+    } 
+    while(1) {	//Non-bool expression used as a while condition
+        return; //Missing return value
+    }
+    a = g; //Type mismatch
+    g = main()==main2();	//Equality operator applied to void functions
+    g = main==main2;	//Equality operator applied to functions
+    g = S==R; //Equality operator applied to struct names
+    g = s==ss; //Equality operator applied to struct variables
+    nonvoid = main; //Function assignment
+    S=R;	//Struct name assignment
+    s=ss; //Struct variable assignment
+    
+    g++; //Arithmetic on non-numeric
+    
+    if((1||2)+(3&&4)) { //4 Arithmetic on non-numeric
+        x = main(); //Type mismatch
+        main--; //Arithmetic on non-numeric
+        g = -g; //Arithmetic on non-numeric
+    }
+    else {
+        g = 1 && 2; //Logical applied to 2 non-bools
+        g = 1 || 2; //Logical applied to 2 non-bools
+        g = !2; //Logical applies to non-bool
+        g = true <= false; //Relational applied to non-numeric
+        g = true >= false; //Relational applied to non-numeric
+      
+        g = true == 1; //Type mismatch
+    }
+    
+    while ((true+false)||(false-true)) { // 4 arithmetic on non-numerics
+        qs.q.a = true;
+        qs.q.a = (qs.q.a == false);
+        r.b = -qs.q.a&&1;
+        r.b = nonvoid(1,true); //type mismatch
+        r.b = nonvoid(1,true+false); //arithmetics on non-numerics, type mismatch
+   } 
+}
+
+void numError() {
+    int x;
+    bool j;
+    cout << R + 1;          // P + 1 is an error; the write is OK
+    x = (true + 3) * 4;         // true + 3 is an error; the * is OK
+    j = true && (false || 3);   // false || 3 is an error; the && is OK
+    //f("a" * 4, true);            // "a" * 4 is an error; the call is OK
+    x = 1 + nonvoid(1);               // p() is an error; the + is OK
+    j = (true + 3) == x    ;    // true + 3 is an error; the == is OK
+                       // regardless of the type of x
+                       
+                       
+    x = true + "hello";    // one error for each of the non-int operands of the +
+    x = 1 + f(true) ;      // one for the bad arg type and one for the 2nd operand of the +
+    x = 1 + f(1, 2);       // one for the wrong number of args and one for the 2nd operand of the +
+    return 3+true;    // in a void function: one error for the 2nd operand to +
+                  // and one for returning a value
+
+}
+
+

@@ -13,6 +13,7 @@ void g() {
     b = a == 3;
     f(a + p.y*2, b);
     g();
+    return;
 }
 
 int x;
@@ -42,6 +43,7 @@ int createNode(int a) {
         x = 0;
         x = 1+2*3-x;
         x++;
+        x--;
         x = createNode((1+2));
     }
     
@@ -60,6 +62,8 @@ int createNode(int a) {
         x = (1/2/3/4*4*5*6); 
     }
     n.pt.x = n.pt.y+n.pt.x/23*22;
+    
+    return (n.pt.x*2)+(2-3/4);
 }
 
 bool m(int x, bool b) {
@@ -67,8 +71,17 @@ bool m(int x, bool b) {
     	int l;
     }
     else {
-    }
-    return true;
+	    return (true==!false)&&(1!=2);
+	}
+	
+	while (!m(1,!false)) {
+		b = (1<=0)||(123>=x)||(x==x)||(true==true);
+		b = (1<=0)&&(123>=x)&&(b!=b)&&(true!=true);
+		cout << "Hello World";
+		cin >> x;
+		return m(1,!false);
+		return createNode(1)==createNode(2);
+	}
 }
 
 struct struct1{
