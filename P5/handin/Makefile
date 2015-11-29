@@ -43,7 +43,7 @@ test:
 	#Good cases
 	java   P5 test.cf test.out
 	#Error cases
-	java   P5 testError.cf testError.out
+	java   P5 typeError.cf typeError.out
 
 ###
 # clean

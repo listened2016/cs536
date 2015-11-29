@@ -11,8 +11,8 @@ JC = javac
 CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
 CP2 = ~cs536-1/public/tools/deps:.
 
-P4.class: P4.java parser.class Yylex.class ASTnode.class
-	$(JC)    P4.java
+P5.class: P5.java parser.class Yylex.class ASTnode.class
+	$(JC)    P5.java
 
 parser.class: parser.java ASTnode.class Yylex.class ErrMsg.class
 	$(JC)      parser.java
@@ -41,9 +41,9 @@ ErrMsg.class: ErrMsg.java
 ##test
 test:
 	#Good cases
-	java   P4 test.cf test.out
+	java   P5 test.cf test.out
 	#Error cases
-	java   P4 nameErrors.cf nameErrors.out
+	java   P5 testError.cf testError.out
 
 ###
 # clean
