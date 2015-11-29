@@ -1,0 +1,180 @@
+struct Point{
+    int x;
+    int y;
+};
+
+int f(int x, bool b) {
+    return 0;
+}
+
+void g() {
+    int a;
+    bool b;
+    struct Point p;
+    p(Point).x(int) = a(int);
+    b(bool) = (a(int) == 3);
+    f(int,bool->int)((a(int) + (p(Point).y(int) * 2)), b(bool));
+    g(->void)();
+}
+
+int x;
+int b;
+struct Node{
+    struct Point pt;
+};
+
+bool z;
+int createNode(int a) {
+    struct Node n;
+    int x;
+    bool bo;
+    int y;
+    int pt;
+    n(Node).pt(Point).x(int) = 1;
+    x(int) = (n(Node).pt(Point).y(int) + 1);
+    n(Node).pt(Point).x(int) = a(int);
+    n(Node).pt(Point).x(int) = b(int);
+    if ((b(int) == (-1))) {
+        x(int) = ((4 + (3 * 5)) - y(int));
+        while (true) {
+            y(int) = ((y(int) * 2) + x(int));
+        }
+    }
+    else {
+        x(int) = 0;
+        x(int) = ((1 + (2 * 3)) - x(int));
+        x(int)++;
+        x(int) = createNode(int->int)((1 + 2));
+    }
+    while ((true || false)) {
+        bo(bool) = (1 == x(int));
+        bo(bool) = (true == true);
+        bo(bool) = (x(int) != 2);
+        bo(bool) = (true && bo(bool));
+        bo(bool) = (bo(bool) || false);
+        bo(bool) = (!true);
+        bo(bool) = ((2 <= 4) || (4 >= x(int)));
+    }
+    if (((true || ((false && false) && bo(bool))) || bo(bool))) {
+        x(int) = (f(int,bool->int)((((((x(int) + 1) - (((2 / 3) * 5) / 6)) - (5 * 8)) + 9) - 10), ((bo(bool) && (!bo(bool))) || ((!bo(bool)) && (1 != 2)))) * 2);
+        x(int) = ((((((1 / 2) / 3) / 4) * 4) * 5) * 6);
+    }
+    n(Node).pt(Point).x(int) = (n(Node).pt(Point).y(int) + ((n(Node).pt(Point).x(int) / 23) * 22));
+}
+
+bool m(int x, bool b) {
+    if ((z(bool) == false)) {
+        int l;
+    }
+    else {
+    }
+    return true;
+}
+
+struct struct1{
+    int foo;
+};
+
+struct struct2{
+    struct struct1 s;
+};
+
+struct struct3{
+    struct struct2 v;
+};
+
+int test() {
+    struct struct3 z;
+    z(struct3).v(struct2).s(struct1).foo(int) = 100;
+}
+
+struct Point{
+    int x;
+    int y;
+};
+
+int f(int x, bool b) {
+    return 0;
+}
+
+void g() {
+    int a;
+    bool b;
+    struct Point p;
+    p(Point).x(int) = a(int);
+    b(bool) = (a(int) == 3);
+    f(int,bool->int)((a(int) + (p(Point).y(int) * 2)), b(bool));
+    g(->void)();
+}
+
+int x;
+int b;
+struct Node{
+    struct Point pt;
+};
+
+bool z;
+int createNode(int a) {
+    struct Node n;
+    int x;
+    bool bo;
+    int y;
+    int pt;
+    n(Node).pt(Point).x(int) = 1;
+    x(int) = (n(Node).pt(Point).y(int) + 1);
+    n(Node).pt(Point).x(int) = a(int);
+    n(Node).pt(Point).x(int) = b(int);
+    if ((b(int) == (-1))) {
+        x(int) = ((4 + (3 * 5)) - y(int));
+        while (true) {
+            y(int) = ((y(int) * 2) + x(int));
+        }
+    }
+    else {
+        x(int) = 0;
+        x(int) = ((1 + (2 * 3)) - x(int));
+        x(int)++;
+        x(int) = createNode(int->int)((1 + 2));
+    }
+    while ((true || false)) {
+        bo(bool) = (1 == x(int));
+        bo(bool) = (true == true);
+        bo(bool) = (x(int) != 2);
+        bo(bool) = (true && bo(bool));
+        bo(bool) = (bo(bool) || false);
+        bo(bool) = (!true);
+        bo(bool) = ((2 <= 4) || (4 >= x(int)));
+    }
+    if (((true || ((false && false) && bo(bool))) || bo(bool))) {
+        x(int) = (f(int,bool->int)((((((x(int) + 1) - (((2 / 3) * 5) / 6)) - (5 * 8)) + 9) - 10), ((bo(bool) && (!bo(bool))) || ((!bo(bool)) && (1 != 2)))) * 2);
+        x(int) = ((((((1 / 2) / 3) / 4) * 4) * 5) * 6);
+    }
+    n(Node).pt(Point).x(int) = (n(Node).pt(Point).y(int) + ((n(Node).pt(Point).x(int) / 23) * 22));
+}
+
+bool m(int x, bool b) {
+    if ((z(bool) == false)) {
+        int l;
+    }
+    else {
+    }
+    return true;
+}
+
+struct struct1{
+    int foo;
+};
+
+struct struct2{
+    struct struct1 s;
+};
+
+struct struct3{
+    struct struct2 v;
+};
+
+int test() {
+    struct struct3 z;
+    z(struct3).v(struct2).s(struct1).foo(int) = 100;
+}
+
