@@ -72,5 +72,18 @@ int nonvoid(int x, bool y) {
     S(struct) = R(struct);
     s(S) = ss(S);
     g(bool)++;
+    if ((true + 1)) {
+        x(int) = main(->void)();
+        main(->void)--;
+        g(bool) = (-g(bool));
+    }
+    else {
+        g(bool) = (1 && 2);
+        g(bool) = (1 || 2);
+        g(bool) = (!2);
+        g(bool) = (true <= false);
+        g(bool) = (true >= false);
+        g(bool) = (true == 1);
+    }
 }
 

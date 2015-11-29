@@ -1,0 +1,53 @@
+12:11 ***ERROR*** Arithmetic operator applied to non-numeric operand
+12:15 ***ERROR*** Arithmetic operator applied to non-numeric operand
+13:11 ***ERROR*** Type mismatch
+14:11 ***ERROR*** Relational operator applied to non-numeric operand
+14:15 ***ERROR*** Relational operator applied to non-numeric operand
+15:11 ***ERROR*** Equality operator applied to functions
+18:5 ***ERROR*** Attempt to call a non-function
+19:5 ***ERROR*** Function call with wrong number of args
+20:5 ***ERROR*** Function call with wrong number of args
+21:12 ***ERROR*** Type of actual does not match type of formal
+22:7 ***ERROR*** Type of actual does not match type of formal
+22:10 ***ERROR*** Type of actual does not match type of formal
+23:5 ***ERROR*** Attempt to call a non-function
+26:5 ***ERROR*** Type mismatch
+27:5 ***ERROR*** Struct name assignment
+28:12 ***ERROR*** Attempt to read a struct name
+29:17 ***ERROR*** Logical operator applied to non-bool operand
+30:11 ***ERROR*** Logical operator applied to non-bool operand
+30:16 ***ERROR*** Logical operator applied to non-bool operand
+33:12 ***ERROR*** Return with a value in a void function
+36:19 ***ERROR*** Arithmetic operator applied to non-numeric operand
+37:17 ***ERROR*** Arithmetic operator applied to non-numeric operand
+38:5 ***ERROR*** Type mismatch
+41:18 ***ERROR*** Arithmetic operator applied to non-numeric operand
+41:28 ***ERROR*** Relational operator applied to non-numeric operand
+41:34 ***ERROR*** Relational operator applied to non-numeric operand
+42:12 ***ERROR*** Return with a value in a void function
+57:13 ***ERROR*** Attempt to write a function
+58:13 ***ERROR*** Attempt to write a struct name
+59:13 ***ERROR*** Attempt to write a struct variable
+60:13 ***ERROR*** Attempt to write void
+62:12 ***ERROR*** Attempt to read a function
+63:12 ***ERROR*** Attempt to read a struct name
+64:12 ***ERROR*** Attempt to read a struct variable
+66:5 ***ERROR*** Attempt to call a non-function
+68:5 ***ERROR*** Function call with wrong number of args
+69:13 ***ERROR*** Type of actual does not match type of formal
+69:15 ***ERROR*** Type of actual does not match type of formal
+0:0 ***ERROR*** Missing return value
+71:12 ***ERROR*** Bad return value
+73:8 ***ERROR*** Non-bool expression used as an if condition
+74:13 ***ERROR*** Bad return value
+76:11 ***ERROR*** Non-bool expression used as a while condition
+0:0 ***ERROR*** Missing return value
+79:5 ***ERROR*** Type mismatch
+80:9 ***ERROR*** Equality operator applied to void functions
+81:9 ***ERROR*** Equality operator applied to functions
+82:9 ***ERROR*** Equality operator applied to struct names
+83:9 ***ERROR*** Equality operator applied to struct variables
+84:5 ***ERROR*** Function assignment
+85:5 ***ERROR*** Struct variable assignment
+86:5 ***ERROR*** Struct name assignment
+88:5 ***ERROR*** Arithmetic operator applied to non-numeric operand

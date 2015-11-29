@@ -71,10 +71,10 @@ int nonvoid(int x, bool y) {
     return true; //Bad return value
     
     if(0) {//Non-bool expression used as an if condition
-    	return false; //Bad return value
+        return false; //Bad return value
     } 
     while(1) {	//Non-bool expression used as a while condition
-    	return; //Missing return value
+        return; //Missing return value
     }
     a = g; //Type mismatch
     g = main()==main2();	//Equality operator applied to void functions
@@ -86,4 +86,19 @@ int nonvoid(int x, bool y) {
     s=ss; //Struct variable assignment
     
     g++; //Arithmetic on non-numeric
+    
+    if(true+1) { //Arithmetic on non-numeric
+        x = main(); //Type mismatch
+        main--; //Arithmetic on non-numeric
+        g = -g; //Arithmetic on non-numeric
+    }
+    else {
+        g = 1 && 2; //Logical applied to 2 non-bools
+        g = 1 || 2; //Logical applied to 2 non-bools
+        g = !2; //Logical applies to non-bool
+        g = true <= false; //Relational applied to non-numeric
+        g = true >= false; //Relational applied to non-numeric
+      
+        g = true == 1; //Type mismatch
+    }
 }
