@@ -120,7 +120,7 @@ void numError() {
     cout << R + 1;          // P + 1 is an error; the write is OK
     x = (true + 3) * 4;         // true + 3 is an error; the * is OK
     j = true && (false || 3);   // false || 3 is an error; the && is OK
-    //f("a" * 4, true);            // "a" * 4 is an error; the call is OK
+    f("a" * 4, true);            // "a" * 4 is an error; the call is OK
     x = 1 + nonvoid(1);               // p() is an error; the + is OK
     j = (true + 3) == x    ;    // true + 3 is an error; the == is OK
                        // regardless of the type of x
