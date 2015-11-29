@@ -1318,10 +1318,14 @@ class ReturnStmtNode extends StmtNode {
     public boolean typeCheck(Type returnType) {
     	
     	if(myExp == null) {
-    		//TODO: Fix this
-    		ErrMsg.fatal(0, 0, 
+    		if (returnType.isVoidType()) {
+    			return true;
+    		}
+    		else {
+    			ErrMsg.fatal(0, 0, 
     				"Missing return value");
-    		return false;
+    			return false;
+    		}
     	}
     	boolean noError = myExp.typeCheck();
     	// 	Missing return value
@@ -1906,35 +1910,34 @@ class CallExpNode extends ExpNode {
     	if (sym == null) {
     		System.out.println("Type Check Error: Null sym at CallExpNode");
     	}
+    	
+    	//Non function case
     	if (!(sym instanceof FnSym)) {
     		ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Attempt to call a non-function");
     		setType(new ErrorType());
     		return false;
     	}
-    	else if (myExpList.getSize() != ((FnSym)sym).getNumParams()) {
+    	//Otherwise, use return type as type
+    	setType(((FnSym)(myId.sym())).getReturnType());
+    	
+    	if (myExpList.getSize() != ((FnSym)sym).getNumParams()) {
     		ErrMsg.fatal(myId.getLineNum(), myId.getCharNum(), "Function call with wrong number of args");
-    		setType(new ErrorType());
     		return false;
     	}
     	
+    	//typecheck every entry
     	myExpList.typeCheck();
     	List<Type> actualTypes = myExpList.getTypes();
     	List<Type> paramTypes = ((FnSym)sym).getParamTypes();
     	for (int i = 0; i<paramTypes.size(); i++) {
     		if (actualTypes.get(i).isErrorType() || paramTypes.get(i).isErrorType()) {
-    			
+    			//Do nothuing
     		}
     		else if (!(actualTypes.get(i).isBoolType() && paramTypes.get(i).isBoolType()) &&
     				 !(actualTypes.get(i).isIntType() && paramTypes.get(i).isIntType())) {
     			ErrMsg.fatal(myExpList.getLineNum(i), myExpList.getCharNum(i), "Type of actual does not match type of formal");
-    			//TODO: Print line correctly in error
-    			setType(new ErrorType());
     			noError = false;
     		}
-    	}
-    	
-    	if (noError) {
-    		setType(((FnSym)(myId.sym())).getReturnType());
     	}
     	
     	return noError;

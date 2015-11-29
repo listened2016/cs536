@@ -78,7 +78,7 @@ int nonvoid(int x, bool y) {
     S(struct) = R(struct);
     s(S) = ss(S);
     g(bool)++;
-    if ((true + 1)) {
+    if (((1 || 2) + (3 && 4))) {
         x(int) = main(->void)();
         main(->void)--;
         g(bool) = (-g(bool));
@@ -91,9 +91,26 @@ int nonvoid(int x, bool y) {
         g(bool) = (true >= false);
         g(bool) = (true == 1);
     }
-    qs(Q).q(S).a(int) = true;
-    qs(Q).q(S).a(int) = (qs(Q).q(S).a(int) == false);
-    r(R).b(bool) = ((-qs(Q).q(S).a(int)) && 1);
-    r(R).b(bool) = nonvoid(int,bool->int)(1, true);
+    while (((true + false) || (false - true))) {
+        qs(Q).q(S).a(int) = true;
+        qs(Q).q(S).a(int) = (qs(Q).q(S).a(int) == false);
+        r(R).b(bool) = ((-qs(Q).q(S).a(int)) && 1);
+        r(R).b(bool) = nonvoid(int,bool->int)(1, true);
+        r(R).b(bool) = nonvoid(int,bool->int)(1, (true + false));
+    }
+}
+
+void numError() {
+    int x;
+    bool j;
+    cout << (R(struct) + 1);
+    x(int) = ((true + 3) * 4);
+    j(bool) = (true && (false || 3));
+    x(int) = (1 + nonvoid(int,bool->int)(1));
+    j(bool) = ((true + 3) == x(int));
+    x(int) = (true + "hello");
+    x(int) = (1 + f(int,bool->void)(true));
+    x(int) = (1 + f(int,bool->void)(1, 2));
+    return (3 + true);
 }
 
