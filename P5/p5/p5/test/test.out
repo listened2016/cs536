@@ -94,8 +94,10 @@ struct struct3{
     struct struct2 v;
 };
 
-int test() {
+int test(int ik) {
     struct struct3 z;
     z(struct3).v(struct2).s(struct1).foo(int) = 100;
+    test(int->int)(test(int->int)(test(int->int)(1)));
+    return test(int->int)(x(int));
 }
 
