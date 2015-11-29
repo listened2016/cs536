@@ -35,8 +35,13 @@ void main() {
 void main2() {
 }
 
+struct Q{
+    struct S q;
+};
+
 struct R{
     int a;
+    bool b;
 };
 
 int nonvoid(int x, bool y) {
@@ -45,6 +50,7 @@ int nonvoid(int x, bool y) {
     struct S s;
     struct S ss;
     struct R r;
+    struct Q qs;
     cout << main(->void);
     cout << S(struct);
     cout << s(S);
@@ -85,5 +91,9 @@ int nonvoid(int x, bool y) {
         g(bool) = (true >= false);
         g(bool) = (true == 1);
     }
+    qs(Q).q(S).a(int) = true;
+    qs(Q).q(S).a(int) = (qs(Q).q(S).a(int) == false);
+    r(R).b(bool) = ((-qs(Q).q(S).a(int)) && 1);
+    r(R).b(bool) = nonvoid(int,bool->int)(1, true);
 }
 

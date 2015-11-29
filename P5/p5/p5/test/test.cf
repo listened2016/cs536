@@ -25,6 +25,7 @@ bool z;
 int createNode(int a) {
     struct Node n;
     int x;
+    bool bo;
     int y;
     int pt;
     n.pt.x = 1;
@@ -39,7 +40,26 @@ int createNode(int a) {
     } 
     else {
         x = 0;
+        x = 1+2*3-x;
+        x++;
+        x = createNode((1+2));
     }
+    
+    while(true||false) {
+        bo = 1 == x;
+        bo = true == true;
+        bo = x != 2;
+        bo = true && bo;
+        bo = bo || false;
+        bo = !true;
+        bo = 2<=4 || 4>=x;
+    }
+    
+    if (true||false&&false&&bo||bo) {
+        x = f(x+1-2/3*5/6-5*8+9-10,bo&&!bo||!bo&&(1!=2))*2;
+        x = (1/2/3/4*4*5*6); 
+    }
+    n.pt.x = n.pt.y+n.pt.x/23*22;
 }
 
 bool m(int x, bool b) {

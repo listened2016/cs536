@@ -45,7 +45,9 @@ void main() {
 void main2() {
 }
 
-struct R { int a; };
+struct Q { struct S q; };
+struct R { int a; 
+			bool b;};
 
 int nonvoid(int x, bool y) {
 	int a;
@@ -53,6 +55,7 @@ int nonvoid(int x, bool y) {
 	struct S s;
 	struct S ss;
 	struct R r;
+	struct Q qs;
 	
     cout << main;  //Attempt to write a function name
     cout << S;    //Attempt to write a struct type
@@ -101,4 +104,10 @@ int nonvoid(int x, bool y) {
       
         g = true == 1; //Type mismatch
     }
+    
+    qs.q.a = true;
+    qs.q.a = (qs.q.a == false);
+    r.b = -qs.q.a&&1;
+    r.b = nonvoid(1,true); //type mismatch
+    
 }

@@ -27,6 +27,7 @@ bool z;
 int createNode(int a) {
     struct Node n;
     int x;
+    bool bo;
     int y;
     int pt;
     n(Node).pt(Point).x(int) = 1;
@@ -41,7 +42,24 @@ int createNode(int a) {
     }
     else {
         x(int) = 0;
+        x(int) = ((1 + (2 * 3)) - x(int));
+        x(int)++;
+        x(int) = createNode(int->int)((1 + 2));
     }
+    while ((true || false)) {
+        bo(bool) = (1 == x(int));
+        bo(bool) = (true == true);
+        bo(bool) = (x(int) != 2);
+        bo(bool) = (true && bo(bool));
+        bo(bool) = (bo(bool) || false);
+        bo(bool) = (!true);
+        bo(bool) = ((2 <= 4) || (4 >= x(int)));
+    }
+    if (((true || ((false && false) && bo(bool))) || bo(bool))) {
+        x(int) = (f(int,bool->int)((((((x(int) + 1) - (((2 / 3) * 5) / 6)) - (5 * 8)) + 9) - 10), ((bo(bool) && (!bo(bool))) || ((!bo(bool)) && (1 != 2)))) * 2);
+        x(int) = ((((((1 / 2) / 3) / 4) * 4) * 5) * 6);
+    }
+    n(Node).pt(Point).x(int) = (n(Node).pt(Point).y(int) + ((n(Node).pt(Point).x(int) / 23) * 22));
 }
 
 bool m(int x, bool b) {
@@ -99,6 +117,7 @@ bool z;
 int createNode(int a) {
     struct Node n;
     int x;
+    bool bo;
     int y;
     int pt;
     n(Node).pt(Point).x(int) = 1;
@@ -113,7 +132,24 @@ int createNode(int a) {
     }
     else {
         x(int) = 0;
+        x(int) = ((1 + (2 * 3)) - x(int));
+        x(int)++;
+        x(int) = createNode(int->int)((1 + 2));
     }
+    while ((true || false)) {
+        bo(bool) = (1 == x(int));
+        bo(bool) = (true == true);
+        bo(bool) = (x(int) != 2);
+        bo(bool) = (true && bo(bool));
+        bo(bool) = (bo(bool) || false);
+        bo(bool) = (!true);
+        bo(bool) = ((2 <= 4) || (4 >= x(int)));
+    }
+    if (((true || ((false && false) && bo(bool))) || bo(bool))) {
+        x(int) = (f(int,bool->int)((((((x(int) + 1) - (((2 / 3) * 5) / 6)) - (5 * 8)) + 9) - 10), ((bo(bool) && (!bo(bool))) || ((!bo(bool)) && (1 != 2)))) * 2);
+        x(int) = ((((((1 / 2) / 3) / 4) * 4) * 5) * 6);
+    }
+    n(Node).pt(Point).x(int) = (n(Node).pt(Point).y(int) + ((n(Node).pt(Point).x(int) / 23) * 22));
 }
 
 bool m(int x, bool b) {
