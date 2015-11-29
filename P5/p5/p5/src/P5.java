@@ -148,6 +148,7 @@ public class P5 {
 		astRoot.nameAnalysis();  // perform name analysis
 		
 		if (ErrMsg.getErr()) {  
+			//Quits if name analysis failed
 			return P5.RESULT_NAME_ERROR;
 		}
 		
