@@ -29,5 +29,48 @@ void main() {
     aaa(int) = (aaa(int) + "foo");
     bbb(bool) = aaa(int);
     bbb(bool) = ((aaa(int) + true) && (bbb(bool) < true));
+    return 2;
+}
+
+void main2() {
+}
+
+struct R{
+    int a;
+};
+
+int nonvoid(int x, bool y) {
+    int a;
+    bool g;
+    struct S s;
+    struct S ss;
+    struct R r;
+    cout << main(->void);
+    cout << S(struct);
+    cout << s(S);
+    cout << main(->void)();
+    cin >> main(->void);
+    cin >> S(struct);
+    cin >> s(S);
+    s(S)();
+    nonvoid(int,bool->int)();
+    nonvoid(int,bool->int)(s(S), (1 + 2));
+    return;
+    return true;
+    if (0) {
+        return false;
+    }
+    while (1) {
+        return;
+    }
+    a(int) = g(bool);
+    g(bool) = (main(->void)() == main2(->void)());
+    g(bool) = (main(->void) == main2(->void));
+    g(bool) = (S(struct) == R(struct));
+    g(bool) = (s(S) == ss(S));
+    nonvoid(int,bool->int) = main(->void);
+    S(struct) = R(struct);
+    s(S) = ss(S);
+    g(bool)++;
 }
 

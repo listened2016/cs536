@@ -39,4 +39,51 @@ void main() {
 
     // don't give too many or too few error messages here 
     bbb = (aaa + true) && (bbb < true);
+    return 2; //Return with a value in a void function
+}
+
+void main2() {
+}
+
+struct R { int a; };
+
+int nonvoid(int x, bool y) {
+	int a;
+	bool g;
+	struct S s;
+	struct S ss;
+	struct R r;
+	
+    cout << main;  //Attempt to write a function name
+    cout << S;    //Attempt to write a struct type
+    cout << s;    //Attempt to write a struct var
+    cout << main(); //Attempt to write void
+    
+    cin >> main;  //Attempt to read a function name
+    cin >> S;    //Attempt to read a struct type
+    cin >> s;    //Attempt to read a struct var
+    
+    s(); //Attempt to call non function
+    
+    nonvoid(); 	//Function call with wrong number of args
+    nonvoid(s,1+2);	// Type of actual does not match type of formal
+    return; // Missing return value
+    return true; //Bad return value
+    
+    if(0) {//Non-bool expression used as an if condition
+    	return false; //Bad return value
+    } 
+    while(1) {	//Non-bool expression used as a while condition
+    	return; //Missing return value
+    }
+    a = g; //Type mismatch
+    g = main()==main2();	//Equality operator applied to void functions
+    g = main==main2;	//Equality operator applied to functions
+    g = S==R; //Equality operator applied to struct names
+    g = s==ss; //Equality operator applied to struct variables
+    nonvoid = main; //Function assignment
+    S=R;	//Struct name assignment
+    s=ss; //Struct variable assignment
+    
+    g++; //Arithmetic on non-numeric
 }
