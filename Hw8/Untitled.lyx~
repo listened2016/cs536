@@ -1,0 +1,368 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Problem 1 
+\end_layout
+
+\begin_layout Subsection*
+a) 
+\end_layout
+
+\begin_layout Standard
+Expression: 
+\begin_inset Formula $(a*b)+(c*d)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+AST:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+     * 
+\end_layout
+
+\begin_layout Plain Layout
+
+   /   
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  *     *
+\end_layout
+
+\begin_layout Plain Layout
+
+ / 
+\backslash
+   / 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+a   b d   e
+\end_layout
+
+\begin_layout Plain Layout
+
+       
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pseudocode:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+load a into T0 
+\end_layout
+
+\begin_layout Plain Layout
+
+load b into T1 
+\end_layout
+
+\begin_layout Plain Layout
+
+T0 = T0 + T1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+b) 
+\end_layout
+
+\begin_layout Standard
+Expression: 
+\begin_inset Formula $a*(b*(c*(d*e)))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+AST: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+  *
+\end_layout
+
+\begin_layout Plain Layout
+
+ / 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+a   *
+\end_layout
+
+\begin_layout Plain Layout
+
+   / 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  b   *
+\end_layout
+
+\begin_layout Plain Layout
+
+     / 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    d   e
+\end_layout
+
+\begin_layout Plain Layout
+
+       
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+load a into T0 
+\end_layout
+
+\begin_layout Plain Layout
+
+load b into T1 
+\end_layout
+
+\begin_layout Plain Layout
+
+load c into T2 
+\end_layout
+
+\begin_layout Plain Layout
+
+load d into T3 
+\end_layout
+
+\begin_layout Plain Layout
+
+T2 = T2*T3 
+\end_layout
+
+\begin_layout Plain Layout
+
+T1 = T1*T2 
+\end_layout
+
+\begin_layout Plain Layout
+
+T0 = T0*T1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Problem 2
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+int numRegisters(ASTNode node) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+	// add code to calculate and return the number of 
+\end_layout
+
+\begin_layout Plain Layout
+
+	// registers required to generate code for the whole 
+\end_layout
+
+\begin_layout Plain Layout
+
+	// expression (whose root is node) if (node.isLeaf()) { return 1 }
+\end_layout
+
+\begin_layout Plain Layout
+
+	int leftReg = numRegisters(node.getLeft()) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	int rightReg = numRegisters(node.getRight())
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (leftReg == rightReg) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		return leftReg+1 
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 
+\end_layout
+
+\begin_layout Plain Layout
+
+	else {
+\end_layout
+
+\begin_layout Plain Layout
+
+		return max(leftReg,rightReg) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
