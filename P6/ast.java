@@ -215,10 +215,6 @@ class DeclListNode extends ASTnode {
             System.exit(-1);
         }
 	}
-	
-	public int length() {
-		return myDecls.size();
-	}
 
     // list of kids (DeclNodes)
     private List<DeclNode> myDecls;
@@ -237,11 +233,15 @@ class FormalsListNode extends ASTnode {
      *     if there was no error, add type of formal decl to list
      */
     public List<Type> nameAnalysis(SymTable symTab) {
+        int offset = 0; //Default offsets
         List<Type> typeList = new LinkedList<Type>();
         for (FormalDeclNode node : myFormals) {
             SemSym sym = node.nameAnalysis(symTab);
             if (sym != null) {
                 typeList.add(sym.getType());
+                
+                sym.setOffset(offset);
+                offset+=4;
             }
         }
         return typeList;
@@ -307,9 +307,6 @@ class FnBodyNode extends ASTnode {
         myStmtList.codeGen();
     }
     
-    public int getDeclLength() {
-		return myDeclList.length();
-	}
 
     // 2 kids
     private DeclListNode myDeclList;
@@ -493,12 +490,17 @@ class VarDeclNode extends DeclNode {
         if (!badDecl) {  // insert into symbol table
             try {
                 if (myType instanceof StructNode) {
-                    sym = new StructSym(structId);
+                    sym = new StructSym(structId); //TODO: Add struct offset to sym
                 }
                 else {
                     sym = new SemSym(myType.type());
                 }
                 symTab.addDecl(name, sym);
+                
+                if(symTab.size() != 1){
+                        sym.setGlobal(false);
+                }
+                
                 myId.link(sym);
             } catch (DuplicateSymException ex) {
                 System.err.println("Unexpected DuplicateSymException " +
@@ -539,6 +541,8 @@ class FnDeclNode extends DeclNode {
         myId = id;
         myFormalsList = formalList;
         myBody = body;
+        this.paramsOffset = -1;
+        this.localsOffset = -1;
     }
 
     /**
@@ -585,9 +589,32 @@ class FnDeclNode extends DeclNode {
         List<Type> typeList = myFormalsList.nameAnalysis(symTab);
         if (sym != null) {
             sym.addFormals(typeList);
+            sym.setOffset(4*this.myFormalsList.size()); //Offset of params
+            this.paramsOffset = sym.getOffset();
         }
         
         myBody.nameAnalysis(symTab); // process the function body
+        
+        int offset = 8 + this.paramsOffset;
+        for (DeclNode d : myBody.getDeclList()) {
+			if (d instanceof VarDeclNode) {
+				//TODO: Add struct case
+				VarDeclNode varDecl = (VarDeclNode) d;
+				if(varDecl.getMyType() instanceof StructNode){
+                    varDecl.getMyId().sym().setOffset(offset);
+                    int structSize = 
+						(StructDefSym)(((StructNode)(varDecl.getMyType()).idNode().sym()).getSize();
+                    offset += 4*structSize;
+
+                }
+                else {
+					((VarDeclNode)node).getMyId().sym().setOffset(offset);
+					offset += 4;
+				}
+			}
+		}
+		
+		this.localsOffset = offset - 8 - this.paramsOffset;
         
         try {
             symTab.removeScope();  // exit scope
@@ -629,8 +656,7 @@ class FnDeclNode extends DeclNode {
 		else {
 			Codegen.p.print("\t_" + this.getMyId().name() + ":\n");
 		}
-	
-		int paramSize = myFormalsList.length();
+
 	
 		//Prologue generation
 		Codegen.p.print("#Start of Prologue for "+
@@ -643,10 +669,10 @@ class FnDeclNode extends DeclNode {
 		Codegen.generate("subu",Codegen.SP,Codegen.SP,4);
 		Codegen.generateWithComment("addu",
 			"Move frame pointer", 
-			Codegen.FP,Codegen.SP,8+paramSize);
+			Codegen.FP,Codegen.SP,paramsOffset+8);
 		Codegen.generateWithComment("subu",
 			"Move stack pointer for loc vars", 
-			Codegen.SP,Codegen.SP,myBody.getDeclLength()*4);
+			Codegen.SP,Codegen.SP,localsOffset*4);
 		
 		//Body
 		this.myBody.codeGen();
@@ -657,12 +683,12 @@ class FnDeclNode extends DeclNode {
 		Codegen.p.print("#Start of Epilogue for "+
 			this.getMyId().name()+"\n");
 		Codegen.generateIndexed("lw", 
-			Codegen.RA,Codegen.FP,("-"+paramSize),
+			Codegen.RA,Codegen.FP,("-"+paramsOffset),
 			"Restore return address");
 		Codegen.generateWithComment("move","Save frame pointer",
 			Codegen.T0,Codegen.FP);
 		Codegen.generateIndexed("lw", 
-			Codegen.FP,Codegen.FP,"-"+(paramSize+4),
+			Codegen.FP,Codegen.FP,"-"+(paramsOffset+4),
 			"Restore frame pointer");
 		Codegen.generateWithComment("move","Restore stack pointer",
 			Codegen.SP,Codegen.T0);
@@ -677,6 +703,8 @@ class FnDeclNode extends DeclNode {
     private IdNode myId;
     private FormalsListNode myFormalsList;
     private FnBodyNode myBody;
+    private int localsOffset;
+    private int paramsOffset;
 }
 
 class FormalDeclNode extends DeclNode {
@@ -714,6 +742,10 @@ class FormalDeclNode extends DeclNode {
             try {
                 sym = new SemSym(myType.type());
                 symTab.addDecl(name, sym);
+                sym.setGlobal(false);
+                
+                
+                
                 myId.link(sym);
             } catch (DuplicateSymException ex) {
                 System.err.println("Unexpected DuplicateSymException " +
