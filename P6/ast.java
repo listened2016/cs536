@@ -974,7 +974,8 @@ class AssignStmtNode extends StmtNode {
     }
     
     public void codeGen() {
-		
+		this.myAssign.codeGen();
+        Codegen.genPop(Codegen.T0);
 	}
 
     // 1 kid
@@ -1011,6 +1012,18 @@ class PostIncStmtNode extends StmtNode {
         myExp.unparse(p, 0);
         p.println("++;");
     }
+    
+    public void codeGen() {
+		if(this.sym().isGlobal()){
+            Codegen.generate("lw", Codegen.T0, "_"+this.myStrVal);
+        }
+
+        else{
+            Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+        }
+
+        Codegen.genPush(Codegen.T0);
+	}
 
     // 1 kid
     private ExpNode myExp;
@@ -1143,6 +1156,24 @@ class WriteStmtNode extends StmtNode {
         myExp.unparse(p, 0);
         p.println(";");
     }
+    
+    public void codeGen() {
+		myExp.codeGen();
+		Codegen.genPop(Codegen.A0);
+		
+        if(myExp instanceof StringLitNode){
+			Codegen.generate("li", Codegen.V0, 4);
+        }
+        
+        else {
+			Codegen.generate("li", Codegen.V0, 1);
+        }
+        
+       	Codegen.generate("syscall");	
+
+       
+	}
+    
 
     // 1 kid
     private ExpNode myExp;
@@ -1378,6 +1409,10 @@ class CallStmtNode extends StmtNode {
         doIndent(p, indent);
         myCall.unparse(p, indent);
         p.println(";");
+    }
+    
+    public void codeGen(){
+        this.myCall.codeGen();
     }
 
     // 1 kid
@@ -1692,7 +1727,30 @@ class IdNode extends ExpNode {
             p.print("(" + mySym + ")");
         }
     }
-
+    
+    public void genJumpAndLink() {
+		if (this.myStrVal.equals("main")) {
+			Codegen.generate("jal", this.myStrVal);
+		}
+		Codegen.generate("jal", "_"+this.myStrVal);
+	}
+	
+	public void codeGen() {
+		if(this.sym().isGlobal()) {
+            Codegen.generate("lw", Codegen.T0, "_" + this.myStrVal);
+        } else {
+            Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+        }
+	}
+	
+	public void genAddr() {
+		if(this.sym().isGlobal()) {
+            Codegen.generate("la", Codegen.T0, "_" + this.myStrVal);
+        } else {
+            Codegen.generateIndexed("la", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+        }
+		
+	}
     private int myLineNum;
     private int myCharNum;
     private String myStrVal;
