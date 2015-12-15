@@ -265,9 +265,11 @@ class FormalsListNode extends ASTnode {
         } 
     }
     
-    public void codeGen() {
-        
-    }    
+    public void codeGen(){
+        for(FormalDeclNode formal : myFormals){
+            formal.codeGen();
+        }
+    } 
 
     // list of kids (FormalDeclNodes)
     private List<FormalDeclNode> myFormals;
@@ -523,6 +525,18 @@ class VarDeclNode extends DeclNode {
         p.print(myId.name());
         p.println(";");
     }
+    
+    public void codeGen(){
+
+        //Global variable with tags
+        if(!this.myId.isLocal()) {
+            String label = "_" + this.myId.name();
+            Codegen.p.write("\t.data\n");
+            Codegen.p.write("\t.align 2\n");
+            Codegen.p.write(label + ": .space 4\n");
+            Codegen.p.flush();
+        }
+    }
 
     // 3 kids
     private TypeNode myType;
@@ -766,6 +780,9 @@ class FormalDeclNode extends DeclNode {
         p.print(" ");
         p.print(myId.name());
     }
+    
+    public void codeGen() {
+	}
 
     // 2 kids
     private TypeNode myType;
@@ -845,6 +862,7 @@ class StructDeclNode extends DeclNode {
 abstract class TypeNode extends ASTnode {
     /* all subclasses must provide a type method */
     abstract public Type type();
+    public void codeGen() {}
 }
 
 class IntNode extends TypeNode {
@@ -954,6 +972,10 @@ class AssignStmtNode extends StmtNode {
         myAssign.unparse(p, -1); // no parentheses
         p.println(";");
     }
+    
+    public void codeGen() {
+		
+	}
 
     // 1 kid
     private AssignNode myAssign;
@@ -1431,6 +1453,7 @@ abstract class ExpNode extends ASTnode {
     abstract public Type typeCheck();
     abstract public int lineNum();
     abstract public int charNum();
+    abstract public void codeGen();
 }
 
 class IntLitNode extends ExpNode {
@@ -1464,6 +1487,11 @@ class IntLitNode extends ExpNode {
     public void unparse(PrintWriter p, int indent) {
         p.print(myIntVal);
     }
+    
+    public void codeGen() {
+		Codegen.generate("li", Codegen.T0, this.myIntVal);
+        Codegen.genPush(Codegen.T0)
+	}
 
     private int myLineNum;
     private int myCharNum;
@@ -1537,6 +1565,11 @@ class TrueNode extends ExpNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("true");
     }
+    
+    public void codeGen() {
+		Codegen.generate("li", Codegen.T0, 1);
+        Codegen.genPush(Codegen.T0);
+	}
 
     private int myLineNum;
     private int myCharNum;
@@ -1572,6 +1605,11 @@ class FalseNode extends ExpNode {
     public void unparse(PrintWriter p, int indent) {
         p.print("false");
     }
+    
+    public void codeGen() {
+		Codegen.generate("li", Codegen.T0, 0);
+        Codegen.genPush(Codegen.T0);
+	}
 
     private int myLineNum;
     private int myCharNum;
@@ -2074,6 +2112,14 @@ class UnaryMinusNode extends UnaryExpNode {
         myExp.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+
+		Codegen.generate("sub",Codegen.T0, "0", Codegen.T0);
+        Codegen.genPush(Codegen.T0);
+	}
 }
 
 class NotNode extends UnaryExpNode {
@@ -2110,9 +2156,8 @@ class NotNode extends UnaryExpNode {
     public void codeGen() {
 		this.myExp1.codeGen();
         Codegen.genPop(Codegen.T0);
-        
-		Codegen.generate("add",Codegen.T0, Codegen.T0, Codegen.T1);
 
+		Codegen.generate("nor",Codegen.T0, Codegen.T0, "0");
         Codegen.genPush(Codegen.T0);
 	}
     
@@ -2388,6 +2433,23 @@ class AndNode extends LogicalExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		String shortLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("bne",Codegen.T0, "0", shortLabel); //If not false, use RHS as solution
+		
+		Codegen.genPush(Codegen.T0); //Uses LHS as solution
+		Codegen.generate("b", exitLabel);
+		
+        Codegen.genLabel(shortLabel);
+        this.myExp2.codeGen(); //Just leave RHS on stack as solution
+        codeGen.genLabel(exitLabel);
+	}
+	
 }
 
 class OrNode extends LogicalExpNode {
@@ -2402,6 +2464,22 @@ class OrNode extends LogicalExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		String shortLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("bne",Codegen.T0, "1", shortLabel); //If not true, use RHS as solution
+		
+		Codegen.genPush(Codegen.T0); //Uses LHS as solution
+		Codegen.generate("b", exitLabel);
+		
+        Codegen.genLabel(shortLabel);
+        this.myExp2.codeGen(); //Just leave RHS on stack as solution
+        codeGen.genLabel(exitLabel);	
+	}
 }
 
 class EqualsNode extends EqualityExpNode {
@@ -2488,6 +2566,19 @@ class GreaterEqNode extends RelationalExpNode {
     }
     
     public void codeGen() {
+		String shortLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        Codegen.generate("bne",Codegen.T0, "1", shortLabel); //If not true, use RHS as solution
+		
+		Codegen.genPush(Codegen.T0); //Uses LHS as solution
+		Codegen.generate("b", exitLabel);
+		
+        Codegen.genLabel(shortLabel);
+        this.myExp2.codeGen(); //Just leave RHS on stack as solution
+        codeGen.genLabel(exitLabel);
 		
 	}
 		
