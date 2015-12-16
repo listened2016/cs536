@@ -304,9 +304,9 @@ class FnBodyNode extends ASTnode {
         myStmtList.unparse(p, indent);
     }
     
-    public void codeGen() {
+    public void codeGen(String label) {
         #myDeclList.unparse(p, indent);
-        myStmtList.codeGen();
+        myStmtList.codeGen(label);
     }
     
 
@@ -346,10 +346,10 @@ class StmtListNode extends ASTnode {
         }
     }
     
-    public void codeGen() {
+    public void codeGen(ttring label) {
 		Iterator<StmtNode> it = myStmts.iterator();
         while (it.hasNext()) {
-            it.next().codeGen();
+            it.next().codeGen(label);
         }
 	}
 
@@ -670,43 +670,40 @@ class FnDeclNode extends DeclNode {
 		else {
 			Codegen.p.print("\t_" + this.getMyId().name() + ":\n");
 		}
+		
+		String exitLabel = "exit_" + this.getMyId().name();
 
 	
 		//Prologue generation
 		Codegen.p.print("#Start of Prologue for "+
 			this.getMyId().name()+"\n");
-		Codegen.generateIndexed("sw", Codegen.RA,Codegen.SP,"0",
-			"Push return address");
+		Codegen.generateIndexed("sw", Codegen.RA,Codegen.SP,"0");
 		Codegen.generate("subu",Codegen.SP,Codegen.SP,4);
-		Codegen.generateIndexed("sw", Codegen.FP,Codegen.SP,"0",
-			"Push control link");
+		Codegen.generateIndexed("sw", Codegen.FP,Codegen.SP,"0");
 		Codegen.generate("subu",Codegen.SP,Codegen.SP,4);
-		Codegen.generateWithComment("addu",
-			"Move frame pointer", 
+		Codegen.generate("addu", 
 			Codegen.FP,Codegen.SP,paramsOffset+8);
-		Codegen.generateWithComment("subu",
-			"Move stack pointer for loc vars", 
+		Codegen.generate("subu",
 			Codegen.SP,Codegen.SP,localsOffset*4);
+		Codegen.p.print("#End of Prologue\n");
+	
 		
 		//Body
-		this.myBody.codeGen();
+		this.myBody.codeGen(exitLabel);
 		
 		
 		//Function exit
-		Codegen.genLabel(this.getMyId().name()+"_ret"); //label for return
+		Codegen.genLabel(exitLabel); //label for return
 		Codegen.p.print("#Start of Epilogue for "+
 			this.getMyId().name()+"\n");
 		Codegen.generateIndexed("lw", 
-			Codegen.RA,Codegen.FP,("-"+paramsOffset),
-			"Restore return address");
-		Codegen.generateWithComment("move","Save frame pointer",
-			Codegen.T0,Codegen.FP);
+			Codegen.RA,Codegen.FP,("-"+paramsOffset));
+		Codegen.generate("move",Codegen.T0,Codegen.FP);
 		Codegen.generateIndexed("lw", 
 			Codegen.FP,Codegen.FP,"-"+(paramsOffset+4),
 			"Restore frame pointer");
-		Codegen.generateWithComment("move","Restore stack pointer",
-			Codegen.SP,Codegen.T0);
-		Codegen.generateWithComment("jr","Return",
+		Codegen.generate("move", Codegen.SP,Codegen.T0);
+		Codegen.generateWithComment("jr","Return jump",
 			Codegen.RA);
 		
 
@@ -973,7 +970,7 @@ class AssignStmtNode extends StmtNode {
         p.println(";");
     }
     
-    public void codeGen() {
+    public void codeGen(String label) {
 		this.myAssign.codeGen();
         Codegen.genPop(Codegen.T0);
 	}
@@ -1013,16 +1010,22 @@ class PostIncStmtNode extends StmtNode {
         p.println("++;");
     }
     
-    public void codeGen() {
-		if(this.sym().isGlobal()){
-            Codegen.generate("lw", Codegen.T0, "_"+this.myStrVal);
-        }
-
-        else{
-            Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, -this.sym().getOffset());
-        }
-
-        Codegen.genPush(Codegen.T0);
+    public void codeGen(String label) {
+		if (myExp instanceof IdNode) {
+			IdNode idExp = (IdNode)myExp;
+			
+			
+			idExp.codeGen();
+			Codegen.genPop(Codegen.T0);
+			
+			Codegen.generate("add", Codegen.T0, Codegen.T0, 1);
+			
+			idExp.getAddr();
+			Codegen.genPop(Codegen.T1);
+			
+			Codegen.generate("sw", Codegen.T0, Codegen.T1, 0);
+			
+		}
 	}
 
     // 1 kid
@@ -1059,6 +1062,23 @@ class PostDecStmtNode extends StmtNode {
         myExp.unparse(p, 0);
         p.println("--;");
     }
+    
+    public void codeGen(String label) {
+		if (myExp instanceof IdNode) {
+			IdNode idExp = (IdNode)myExp;
+			
+			
+			idExp.codeGen();
+			Codegen.genPop(Codegen.T0);
+			
+			Codegen.generate("sub", Codegen.T0, Codegen.T0, 1);
+			
+			idExp.getAddr();
+			Codegen.genPop(Codegen.T1);
+			
+			Codegen.generate("sw", Codegen.T0, Codegen.T1, 0);		
+		}
+	}
     
     // 1 kid
     private ExpNode myExp;
@@ -1104,6 +1124,18 @@ class ReadStmtNode extends StmtNode {
         p.print("cin >> ");
         myExp.unparse(p, 0);
         p.println(";");
+    }
+    
+    public void codeGen(String label){
+
+        if(myExp instanceof IdNode){
+            ((IdNode) myExp).genAddr();
+			Codegen.genPop(Codegen.T0);
+			Codegen.generate("li", Codegen.V0, 5);
+			Codegen.generate("syscall");
+			Codegen.generateIndexed("sw", Codegen.V0, Codegen.T0, 0 );
+			
+		}
     }
 
     // 1 kid (actually can only be an IdNode or an ArrayExpNode)
@@ -1157,7 +1189,7 @@ class WriteStmtNode extends StmtNode {
         p.println(";");
     }
     
-    public void codeGen() {
+    public void codeGen(String label) {
 		myExp.codeGen();
 		Codegen.genPop(Codegen.A0);
 		
@@ -1232,7 +1264,20 @@ class IfStmtNode extends StmtNode {
         doIndent(p, indent);
         p.println("}");
     }
-
+    
+    public void codeGen(String label) {
+		String label1 = Codegen.nextLabel();
+		String label2 = Codegen.nextLabel();
+		
+		myExp.codeGen();
+		Codegen.genPop(Codegen.T0);
+		
+		Codegen.generate("bne", Codegen.T0, 1, label2);
+		
+		#Codegen.genLabel(label1);
+		myStmtList.codeGen(label);
+		Codegen.genLabel(label2);
+	}
     // e kids
     private ExpNode myExp;
     private DeclListNode myDeclList;
@@ -1316,6 +1361,22 @@ class IfElseStmtNode extends StmtNode {
         doIndent(p, indent);
         p.println("}");        
     }
+    
+    public void codeGen(String label) {
+		String label1 = Codegen.nextLabel();
+		String label2 = Codegen.nextLabel();
+		
+		myExp.codeGen();
+		Codegen.genPop(Codegen.T0);
+		
+		Codegen.generate("bne", Codegen.T0, 1, label2);
+		
+		#Codegen.genLabel(label1);
+		myStmtList.codeGen(label);
+		Codegen.genLabel(label2);
+		myElseStmtList.codeGen();
+		
+	}
 
     // 5 kids
     private ExpNode myExp;
@@ -1411,8 +1472,9 @@ class CallStmtNode extends StmtNode {
         p.println(";");
     }
     
-    public void codeGen(){
+    public void codeGen(String label){
         this.myCall.codeGen();
+        Codegen.genPop(Codegen.T0);
     }
 
     // 1 kid
@@ -1470,6 +1532,16 @@ class ReturnStmtNode extends StmtNode {
         }
         p.println(";");
     }
+    
+    //Given the return label, jumps to function exit codes
+    public void codeGen(String exitLabel) {
+		if (myExp != null) {
+			myExp.codeGen()
+			Codegen.genPop(Codegen.V0);
+		}
+		
+		Codegen.generate("b", exitLabel);
+	}
 
     // 1 kid
     private ExpNode myExp; // possibly null
@@ -1488,7 +1560,7 @@ abstract class ExpNode extends ASTnode {
     abstract public Type typeCheck();
     abstract public int lineNum();
     abstract public int charNum();
-    abstract public void codeGen();
+    public void codeGen() {}
 }
 
 class IntLitNode extends ExpNode {
@@ -1738,16 +1810,20 @@ class IdNode extends ExpNode {
 	public void codeGen() {
 		if(this.sym().isGlobal()) {
             Codegen.generate("lw", Codegen.T0, "_" + this.myStrVal);
+            Codegen.genPush(Codegen.T0);
         } else {
             Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+            Codegen.genPush(Codegen.T0);
         }
 	}
 	
 	public void genAddr() {
 		if(this.sym().isGlobal()) {
             Codegen.generate("la", Codegen.T0, "_" + this.myStrVal);
+            Codegen.genPush(Codegen.T0);
         } else {
             Codegen.generateIndexed("la", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+            Codegen.genPush(Codegen.T0);
         }
 		
 	}
@@ -1976,6 +2052,35 @@ class AssignNode extends ExpNode {
         myExp.unparse(p, 0);
         if (indent != -1)  p.print(")");
     }
+    
+    public void codeGen(){
+
+
+        if(myLhs instanceof IdNode && myExp instanceof IdNode){
+                      
+			((IdNode)myLhs).genAddr(); 
+            Codegen.genPop(Codegen.T0); 
+
+            ((IdNode)myExp).codeGen();
+            Codegen.genPop(Codegen.T1); 
+            
+            Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0); 
+            Codegen.genPush(Codegen.T1); 
+
+        }
+
+        else if (myLhs instanceof IdNode) {
+                       
+			((IdNode)myLhs).genAddr(); 
+            Codegen.genPop(Codegen.T0); 
+
+            myExp.codeGen();
+            Codegen.genPop(Codegen.T1); 
+            
+            Codegen.generateIndexed("sw", Codegen.T1, Codegen.T0, 0); 
+            Codegen.genPush(Codegen.T1); 
+        }
+
 
     // 2 kids
     private ExpNode myLhs;
@@ -2056,10 +2161,11 @@ class CallExpNode extends ExpNode {
         p.print(")");
     }
     
-    public void codeGen() {
-		//Steps
-		//
-	}
+    public void codeGen(){
+        this.myExpList.codeGen();
+        this.myId.genJumpAndLink();
+        Codegen.genPush(Codegen.V0);
+    }
 
     // 2 kids
     private IdNode myId;
@@ -2175,7 +2281,7 @@ class UnaryMinusNode extends UnaryExpNode {
 		this.myExp1.codeGen();
         Codegen.genPop(Codegen.T0);
 
-		Codegen.generate("sub",Codegen.T0, "0", Codegen.T0);
+		Codegen.generate("sub",Codegen.T0, 0, Codegen.T0);
         Codegen.genPush(Codegen.T0);
 	}
 }
@@ -2552,6 +2658,26 @@ class EqualsNode extends EqualityExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen(){
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        Codegen.generate("beq",Codegen.T0, Codegen.T1, trueLabel); 
+       
+        //Set false
+        Codegen.generate("li",Codegen.T0, 0); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(trueLabel);
+        Codegen.generate("li",Codegen.T0, 1);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);	
+	}
 }
 
 class NotEqualsNode extends EqualityExpNode {
@@ -2566,6 +2692,26 @@ class NotEqualsNode extends EqualityExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen(){
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        Codegen.generate("bne",Codegen.T0, Codegen.T1, trueLabel); 
+       
+        //Set false
+        Codegen.generate("li",Codegen.T0, 0); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(trueLabel);
+        Codegen.generate("li",Codegen.T0, 1);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);	
+	}
 }
 
 class LessNode extends RelationalExpNode {
@@ -2580,6 +2726,32 @@ class LessNode extends RelationalExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		String falseLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        //T0 > T1 -> !(0 <= T1-T0)
+        Codegen.generate("sub",Codegen.T0, Codegen.T0, Codegen.T1); 
+        Codegen.generate("bgze",Codegen.T0, falseLabel); 
+       
+       //Set false
+        Codegen.generate("li",Codegen.T0, 1); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(falseLabel);
+        Codegen.generate("li",Codegen.T0, 0);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);
+		
+	}
 }
 
 class GreaterNode extends RelationalExpNode {
@@ -2594,6 +2766,32 @@ class GreaterNode extends RelationalExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		String falseLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        //T0 > T1 -> !(0 <= T1-T0)
+        Codegen.generate("sub",Codegen.T0, Codegen.T1, Codegen.T0); 
+        Codegen.generate("bgze",Codegen.T0, falseLabel); 
+       
+       //Set false
+        Codegen.generate("li",Codegen.T0, 1); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(falseLabel);
+        Codegen.generate("li",Codegen.T0, 0);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);
+		
+	}
 }
 
 class LessEqNode extends RelationalExpNode {
@@ -2608,6 +2806,31 @@ class LessEqNode extends RelationalExpNode {
         myExp2.unparse(p, 0);
         p.print(")");
     }
+    
+    public void codeGen() {
+		String trueLabel = codeGen.nextLabel();
+		String exitLabel = codeGen.nextLabel();
+		
+		this.myExp1.codeGen();
+        Codegen.genPop(Codegen.T0);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        Codegen.generate("sub",Codegen.T0, Codegen.T1, Codegen.T0); 
+        Codegen.generate("bgze",Codegen.T0, trueLabel); 
+       
+       //Set false
+        Codegen.generate("li",Codegen.T0, 0); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(trueLabel);
+        Codegen.generate("li",Codegen.T0, 1);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);
+		
+	}
 }
 
 class GreaterEqNode extends RelationalExpNode {
@@ -2624,19 +2847,27 @@ class GreaterEqNode extends RelationalExpNode {
     }
     
     public void codeGen() {
-		String shortLabel = codeGen.nextLabel();
+		String trueLabel = codeGen.nextLabel();
 		String exitLabel = codeGen.nextLabel();
 		
 		this.myExp1.codeGen();
         Codegen.genPop(Codegen.T0);
-        Codegen.generate("bne",Codegen.T0, "1", shortLabel); //If not true, use RHS as solution
-		
-		Codegen.genPush(Codegen.T0); //Uses LHS as solution
-		Codegen.generate("b", exitLabel);
-		
-        Codegen.genLabel(shortLabel);
-        this.myExp2.codeGen(); //Just leave RHS on stack as solution
-        codeGen.genLabel(exitLabel);
+        
+        this.myExp2.codeGen();
+        Codegen.genPop(Codegen.T1);
+        
+        Codegen.generate("sub",Codegen.T0, Codegen.T0, Codegen.T1); 
+        Codegen.generate("bgze",Codegen.T0, trueLabel); 
+       
+       //Set false
+        Codegen.generate("li",Codegen.T0, 0); 
+        Codegen.generate("b",exitLabel); 	
+        
+        Codegen.genLabel(trueLabel);
+        Codegen.generate("li",Codegen.T0, 1);
+       
+		Codegen.genLabel(exitLabel);
+		Codegen.genPush(Codegen.T0);
 		
 	}
 		
