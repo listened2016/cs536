@@ -1,0 +1,69 @@
+int globalx;
+
+int f() {
+	int x;
+	int y;
+	
+	globalx = globalx - 5;
+	if (true || false) {
+		cout << "This is an if statement\n"; 
+	}
+	
+	if (true && false) {
+		cout << "This should not print\n"; 
+	}
+	else {
+		cout << "This is an if-else statement\n"; 
+	}
+	
+	x = 5;
+	while (x > 0) {
+		x--;
+		cout << x;
+		cout << "\n";
+	}
+	
+	while (x < 10) {
+		x++;
+		cout << x;
+		cout << "\n";
+	}
+	
+	return 10;
+	
+}
+
+void g(int x, int y, bool b) {
+	cout << (x+y);
+	cout << "\n";
+	cout << (b == false);
+	cout << "\n";
+}
+
+void main() {
+	int x;
+	bool y;
+	
+	x = 1;
+	y = true;
+	globalx = 0;
+	
+	cout << 1; 
+	cout << "\n";
+	cout << y;
+	cout << "\n";
+	cout << globalx;
+	cout << "\n";
+	
+	//Function tests
+	g(5,20,false);
+	cout << globalx;
+	cout << "\n";
+	x = f();
+	cout << globalx;
+	cout << "\n";
+	cout << x;
+	cout << "\n";
+	
+
+}

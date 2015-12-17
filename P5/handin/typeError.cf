@@ -132,6 +132,8 @@ void numError() {
     return 3+true;    // in a void function: one error for the 2nd operand to +
                   // and one for returning a value
 
+    cin >> "String"; //Attempt to write to string
+
 }
 
 

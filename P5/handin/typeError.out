@@ -1,0 +1,118 @@
+bool bbb;
+struct S{
+    int a;
+};
+
+struct S t;
+void f(int p1, bool p2) {
+}
+
+void main() {
+    int aaa;
+    aaa(int) = (f(int,bool->void) + f(int,bool->void));
+    bbb(bool) = (f(int,bool->void) == 3);
+    bbb(bool) = (f(int,bool->void) > main(->void));
+    bbb(bool) = (f(int,bool->void) == f(int,bool->void));
+    aaa(int)();
+    f(int,bool->void)();
+    f(int,bool->void)(5);
+    f(int,bool->void)(aaa(int), aaa(int));
+    f(int,bool->void)(t(S), t(S).a(int));
+    S(struct)();
+    t(S) = 5;
+    t(S) = t(S);
+    cin >> S(struct);
+    t(S) = (true || 3);
+    bbb(bool) = (S(struct) && t(S).a(int));
+    return 10;
+    aaa(int) = (aaa(int) + (!false));
+    aaa(int) = (aaa(int) + "foo");
+    bbb(bool) = aaa(int);
+    bbb(bool) = ((aaa(int) + true) && (bbb(bool) < true));
+    return 2;
+}
+
+void main2() {
+}
+
+struct Q{
+    struct S q;
+};
+
+struct R{
+    int a;
+    bool b;
+};
+
+int nonvoid(int x, bool y) {
+    int a;
+    bool g;
+    struct S s;
+    struct S ss;
+    struct R r;
+    struct Q qs;
+    cout << main(->void);
+    cout << S(struct);
+    cout << s(S);
+    cout << main(->void)();
+    cin >> main(->void);
+    cin >> S(struct);
+    cin >> s(S);
+    s(S)();
+    nonvoid(int,bool->int)();
+    nonvoid(int,bool->int)(s(S), (1 + 2));
+    return;
+    return true;
+    if (0) {
+        return false;
+    }
+    while (1) {
+        return;
+    }
+    a(int) = g(bool);
+    g(bool) = (main(->void)() == main2(->void)());
+    g(bool) = (main(->void) == main2(->void));
+    g(bool) = (S(struct) == R(struct));
+    g(bool) = (s(S) == ss(S));
+    nonvoid(int,bool->int) = main(->void);
+    S(struct) = R(struct);
+    s(S) = ss(S);
+    g(bool)++;
+    if (((1 || 2) + (3 && 4))) {
+        x(int) = main(->void)();
+        main(->void)--;
+        g(bool) = (-g(bool));
+    }
+    else {
+        g(bool) = (1 && 2);
+        g(bool) = (1 || 2);
+        g(bool) = (!2);
+        g(bool) = (true <= false);
+        g(bool) = (true >= false);
+        g(bool) = (true == 1);
+    }
+    while (((true + false) || (false - true))) {
+        qs(Q).q(S).a(int) = true;
+        qs(Q).q(S).a(int) = (qs(Q).q(S).a(int) == false);
+        r(R).b(bool) = ((-qs(Q).q(S).a(int)) && 1);
+        r(R).b(bool) = nonvoid(int,bool->int)(1, true);
+        r(R).b(bool) = nonvoid(int,bool->int)(1, (true + false));
+    }
+}
+
+void numError() {
+    int x;
+    bool j;
+    cout << (R(struct) + 1);
+    x(int) = ((true + 3) * 4);
+    j(bool) = (true && (false || 3));
+    f(int,bool->void)(("a" * 4), true);
+    x(int) = (1 + nonvoid(int,bool->int)(1));
+    j(bool) = ((true + 3) == x(int));
+    x(int) = (true + "hello");
+    x(int) = (1 + f(int,bool->void)(true));
+    x(int) = (1 + f(int,bool->void)(1, 2));
+    return (3 + true);
+    cin >> "String";
+}
+

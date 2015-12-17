@@ -8,7 +8,7 @@
 ###
 
 JC = javac
-CP = /u/s/a/sahit/projects/cs536/P5/p5/536_deps/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.no
+CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
 CP2 = ~cs536-1/public/tools/deps:.
 
 P5.class: P5.java parser.class Yylex.class ASTnode.class
@@ -41,9 +41,9 @@ ErrMsg.class: ErrMsg.java
 ##test
 test:
 	#Good cases
-	java   P5 ../test/test.cf ../test/test.out
+	java   P5 test.cf test.out
 	#Error cases
-	java   P5 ../test/nameErrors.cf ../test/nameErrors.out
+	java   P5 tytError.cf testError.out
 
 ###
 # clean

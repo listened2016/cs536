@@ -960,6 +960,11 @@ class ReadStmtNode extends StmtNode {
     				"Attempt to read a struct variable");
     		return false;
     	}
+	else if (myExp.getType().isStringType()) {
+	    ErrMsg.fatal(myExp.getLineNum(), myExp.getCharNum(),
+			 "Attempt to read a string literal");
+	    return false;
+	}
     	return true; 
     }
     
