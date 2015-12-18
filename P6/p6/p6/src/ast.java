@@ -133,6 +133,11 @@ class ProgramNode extends ASTnode {
     public void nameAnalysis() {
         SymTable symTab = new SymTable();
         myDeclList.nameAnalysis(symTab);
+        if (symTab.lookupGlobal("main") == null) {
+        	ErrMsg.fatal(0, 0,
+                    "No main function");
+        	
+        }
     }
     
     /**
@@ -577,8 +582,8 @@ class FnDeclNode extends DeclNode {
         myId = id;
         myFormalsList = formalList;
         myBody = body;
-        this.paramsOffset = -1;
-        this.localsOffset = -1;
+        this.paramsOffset = 0;
+        this.localsOffset = 0;
     }
 
     /**
@@ -630,7 +635,8 @@ class FnDeclNode extends DeclNode {
         }
         int offset = 8 + this.paramsOffset; 
 		
-        myBody.nameAnalysis(symTab, offset + 4*myBody.getDeclList().size()); // process the function body
+        myBody.nameAnalysis(symTab, offset + 4*myBody.getDeclList().size()); 
+        // process the function body
         
         for (DeclNode d : myBody.getDeclList()) {
 			if (d instanceof VarDeclNode) {
@@ -673,6 +679,8 @@ class FnDeclNode extends DeclNode {
         p.println("}\n");
     }
     
+    //Generates the function prologue, 
+    //epilogue for function, uses offsets from name analysis
     public void codeGen() {
 		Codegen.p.print("\t.text\n");
 		//if main
@@ -689,9 +697,9 @@ class FnDeclNode extends DeclNode {
 
 	
 		//Prologue generation
-		Codegen.p.print("#Start of Prologue for "+
-			this.myId.name()+"\n");
-		Codegen.generateIndexed("sw", Codegen.RA,Codegen.SP,0);
+		Codegen.generateIndexed("sw", Codegen.RA,Codegen.SP,0,
+				"#Start of Prologue for "+
+						this.myId.name()+"\n");
 		Codegen.generate("subu",Codegen.SP,Codegen.SP,4);
 		Codegen.generateIndexed("sw", Codegen.FP,Codegen.SP,0);
 		Codegen.generate("subu",Codegen.SP,Codegen.SP,4);
@@ -699,7 +707,6 @@ class FnDeclNode extends DeclNode {
 			Codegen.FP,Codegen.SP,paramsOffset+8);
 		Codegen.generate("subu",
 			Codegen.SP,Codegen.SP,localsOffset);
-		Codegen.p.print("#End of Prologue\n");
 	
 		
 		//Body
@@ -708,10 +715,10 @@ class FnDeclNode extends DeclNode {
 		
 		//Function exit
 		Codegen.genLabel(exitLabel); //label for return
-		Codegen.p.print("#Start of Epilogue for "+
-			this.myId.name()+"\n");
 		Codegen.generateIndexed("lw", 
-			Codegen.RA,Codegen.FP,(-paramsOffset));
+			Codegen.RA,Codegen.FP,(-paramsOffset),
+			"#Start of Epilogue for "+
+					this.myId.name()+"\n");
 		Codegen.generate("move",Codegen.T0,Codegen.FP);
 		Codegen.generateIndexed("lw", 
 			Codegen.FP,Codegen.FP,-(paramsOffset+4),
@@ -1257,19 +1264,22 @@ class IfStmtNode extends StmtNode {
     public void nameAnalysis(SymTable symTab, int offset) {
         myExp.nameAnalysis(symTab);
         symTab.addScope();
-        
+
+
+
+		
+        myDeclList.nameAnalysis(symTab);
+        myStmtList.nameAnalysis(symTab, offset + 4*myDeclList.getList().size());
+      
+        this.offset = 0;
         for (DeclNode d : myDeclList.getList()) {
 			if (d instanceof VarDeclNode) {
-				((VarDeclNode)d).getMyId().sym().setOffset(offset);
-				offset += 4;
+				((VarDeclNode)d).getMyId().sym().setOffset(offset + this.offset);
+				this.offset += 4;
 				
 			}
 		}
-
-
-		this.offset = offset;
-        myDeclList.nameAnalysis(symTab);
-        myStmtList.nameAnalysis(symTab, offset);
+        
         
         
         try {
@@ -1359,19 +1369,21 @@ class IfElseStmtNode extends StmtNode {
     public void nameAnalysis(SymTable symTab, int offset) {
         myExp.nameAnalysis(symTab);
         symTab.addScope();
+       
+       
+        myThenDeclList.nameAnalysis(symTab);
+        myThenStmtList.nameAnalysis(symTab, offset + 4*myThenDeclList.getList().size());
         
-        this.offsetThen = offset;
+        this.offsetThen = 0;
         for (DeclNode d : myThenDeclList.getList()) {
 			if (d instanceof VarDeclNode) {
-				((VarDeclNode)d).getMyId().sym().setOffset(this.offsetThen);
+				((VarDeclNode)d).getMyId().sym().setOffset(offset + this.offsetThen);
 				this.offsetThen += 4;
 				
 			}
 		}
         
-        myThenDeclList.nameAnalysis(symTab);
-        myThenStmtList.nameAnalysis(symTab, this.offsetThen);
-        try {
+       try {
             symTab.removeScope();
         } catch (EmptySymTableException ex) {
             System.err.println("Unexpected EmptySymTableException " +
@@ -1380,16 +1392,19 @@ class IfElseStmtNode extends StmtNode {
         }
         symTab.addScope();
         
-        this.offsetElse = offset;
+        
+        myElseDeclList.nameAnalysis(symTab);
+        myElseStmtList.nameAnalysis(symTab, offset + 4*myElseDeclList.getList().size());
+        
+        this.offsetElse = 0;
         for (DeclNode d : myElseDeclList.getList()) {
 			if (d instanceof VarDeclNode) {
-				((VarDeclNode)d).getMyId().sym().setOffset(this.offsetElse);
+				((VarDeclNode)d).getMyId().sym().setOffset(offset + this.offsetElse);
 				this.offsetElse += 4;
 				
 			}
 		}
-        myElseDeclList.nameAnalysis(symTab);
-        myElseStmtList.nameAnalysis(symTab, this.offsetElse);
+        
         try {
             symTab.removeScope();
         } catch (EmptySymTableException ex) {
@@ -1489,18 +1504,20 @@ class WhileStmtNode extends StmtNode {
         myExp.nameAnalysis(symTab);
         symTab.addScope();
         
+        myDeclList.nameAnalysis(symTab);
+        myStmtList.nameAnalysis(symTab, offset + 4*myDeclList.getList().size());
+        
+        this.offset = 0;
         for (DeclNode d : myDeclList.getList()) {
 			if (d instanceof VarDeclNode) {
-				((VarDeclNode)d).getMyId().sym().setOffset(offset);
-				offset += 4;
+				((VarDeclNode)d).getMyId().sym().setOffset(offset + this.offset);
+				this.offset += 4;
 				
 			}
 		}
-		
-		this.offset = offset;
         
-        myDeclList.nameAnalysis(symTab);
-        myStmtList.nameAnalysis(symTab, offset);
+		
+		
         try {
             symTab.removeScope();
         } catch (EmptySymTableException ex) {
@@ -1677,7 +1694,7 @@ abstract class ExpNode extends ASTnode {
     abstract public int lineNum();
     abstract public int charNum();
     public void codeGen() {}
-    public Hashtable<String, String> stringTable = new Hashtable<String, String>();
+    public static Hashtable<String, String> stringTable = new Hashtable<String, String>();
 }
 
 class IntLitNode extends ExpNode {
@@ -1758,6 +1775,7 @@ class StringLitNode extends ExpNode {
     	String label = stringTable.get(this.myStrVal);
     	if (label == null) {
     		String newLabel = Codegen.nextLabel();
+    		stringTable.put(this.myStrVal, newLabel);
     		Codegen.p.println("\t.data");
     		Codegen.generateLabeled(newLabel, ".asciiz " + myStrVal, "");
     		Codegen.p.println("\t.text");
@@ -1951,7 +1969,8 @@ class IdNode extends ExpNode {
             Codegen.generate("lw", Codegen.T0, "_" + this.myStrVal);
             Codegen.genPush(Codegen.T0);
         } else {
-            Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, -this.sym().getOffset());
+            Codegen.generateIndexed("lw", Codegen.T0, Codegen.FP, 
+            		-this.sym().getOffset());
             Codegen.genPush(Codegen.T0);
         }
 	}
@@ -1961,7 +1980,8 @@ class IdNode extends ExpNode {
             Codegen.generate("la", Codegen.T0, "_" + this.myStrVal);
             Codegen.genPush(Codegen.T0);
         } else {
-            Codegen.generateIndexed("la", Codegen.T0, Codegen.FP, -this.sym().getOffset(), "Generate Address");
+            Codegen.generateIndexed("la", Codegen.T0, Codegen.FP, 
+            		-this.sym().getOffset(), "Generate Address");
             Codegen.genPush(Codegen.T0);
         }
 		
@@ -2420,7 +2440,8 @@ class UnaryMinusNode extends UnaryExpNode {
 		this.myExp.codeGen();
         Codegen.genPop(Codegen.T0);
 
-		Codegen.generate("sub",Codegen.T0, "0", Codegen.T0);
+        Codegen.generate("li", Codegen.T1,0);
+		Codegen.generate("sub",Codegen.T0, Codegen.T1, Codegen.T0);
         Codegen.genPush(Codegen.T0);
 	}
 }
@@ -2460,7 +2481,7 @@ class NotNode extends UnaryExpNode {
 		this.myExp.codeGen();
         Codegen.genPop(Codegen.T0);
 
-		Codegen.generate("nor",Codegen.T0, Codegen.T0, "0");
+		Codegen.generate("seq",Codegen.T0, Codegen.T0, "0");
         Codegen.genPush(Codegen.T0);
 	}
     
@@ -2717,8 +2738,7 @@ class DivideNode extends ArithmeticExpNode {
         Codegen.genPop(Codegen.T0);
 
 		//mult uses special register
-        Codegen.generate("mult", Codegen.T0, Codegen.T1);
-        Codegen.generate("mflo", Codegen.T0);
+        Codegen.generate("div", Codegen.T0, Codegen.T0, Codegen.T1);
 
         Codegen.genPush(Codegen.T0);
 	}

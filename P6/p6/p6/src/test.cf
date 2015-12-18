@@ -9,6 +9,12 @@ int f() {
 		cout << "This is an if statement\n"; 
 	}
 	
+	if (1 >= 0) {
+		int x;
+		x = 8127;
+		cout << "This is another if statement\n"; 
+	}
+	
 	if (true && false) {
 		cout << "This should not print\n"; 
 	}
@@ -40,9 +46,248 @@ void g(int x, int y, bool b) {
 	cout << "\n";
 }
 
+int recursionTester(int level) {
+	int x;
+	int y;
+	
+	x = 13;
+	y = 17;
+	if  (level == 0) {
+		return 0;
+	}
+	cout << recursionTester(level-1);
+	cout << "\n";
+	return level;
+	
+}
+
+bool loopTester(bool x) {
+	int xx;
+	int yy;
+	bool re;
+	
+	
+	re = true;
+	xx = 0;
+	yy = 100;
+	
+	cout << "Nest If test\n";
+	if (true) {
+		int firstLoop;
+		firstLoop = 1;	
+		if (true) {
+			int secondLoop;
+			secondLoop = 2;
+			if (true) {
+				int thirdLoop;
+				thirdLoop = 3;
+				cout << thirdLoop;
+				cout << "\n";
+			}
+			cout << secondLoop;
+			cout << "\n";
+		}
+		cout << firstLoop;
+		cout << "\n";
+	}
+	cout << "Nest If test end\n";
+	
+	cout << "Nest If-Else test\n";
+	if (true) {
+		int firstLoop;
+		firstLoop = 1;	
+		if (false) {
+			bool x;
+			int firstLoop;
+			firstLoop  = 0;
+			firstLoop++;
+		}
+		else {
+			int secondLoop;
+			secondLoop = 2;
+			if (false) {
+				int x;
+			}
+			else {
+				int thirdLoop;
+				thirdLoop = 3;
+				cout << thirdLoop;
+				cout << "\n";
+			}
+			cout << secondLoop;
+			cout << "\n";
+		}
+		cout << firstLoop;
+		cout << "\n";
+	}
+	else {
+	}
+	cout << "Nest If-Else test end\n";
+	
+	cout << "Nest While test\n";
+	if(true) {
+		int width;
+		width = 10;
+		while (width > 0) {
+			int height;
+			bool hellyeah;
+			height = 10;
+			while (height > 0) {
+				int whelp;
+				cout << "0";
+				height--;
+			}
+		cout << "\n";
+		width--;
+		}
+	}
+	cout << "Nest While test end\n";
+	
+	
+	return re;
+	
+}
+
+bool trueFoobar() {
+	cout << "Your failed";
+	return false;
+}
+
+
+
+void testExp() {
+int x;
+int y;
+bool a;
+bool b;
+
+cout << "\nAddition test: 20\n"; 
+x = 10;
+y = 10;
+cout << x + y; 
+
+cout << "\nSubtraction test: 0\n"; 
+x = 10;
+y = 10;
+cout << x - y;
+
+cout << "\nTimes test: 27\n"; 
+x = 3;
+y = 9;
+cout << x * y; 
+
+cout << "\nDivide test: 13\n"; 
+x = 40;
+y = 3;
+cout << x / y;
+
+cout << "\nAnd test: 1 and 0\n"; 
+a = true;
+b = false;
+cout << a && a;
+cout << "\n";
+cout << a && b;
+ 
+cout << "\nOr test: 1 and 0\n"; 
+a = true;
+b = false;
+cout << b || a; 
+cout << "\n";
+cout << b || b;
+
+cout << "\nEquals test: 1 and 0\n"; 
+x = 3;
+y = 3;
+cout << x == y;
+y = 9; 
+cout << "\n";
+cout << y == x;
+
+cout << "\nNot Equals test: 1 and 0\n"; 
+x = 5;
+y = 4;
+cout << x != y;
+y = 5; 
+cout << "\n";
+cout << y != x;
+
+cout << "\nLess test: 1 and 0\n"; 
+x = 3;
+y = 4;
+cout << x < y;
+cout << "\n";
+cout << y < x;
+
+cout << "\nGreater test: 1 and 0\n"; 
+x = 5;
+y = 4;
+cout << x > y;
+cout << "\n";
+cout << y > x;
+
+cout << "\nLessEq test: 1 and 0\n"; 
+x = 3;
+y = 4;
+cout << x <= y;
+cout << "\n";
+cout << y <= x;
+
+cout << "\nGreaterEq test: 1 and 0\n"; 
+x = 5;
+y = 4;
+cout << x >= y;
+cout << "\n";
+cout << y >= x;
+
+
+cout << "\nShort Circuit test: And\n"; 
+a = false && trueFoobar();
+cout << a;
+
+cout << "\nShort Circuit test: Or\n"; 
+a = true || trueFoobar();
+cout << a;
+
+cout << "\nPostIncrement/Decrement\n"; 
+x = 1;
+cout << x;
+cout << "\n";
+x++;
+cout << x;
+cout << "\n";
+x++;
+cout << x;
+cout << "\n";
+x--;
+cout << x;
+cout << "\n";
+x--;
+cout << x;
+cout << "\n";
+x--;
+cout << x;
+cout << "\n";
+
+cout << "Unary test: -10\n"; 
+x = 10;
+cout << (-x);
+cout << "\n";
+
+cout << "Not test: 0\n"; 
+a = true;
+cout << (!a);
+cout << "\n";
+
+}
+
+int one() {
+	return 1;
+}
+
 void main() {
 	int x;
 	bool y;
+	bool a;
 	
 	x = 1;
 	y = true;
@@ -65,5 +310,46 @@ void main() {
 	cout << x;
 	cout << "\n";
 	
-
+	//recursion test
+	cout << "Recursion test start\n";
+	recursionTester(4);
+	cout << "Recursion test end\n";
+	
+	cout << "Loop test start\n";
+	loopTester(true);
+	cout << "Loop test end\n";
+	testExp();
+	
+	cout << "Call test\n";
+	x = one();
+	cout << x;
+	cout << "\nCall test end\n";
+	
+	cout << "Random math test\n";
+	x = 10;
+	cout << ((5+one())+2*3+4*6-x-20/4);
+	cout << "\n";
+	cout << true!=((true && false) == (false || true));
+	cout << "\nRandom math test end\n";
+	
+	
+	
+	cout << "Read test\n";
+	cin >> a;
+	cout << "\n";
+	cout << a;
+	cout << "\n";
+	cin >> x;
+	cout << "\n";
+	cout << x;
+	cout << "\n";
+	cout << "Read test end\n";
+	
+	cout << "String literal node: 1 and 0\n";
+	cout << ("if" == "if");
+	cout << "\n";
+	cout << ("if" == "ifw");
+	cout << "\nString literal end\n";
+	
 }
+

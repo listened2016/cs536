@@ -25,7 +25,7 @@ public class SemSym {
     }
     
     public String toString() {
-        return type.toString();
+        return "("+offset+")";
     }
     
     //Offset set/get

@@ -11,8 +11,8 @@ JC = javac
 CP = ~cs536-1/public/tools/deps_src/java-cup-11b.jar:~cs536-1/public/tools/deps_src/java-cup-11b-runtime.jar:~cs536-1/public/tools/deps:.
 CP2 = ~cs536-1/public/tools/deps:.
 
-P5.class: P5.java parser.class Yylex.class ASTnode.class
-	$(JC)    P5.java
+P6.class: P6.java parser.class Yylex.class ASTnode.class
+	$(JC)    P6.java
 
 parser.class: parser.java ASTnode.class Yylex.class ErrMsg.class
 	$(JC)      parser.java
@@ -23,7 +23,7 @@ parser.java: CFlat.cup
 Yylex.class: CFlat.jlex.java sym.class ErrMsg.class
 	$(JC)   CFlat.jlex.java
 
-ASTnode.class: ast.java
+ASTnode.class: ast.java Type.java
 	$(JC)  ast.java
 
 CFlat.jlex.java: CFlat.jlex sym.class
@@ -41,9 +41,9 @@ ErrMsg.class: ErrMsg.java
 ##test
 test:
 	#Good cases
-	java   P5 test.cf test.asm
-	#Error cases
-	java   P5 testErrors.cf testErrors.out
+	java   P6 test.cf test.asm
+	java   P6 ex.cf ex.asm
+
 
 ###
 # clean
